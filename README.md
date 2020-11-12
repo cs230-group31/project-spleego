@@ -37,3 +37,7 @@ code, you just need to approve it or ask for changes.
 
 Please review all commits made by other members in the group. Should you disagree with how something has been programmed,
 please leave a comment on the merge request.
+
+## After Merge Requests
+
+Please ensure to delete the branch from both Github and your local system before starting new work.
