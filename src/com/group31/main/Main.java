@@ -11,7 +11,7 @@ public class Main {
 
         // init settings from a file
 
-        if (args.length == 0) {
+        if (args.length != 0) {
             Settings.updateSettings(args);
         }
     }
