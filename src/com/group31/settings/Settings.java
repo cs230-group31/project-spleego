@@ -19,8 +19,8 @@ public class Settings {
         }
     }
 
-    public static void setAllSettings(HashMap<String, String> settingsFromFile) {
-        settings = settingsFromFile;
+    public static void setAllSettings(HashMap<String, String> allSettingsData) {
+        settings = allSettingsData;
     }
 
     public static Map<String, String> getAllSettings() {
