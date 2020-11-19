@@ -1,6 +1,3 @@
-/**
- * Logger for the app.
- */
 package com.group31.logger;
 
 import java.sql.Timestamp;
