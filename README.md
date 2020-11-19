@@ -20,7 +20,7 @@ Logger.log("Message To Log", Logger.Level.INFO)
 
 The levels are:
 
-```
+```java
 Logger.Level.INFO
 Logger.Level.WARNING
 Logger.Level.ERROR
@@ -76,6 +76,6 @@ that is in the master branch should run **without any** errors or warnings!
 
 ### After Pull Requests
 
-Please ensure to delete the branch from both Github and your local system before starting new work. 
+Please ensure to delete the branch from both Github and your local system before starting new work.
 
 **Do not** delete other people's branches. To avoid confusion it is suggested that you name your branch after yourself.
