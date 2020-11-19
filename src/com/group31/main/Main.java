@@ -1,6 +1,3 @@
-/*
-Initialises all components and starts app.
- */
 package com.group31.main;
 
 import com.group31.controller.Controller;
