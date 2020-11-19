@@ -15,4 +15,4 @@ jobs:
           java-version: '8'
           java-package: jdk
           architecture: x64
-      - run: java -cp java src/com/group31/main/Main
+      - run: java -cp src/ com.group31.main.Main
