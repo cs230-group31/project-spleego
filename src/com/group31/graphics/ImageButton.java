@@ -11,7 +11,7 @@ public class ImageButton extends Parent {
     /**
      * Height of the button in pixels.
      */
-    private static final double BUTTON_HEIGHT = 50.0;
+    private static final double BUTTON_HEIGHT = 80.0;
     /**
      * Width of the button in pixels.
      */
