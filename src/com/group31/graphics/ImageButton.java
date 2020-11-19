@@ -8,17 +8,30 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 public class ImageButton extends Parent {
+    /**
+     * Height of the button in pixels.
+     */
+    private static final double BUTTON_HEIGHT = 50.0;
+    /**
+     * Width of the button in pixels.
+     */
+    private static final double BUTTON_WIDTH = 504.0;
 
-    public ImageButton(String unpressed, String pressed) {
+    /**
+     * Represents a JavaFX button that presents as an image.
+     * @param unpressed File Path of the unpressed button image.
+     * @param pressed File Path of the pressed button image.
+     */
+    public ImageButton(final String unpressed, final String pressed) {
         Image unpressedImage = null;
         Image pressedImage = null;
         try {
-            unpressedImage = new Image(new FileInputStream(unpressed));
+            unpressedImage = new Image(new FileInputStream(unpressed), BUTTON_WIDTH, BUTTON_HEIGHT, false, false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         try {
-            pressedImage = new Image(new FileInputStream(pressed));
+            pressedImage = new Image(new FileInputStream(pressed), BUTTON_WIDTH, BUTTON_HEIGHT, false, false);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
