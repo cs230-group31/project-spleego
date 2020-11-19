@@ -20,7 +20,7 @@ Logger.log("Message To Log", Logger.Level.INFO)
 
 The levels are:
 
-```
+```java
 Logger.Level.INFO
 Logger.Level.WARNING
 Logger.Level.ERROR
