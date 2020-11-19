@@ -27,8 +27,7 @@ public class Settings {
         for (String setting : args) {
             String[] settingNameValue = setting.split(":");
             if (settings.containsKey(settingNameValue[SETTING_KEY])) {
-                settings.put(settingNameValue[SETTING_KEY],
-                        settingNameValue[SETTING_VALUE]);
+                settings.put(settingNameValue[SETTING_KEY], settingNameValue[SETTING_VALUE]);
             }
         }
     }
@@ -37,8 +36,7 @@ public class Settings {
      * Initialises settings.
      * @param allSettingsData All settings (keys and values).
      */
-    public static void setAllSettings(
-            final HashMap<String, String> allSettingsData) {
+    public static void setAllSettings(final HashMap<String, String> allSettingsData) {
         settings = allSettingsData;
     }
 
