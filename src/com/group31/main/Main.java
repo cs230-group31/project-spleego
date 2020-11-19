@@ -1,19 +1,33 @@
+/*
+Initialises all components and starts app.
+ */
 package com.group31.main;
 
 import com.group31.controller.Controller;
 import com.group31.settings.Settings;
 
-public class Main {
+public final class Main {
 
-    Controller controller;
-
-    public static void main(String[] args) {
-
+    /*
+    Initialises the components and runs the app.
+     */
+    public static void main(final String[] args) {
+        // === Settings ================================================================================================
         // init settings from a file
 
         if (args.length != 0) {
             Settings.updateSettings(args);
         }
+
+        // === Components Initialisation ===============================================================================
+
+        Leaderboard leaderboard = initLeaderBoard();
+        Silkbag silkbag = initSilkBag();
+        Gameboard gameboard = initGameboard();
+        Player[] players = initPlayers();
+
+        initController(players, gameboard, silkbag, leaderboard);
+
     }
 
     private static Leaderboard initLeaderBoard() {
@@ -28,7 +42,7 @@ public class Main {
         // loads size, saved state if any, initialises, pass back
     }
 
-    private static Player initPlayers() {
+    private static Player[] initPlayers() {
         // loads players if any saved or creates new players (however many are asked for at runtime), pass back
     }
 
@@ -36,7 +50,10 @@ public class Main {
                                        Gameboard gameboard,
                                        Silkbag silkbag,
                                        Leaderboard leaderboard) {
-        // from here go to the controller, don't come back to main.
+
+        // start the game.
+        Controller controller = new Controller(players, gameboard, silkbag, leaderboard);
+    }
     }
 
 }

@@ -8,7 +8,7 @@ public class Controller {
     private int[] permittedPlacePoint;
     private FileManager fileManager;
 
-    public Controller(Player[] players, Gameboard gameboard, Silkbag silkbag) {
+    public Controller(Player[] players, Gameboard gameboard, Silkbag silkbag, Leaderboard leaderboard) {
         this.players = players;
         this.gameboard = gameboard;
         this.silkbag = silkbag;
@@ -27,7 +27,7 @@ public class Controller {
     }
 
     public boolean validatePlayerMove(Player player, int x, int y) {
-        // validate a player move, consider creating a class for validating?
+        // call validate class
     }
 
     public void saveGame() {
