@@ -1,8 +1,14 @@
+/**
+ * Initialises all components and starts app.
+ */
 package com.group31.main;
 
-public class Main {
+public final class Main {
 
-    public static void main(String[] args) {
+    /**
+     * Initialises the components and runs the app.
+     */
+    public static void main(final String[] args) {
         // start program here
     }
 
