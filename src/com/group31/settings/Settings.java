@@ -5,24 +5,47 @@ import java.util.Map;
 
 public class Settings {
 
+    /**
+     * Hashmap containing all the settings.
+     */
     private static HashMap<String, String> settings;
 
+    /**
+     * Index of the setting's key.
+     */
     private static final int SETTING_KEY = 0;
+    /**
+     * Index of the setting's value.
+     */
     private static final int SETTING_VALUE = 1;
 
-    public static void updateSettings(String[] args) {
+    /**
+     * Updates settings value if the key exists.
+     * @param args Settings to change.
+     */
+    public static void updateSettings(final String[] args) {
         for (String setting : args) {
             String[] settingNameValue = setting.split(":");
             if (settings.containsKey(settingNameValue[SETTING_KEY])) {
-                settings.put(settingNameValue[SETTING_KEY], settingNameValue[SETTING_VALUE]);
+                settings.put(settingNameValue[SETTING_KEY],
+                        settingNameValue[SETTING_VALUE]);
             }
         }
     }
 
-    public static void setAllSettings(HashMap<String, String> allSettingsData) {
+    /**
+     * Initialises settings.
+     * @param allSettingsData All settings (keys and values).
+     */
+    public static void setAllSettings(
+            final HashMap<String, String> allSettingsData) {
         settings = allSettingsData;
     }
 
+    /**
+     * Gets all the settings.
+     * @return All settings.
+     */
     public static Map<String, String> getAllSettings() {
         return settings;
     }
