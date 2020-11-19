@@ -25,11 +25,6 @@ public class ImageButton extends Parent {
         ImageView imageView = new ImageView(unpressedImage);
         this.getChildren().add(imageView);
 
-        Image finalUnpressedImage1 = unpressedImage;
-        imageView.setOnMouseExited(event -> {
-            imageView.setImage(finalUnpressedImage1);
-            event.consume();
-        });
         Image finalPressedImage = pressedImage;
         imageView.setOnMousePressed(event ->
             imageView.setImage(finalPressedImage)
