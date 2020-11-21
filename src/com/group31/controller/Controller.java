@@ -26,8 +26,10 @@ public class Controller {
         // draw a tile on the gameboard
     }
 
-    public boolean validatePlayerMove(Player player, int x, int y) {
-        // call validate class
+    public boolean validatePlayerMove(Player player, int playerX, int playerY, Movement.Move direction) {
+        int maxBoardX = gameboard.maxX;
+        int maxBoardY = gameboard.maxY;
+        boolean validMove = validatePlayerMove(playerX, playerY, maxBoardX, maxBoardY, direction);
     }
 
     public void saveGame() {
