@@ -1,5 +1,6 @@
 package com.group31.graphics;
 
+import com.group31.logger.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -97,7 +98,7 @@ public class GUI extends Application {
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(bg));
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.log(e.toString(), Logger.Level.ERROR);
         }
 
         ImageButton start = new ImageButton(START_UNPRESSED_URL, START_PRESSED_URL);
@@ -122,6 +123,15 @@ public class GUI extends Application {
         stage.setScene(scene);
         stage.show();
     }
+    ///**
+     //* Updates the size of the window.
+    //*@param stage JavaFX Stage of the main window.
+     //*/
+    /*
+    public void updateRes(final Stage stage) {
+        stage.setHeight();
+    }
+    */
 
     /**
      * Launches the GUI.

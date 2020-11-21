@@ -1,5 +1,6 @@
 package com.group31.graphics;
 
+import com.group31.logger.Logger;
 import javafx.scene.Parent;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -28,7 +29,7 @@ public class ImageButton extends Parent {
         try {
             unpressedImage = new Image(new FileInputStream(unpressed), BUTTON_WIDTH, BUTTON_HEIGHT, false, false);
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            Logger.log(e.toString(), Logger.Level.ERROR);
         }
         try {
             pressedImage = new Image(new FileInputStream(pressed), BUTTON_WIDTH, BUTTON_HEIGHT, false, false);
