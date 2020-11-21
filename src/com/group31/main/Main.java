@@ -1,6 +1,7 @@
 package com.group31.main;
 
 import com.group31.services.ApiRequest;
+import com.group31.services.PuzzleSolver;
 
 public final class Main {
 
@@ -11,7 +12,16 @@ public final class Main {
      */
     public static void main(final String[] args) {
         // start program here
-        System.out.println(new ApiRequest("http://cswebcat.swansea.ac.uk/", "puzzle").getResponse());
-        System.out.println(new ApiRequest("https://api.openweathermap.org/data/2.5/", "weather?q=swansea", "abebd2c5cf413635e368dc078e9f616f", "&appid=").getResponse());
+        String puzzleHeadContent = "CS-230";
+        System.out.println(getMotd("http://cswebcat.swansea.ac.uk/", "puzzle", "message",
+                "?solution=", puzzleHeadContent));
     }
+
+    private static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
+                                  String tokenIdentifier, String puzzleHeadContent) {
+        ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
+        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse(), puzzleHeadContent);
+        return new ApiRequest(urlBase, messageRoute, puzzle, tokenIdentifier).getResponse();
+    }
+
 }
