@@ -12,15 +12,24 @@ public final class Main {
      */
     public static void main(final String[] args) {
         // start program here
-        String puzzleHeadContent = "CS-230";
+
+        // Testing:
         System.out.println(getMotd("http://cswebcat.swansea.ac.uk/", "puzzle", "message",
-                "?solution=", puzzleHeadContent));
+                "?solution="));
     }
 
-    private static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
-                                  String tokenIdentifier, String puzzleHeadContent) {
+    /**
+     * Gets the MOTD.
+     * @param urlBase URL base for the API.
+     * @param puzzleRoute The URL route of the puzzle text.
+     * @param messageRoute The URL route of the message text.
+     * @param tokenIdentifier The tag in the URL that identifies the token.
+     * @return The response from the API as a string.
+     */
+    private static String getMotd(final String urlBase, final String puzzleRoute, final String messageRoute,
+                                  final String tokenIdentifier) {
         ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
-        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse(), puzzleHeadContent);
+        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
         return new ApiRequest(urlBase, messageRoute, puzzle, tokenIdentifier).getResponse();
     }
 
