@@ -39,4 +39,26 @@ public class SilkBag {
     //public Tile getTile(int index){
     //
     //}
+
+    /**
+     * pseudo random tile generation using weights
+     * @param tiles arraylist of tiles
+     * @return tile
+     */
+    public Tile tileWeight(ArrayList<Tile> tiles) {
+        double completeWeight = 0.0;
+
+        for (Tile tile : tiles) {
+            completeWeight += tile.getWeight();
+        }
+        double r = Math.random() * completeWeight;
+        double countWeight = 0.0;
+        for (Tile tile : tiles) {
+            countWeight += tile.getWeight();
+            if (countWeight >= r) {
+                return tile;
+            }
+        }
+        throw new RuntimeException("Runtime error.");
+    }
 }

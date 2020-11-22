@@ -14,9 +14,10 @@ public class Tile {
 
     private String routing;
     private int id;
-    //private image imageTexture
+    private Image imageTexture;
     private int[] coord;
     private boolean actionTile;
+    private double weight;
 
     /**
      * Class constructor
@@ -85,5 +86,22 @@ public class Tile {
      */
     public boolean isActionTile(){
         return actionTile;
+    }
+
+    /**
+     * @return The weight of the tile.
+     */
+    public double getWeight() {
+        return weight;
+    }
+
+    public void loadImage(String imageName) {
+
+        Image tileImg = new Image(imageName);
+        image = tileImg.getImage();
+    }
+
+    public Image getImage() {
+        return image;
     }
 }
