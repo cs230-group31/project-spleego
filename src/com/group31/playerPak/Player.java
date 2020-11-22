@@ -2,13 +2,14 @@ package com.group31.playerPak;
 
 import javafx.scene.image.Image;
 import org.jetbrains.annotations.NotNull;
+import javafx.scene.paint.Color;
 
 public class Player {
 
 
     private String playerName;
     private Image playerSprite;
-    private String Colour;
+    private Color Colour;
     private int[] playerLocation;
    // private Tile[] playerHand;
     private PlayerData playerData;
@@ -36,7 +37,7 @@ public class Player {
         return playerSprite;
     }
 
-    public String getPlayerColour(){
+    public Color getPlayerColour(){
 
         return Colour;
 
