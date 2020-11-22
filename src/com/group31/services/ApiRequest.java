@@ -34,7 +34,7 @@ public class ApiRequest {
      * @param baseUrl API's base URL. For example "api.someapi.com/"
      * @param route Route of item we want to get. For example "weather/swansea"
      */
-    public ApiRequest(final String baseUrl, final String route) {
+    public ApiRequest(String baseUrl, String route) {
         this.baseUrl = baseUrl;
         this.route = route;
     }

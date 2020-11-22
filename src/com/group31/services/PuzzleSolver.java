@@ -24,7 +24,7 @@ public class PuzzleSolver {
      * @param puzzle Raw puzzle text.
      * @return Puzzle text with all changes made to decipher it.
      */
-    public static String solvePuzzle(final String puzzle) {
+    public static String solvePuzzle(String puzzle) {
         shiftChars(puzzle);
         addHeadContent();
         addTailContent();
@@ -49,7 +49,7 @@ public class PuzzleSolver {
      * Loops through each character in the puzzle, shifting it backwards of forwards to decipher it.
      * @param puzzle The raw puzzle text.
      */
-    private static void shiftChars(final String puzzle) {
+    private static void shiftChars(String puzzle) {
         int length = puzzle.length();
         char[] puzzleArray = puzzle.toCharArray();
         for (int i = 0; i <= length - 1; i++) {
@@ -63,7 +63,7 @@ public class PuzzleSolver {
      * @param shiftAmount The amount we are shifting by.
      * @return The shifted character.
      */
-    private static char shift(final char character, final int shiftAmount) {
+    private static char shift(char character, int shiftAmount) {
         if (shiftAmount % 2 == 0) {
             // roll forwards
             if (character + shiftAmount > 'Z') {

@@ -3,14 +3,14 @@ package com.group31.main;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
 
-public final class Main {
+public class Main {
 
     /**
      * Initialises the components and runs the app.
      *
      * @param args Args passed in at runtime.
      */
-    public static void main(final String[] args) {
+    public static void main(String[] args) {
         // start program here
 
         // Testing:
@@ -26,8 +26,8 @@ public final class Main {
      * @param tokenIdentifier The tag in the URL that identifies the token.
      * @return The response from the API as a string.
      */
-    private static String getMotd(final String urlBase, final String puzzleRoute, final String messageRoute,
-                                  final String tokenIdentifier) {
+    private static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
+                                  String tokenIdentifier) {
         ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
         String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
         return new ApiRequest(urlBase, messageRoute, puzzle, tokenIdentifier).getResponse();
