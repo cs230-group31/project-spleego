@@ -15,5 +15,5 @@ jobs:
           java-version: '8'
           java-package: jdk
           architecture: x64
-      - run: javac src/com/group31/main/Main.java
+      - run: ./compileAll.sh
       - run: java -cp src/ com.group31.main.Main
