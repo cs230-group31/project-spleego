@@ -1,7 +1,7 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
-import com.group31.tileManager.Tile;
+import com.group31.main.Main;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -14,15 +14,15 @@ import javafx.scene.layout.BackgroundPosition;
 import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-
 public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
@@ -35,19 +35,15 @@ public class MainMenu extends Application {
     /**
      * Space between buttons in pixels.
      */
-    private static final double BUTTON_SPACING = 25.0;
-    /**
-     * Space between tiles in pixels.
-     */
-    private static final double TILE_SPACING = 5.0;
+    private static final double BUTTON_SPACING = 15.0;
     /**
      * File Path for the menu background image.
      */
     private static final String MENU_IMAGE_URL = "resources/images/main menu background.png";
     /**
-     * File Path for the table background image.
+     * File Path for the title image.
      */
-    private static final String TABLE_IMAGE_URL = "resources/images/table.png";
+    private static final String TITLE_IMAGE_URL = "resources/images/title.png";
     /**
      * File Path for the unpressed `START` button.
      */
@@ -119,9 +115,7 @@ public class MainMenu extends Application {
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
         exit.setOnMouseClicked(e -> Platform.exit());
-        start.setOnMouseClicked(e -> {
-            Game.launch(stage);
-        });
+        start.setOnMouseClicked(e -> Game.launch(stage));
 
         VBox buttonBox = new VBox();
         buttonBox.getChildren().add(start);
@@ -132,6 +126,26 @@ public class MainMenu extends Application {
         buttonBox.setAlignment(Pos.CENTER);
         buttonBox.setSpacing(BUTTON_SPACING);
 
+        Image titleImg = null;
+        try {
+           titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), 315.0, 210.0, true, false);
+        } catch (FileNotFoundException e) {
+            Logger.log(e.toString(), Logger.Level.ERROR);
+        }
+
+        VBox titleBox = new VBox();
+        titleBox.setAlignment(Pos.CENTER);
+        titleBox.getChildren().add(new ImageView(titleImg));
+        Text motd = new Text(Main.getMotd("http://cswebcat.swansea.ac.uk/", "puzzle", "message",
+                "?solution="));
+        motd.setFont(new Font("Comic Sans MS Bold", 20.0));
+        motd.setFill(Color.WHITE);
+        motd.setStroke(Color.DARKRED);
+        motd.setStrokeWidth(1);
+        motd.setWrappingWidth(600.0);
+        titleBox.getChildren().add(motd);
+
+        root.setTop(titleBox);
         root.setLeft(new VBox());
         root.setCenter(buttonBox);
         scene.setRoot(root);
