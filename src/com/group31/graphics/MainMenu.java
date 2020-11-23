@@ -39,7 +39,7 @@ public class MainMenu extends Application {
     /**
      * File Path for the menu background image.
      */
-    private static final String MENU_IMAGE_URL = "resources/images/main menu background.png";
+    private static final String MENU_IMAGE_URL = "resources/images/background.png";
     /**
      * File Path for the title image.
      */
@@ -102,7 +102,7 @@ public class MainMenu extends Application {
         try {
             Image menuImg = new Image(new FileInputStream(MENU_IMAGE_URL));
             BackgroundImage bg = new BackgroundImage(menuImg,
-                    BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(bg));
         } catch (FileNotFoundException e) {
