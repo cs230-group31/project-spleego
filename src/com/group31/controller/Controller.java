@@ -27,8 +27,8 @@ public class Controller {
     }
 
     public boolean validatePlayerMove(Player player, int playerX, int playerY, Movement.Move direction) {
-        int maxBoardX = gameboard.maxX;
-        int maxBoardY = gameboard.maxY;
+        int maxBoardX = gameboard.getMaxX();
+        int maxBoardY = gameboard.getMaxY();
         boolean validMove = validatePlayerMove(playerX, playerY, maxBoardX, maxBoardY, direction);
     }
 

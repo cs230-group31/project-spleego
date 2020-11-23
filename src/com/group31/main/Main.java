@@ -1,9 +1,11 @@
 package com.group31.main;
 
+import com.group31.graphics.GUI;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
 import com.group31.controller.Controller;
 import com.group31.settings.Settings;
+import javafx.application.Application;
 
 public class Main {
 
@@ -26,7 +28,8 @@ public class Main {
 
         initController(players, gameboard, silkbag, leaderboard);
 
-        // TODO: draw GUI
+        // start GUI
+        Application.launch();
 
         // TODO: Get user preferences before creating controller.
 
@@ -48,14 +51,6 @@ public class Main {
         ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
         String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
         return new ApiRequest(urlBase, messageRoute, puzzle, tokenIdentifier).getResponse();
-    }
-  
-  /*
-    Initialises the components and runs the app.
-     */
-    public static void main(final String[] args) {
-
-
     }
 
     private static Leaderboard initLeaderBoard() {
