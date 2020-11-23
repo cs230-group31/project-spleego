@@ -26,7 +26,7 @@ public class Main {
      * @param tokenIdentifier The tag in the URL that identifies the token.
      * @return The response from the API as a string.
      */
-    private static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
+    public static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
                                   String tokenIdentifier) {
         ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
         String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
