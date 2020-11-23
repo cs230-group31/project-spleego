@@ -1,25 +1,29 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
+import com.group31.tileManager.Tile;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-public class GUI extends Application {
+public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
      */
@@ -33,9 +37,17 @@ public class GUI extends Application {
      */
     private static final double BUTTON_SPACING = 25.0;
     /**
+     * Space between tiles in pixels.
+     */
+    private static final double TILE_SPACING = 5.0;
+    /**
      * File Path for the menu background image.
      */
     private static final String MENU_IMAGE_URL = "resources/images/main menu background.png";
+    /**
+     * File Path for the table background image.
+     */
+    private static final String TABLE_IMAGE_URL = "resources/images/table.png";
     /**
      * File Path for the unpressed `START` button.
      */
@@ -107,6 +119,9 @@ public class GUI extends Application {
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
         exit.setOnMouseClicked(e -> Platform.exit());
+        start.setOnMouseClicked(e -> {
+            Game.launch(stage);
+        });
 
         VBox buttonBox = new VBox();
         buttonBox.getChildren().add(start);
