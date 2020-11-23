@@ -15,5 +15,7 @@ jobs:
           java-version: '8'
           java-package: jdk
           architecture: x64
-      - run: javac src/com/group31/main/Main.java
+      - run: echo "Finding all Java classes..."
+      - run: find -name "*.java" > sources.txt
+      - run: javac @sources.txt
       - run: java -cp src/ com.group31.main.Main
