@@ -39,7 +39,7 @@ public class MainMenu extends Application {
     /**
      * File Path for the menu background image.
      */
-    private static final String MENU_IMAGE_URL = "resources/images/background.png";
+    private static final String MENU_IMAGE_URL = "resources/images/background 1280 x 720.png";
     /**
      * File Path for the title image.
      */
