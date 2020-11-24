@@ -18,6 +18,7 @@ public class Main {
                 "?solution="));
     }
 
+    // Okay for removal, has been implemented into MainMenu -aarontf
     /**
      * Gets the MOTD.
      * @param urlBase URL base for the API.
