@@ -1,5 +1,6 @@
 package sample;
 
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -11,6 +12,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.control.Button;
 import javafx.scene.paint.Color;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
 
 
 public class Main extends Application {
@@ -18,12 +27,21 @@ public class Main extends Application {
     stage windowView;
     Button button;
     Color color;
+    
+    //scores
+    private int score;
+    private int topScore;
 
     private int scoreB = 0;
 
     //score set
     private Text ScoreA = new Text("socreA"+scoreA);
     private Text ScoreB = new Text("socreB"+scoreA);
+
+
+ //boolean
+    private  boolean Game;
+
 
 
 
