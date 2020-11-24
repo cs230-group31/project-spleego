@@ -1,7 +1,8 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
-import com.group31.main.Main;
+import com.group31.services.ApiRequest;
+import com.group31.services.PuzzleSolver;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -45,6 +46,26 @@ public class MainMenu extends Application {
      */
     private static final String TITLE_IMAGE_URL = "resources/images/title.png";
     /**
+     * Height of the title image in pixels.
+     */
+    private static final double TITLE_IMAGE_HEIGHT = 315.0;
+    /**
+     * Width of the window in pixels.
+     */
+    private static final double TITLE_IMAGE_WIDTH = 210.0;
+    /**
+     * Size of the font.
+     */
+    private static final double FONT_SIZE = 20.0;
+    /**
+     * Stroke surrounding the font in pixels.
+     */
+    private static final double FONT_STROKE = 1.0;
+    /**
+     * Width of the window in pixels.
+     */
+    private static final double TEXT_WRAPPING_WIDTH = 600.0;
+    /**
      * File Path for the unpressed `START` button.
      */
     private static final String START_UNPRESSED_URL = "resources/images/start unpressed.png";
@@ -84,11 +105,28 @@ public class MainMenu extends Application {
      * File Path for the pressed `EXIT` button.
      */
     private static final String EXIT_PRESSED_URL = "resources/images/exit pressed.png";
+    /**
+     * URL for MOTD request.
+     */
+    private static final String MOTD_URL_BASE = "http://cswebcat.swansea.ac.uk/";
+    /**
+     * Puzzle route.
+     */
+    private static final String PUZZLE_ROUTE = "puzzle";
+    /**
+     * Message route.
+     */
+    private static final String MESSAGE_ROUTE = "message";
+    /**
+     * Token identifier.
+     */
+    private static final String TOKEN_IDENTIFIER = "?solution=";
 
     /**
      * Takes the main stage and displays a background with buttons.
      * @param stage JavaFX Stage of the main window.
      */
+    @SuppressWarnings("checkstyle:LineLength")
     public void start(final Stage stage) {
         stage.setHeight(WINDOW_HEIGHT);
         stage.setWidth(WINDOW_WIDTH);
@@ -128,7 +166,8 @@ public class MainMenu extends Application {
 
         Image titleImg = null;
         try {
-           titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), 315.0, 210.0, true, false);
+           titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), TITLE_IMAGE_WIDTH,
+                   TITLE_IMAGE_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
             Logger.log(e.toString(), Logger.Level.ERROR);
         }
@@ -136,13 +175,15 @@ public class MainMenu extends Application {
         VBox titleBox = new VBox();
         titleBox.setAlignment(Pos.CENTER);
         titleBox.getChildren().add(new ImageView(titleImg));
-        Text motd = new Text(Main.getMotd("http://cswebcat.swansea.ac.uk/", "puzzle", "message",
-                "?solution="));
-        motd.setFont(new Font("Comic Sans MS Bold", 20.0));
+
+        ApiRequest request = new ApiRequest(MOTD_URL_BASE, PUZZLE_ROUTE);
+        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
+        Text motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
+        motd.setFont(new Font("Comic Sans MS Bold", FONT_SIZE));
         motd.setFill(Color.WHITE);
         motd.setStroke(Color.DARKRED);
-        motd.setStrokeWidth(1);
-        motd.setWrappingWidth(600.0);
+        motd.setStrokeWidth(FONT_STROKE);
+        motd.setWrappingWidth(TEXT_WRAPPING_WIDTH);
         titleBox.getChildren().add(motd);
 
         root.setTop(titleBox);
