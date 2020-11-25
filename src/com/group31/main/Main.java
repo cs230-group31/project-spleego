@@ -1,17 +1,12 @@
 package com.group31.main;
 
-<<<<<<< HEAD
 import com.group31.gameboard.Gameboard;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.player.Player;
 import com.group31.controller.Controller;
 import com.group31.settings.Settings;
-import com.group31.tile_manager.Silkbag;
+import com.group31.tileManager.SilkBag;
 import javafx.application.Application;
-=======
-import com.group31.services.ApiRequest;
-import com.group31.services.PuzzleSolver;
->>>>>>> origin/merge-master
 
 public class Main {
 
@@ -28,7 +23,7 @@ public class Main {
         }
 
         Leaderboard leaderboard = initLeaderBoard();
-        Silkbag silkbag = initSilkBag();
+        SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
         Player[] players = initPlayers();
 
@@ -44,9 +39,9 @@ public class Main {
         return new Leaderboard();
     }
 
-    private static Silkbag initSilkBag() {
+    private static SilkBag initSilkBag() {
         // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        return new Silkbag();
+        return new SilkBag();
     }
 
     private static Gameboard initGameboard() {
@@ -71,7 +66,7 @@ public class Main {
 
     private static void initController(Player[] players,
                                        Gameboard gameboard,
-                                       Silkbag silkbag) {
+                                       SilkBag silkbag) {
 
         // start the game.
         Controller controller = new Controller(players, gameboard, silkbag);
