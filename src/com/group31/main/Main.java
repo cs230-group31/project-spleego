@@ -1,5 +1,6 @@
 package com.group31.main;
 
+<<<<<<< HEAD
 import com.group31.gameboard.Gameboard;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.player.Player;
@@ -7,6 +8,10 @@ import com.group31.controller.Controller;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.Silkbag;
 import javafx.application.Application;
+=======
+import com.group31.services.ApiRequest;
+import com.group31.services.PuzzleSolver;
+>>>>>>> origin/merge-master
 
 public class Main {
 
@@ -70,5 +75,6 @@ public class Main {
 
         // start the game.
         Controller controller = new Controller(players, gameboard, silkbag);
+
     }
 }
