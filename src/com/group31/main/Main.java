@@ -1,10 +1,11 @@
 package com.group31.main;
 
-import com.group31.graphics.GUI;
-import com.group31.services.ApiRequest;
-import com.group31.services.PuzzleSolver;
+import com.group31.gameboard.Gameboard;
+import com.group31.leaderboard.Leaderboard;
+import com.group31.player.Player;
 import com.group31.controller.Controller;
 import com.group31.settings.Settings;
+import com.group31.tile_manager.Silkbag;
 import javafx.application.Application;
 
 public class Main {
@@ -15,7 +16,7 @@ public class Main {
      * @param args Args passed in at runtime.
      */
     public static void main(String[] args) {
-        // TODO: init settings from a file.
+        // TODO: init settings from a file. Awaiting File Manager
 
         if (args.length != 0) {
             Settings.updateSettings(args);
@@ -26,31 +27,11 @@ public class Main {
         Gameboard gameboard = initGameboard();
         Player[] players = initPlayers();
 
-        initController(players, gameboard, silkbag, leaderboard);
-
         // start GUI
         Application.launch();
 
-        // TODO: Get user preferences before creating controller.
+        initController(players, gameboard, silkbag);
 
-        // Testing:
-        System.out.println(getMotd("http://cswebcat.swansea.ac.uk/", "puzzle", "message",
-                "?solution="));
-    }
-
-    /**
-     * Gets the MOTD.
-     * @param urlBase URL base for the API.
-     * @param puzzleRoute The URL route of the puzzle text.
-     * @param messageRoute The URL route of the message text.
-     * @param tokenIdentifier The tag in the URL that identifies the token.
-     * @return The response from the API as a string.
-     */
-    private static String getMotd(String urlBase, String puzzleRoute, String messageRoute,
-                                  String tokenIdentifier) {
-        ApiRequest request = new ApiRequest(urlBase, puzzleRoute);
-        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
-        return new ApiRequest(urlBase, messageRoute, puzzle, tokenIdentifier).getResponse();
     }
 
     private static Leaderboard initLeaderBoard() {
@@ -72,7 +53,7 @@ public class Main {
         // TODO: loads players if any saved or creates new players (however many are asked for at runtime), pass back
 
         //set based on settings passed in before game starts.
-        int numberOfPlayers = 0;
+        int numberOfPlayers = 2;
         Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i <= numberOfPlayers; i++) {
 
@@ -85,10 +66,9 @@ public class Main {
 
     private static void initController(Player[] players,
                                        Gameboard gameboard,
-                                       Silkbag silkbag,
-                                       Leaderboard leaderboard) {
+                                       Silkbag silkbag) {
 
         // start the game.
-        Controller controller = new Controller(players, gameboard, silkbag, leaderboard);
+        Controller controller = new Controller(players, gameboard, silkbag);
     }
 }
