@@ -5,23 +5,23 @@ import java.sql.Timestamp;
 public class Logger {
 
     /**
-     * Log levels that can be used
+     * Log levels that can be used.
      */
     public enum Level {
         /**
-         * Info
+         * Info.
          */
         INFO,
         /**
-         * Warning
+         * Warning.
          */
         WARNING,
         /**
-         * Error
+         * Error.
          */
         ERROR,
         /**
-         * Verbose
+         * Verbose.
          */
         VERBOSE
     }

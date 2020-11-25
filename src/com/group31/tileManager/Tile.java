@@ -1,6 +1,14 @@
 package com.group31.tileManager;
 
+
 import java.lang.reflect.Array;
+import javafx.scene.image.Image;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+
 
 /**
  * This class represents a tile which has coordinates [x, y] in the
@@ -8,6 +16,19 @@ import java.lang.reflect.Array;
  * @author Alvaro
  */
 public class Tile {
+     /**
+     * Holds record of all tile image variations.
+     */
+    private static final HashMap<Integer, Image> TILE_IMAGES = new HashMap<>();
+    /**
+     * Location of tile images in directory.
+     */
+    private static final String TILES_LOCATION = "resources/images/tiles";
+    /**
+     * holds the image of the tile.
+     */
+    private Image currentImage;
+
 
     private final int X = 0;
     private final int Y = 1;
@@ -33,6 +54,23 @@ public class Tile {
         this.coord[X] = coord[X];
         this.coord[Y] = coord[Y];
         this.actionTile = actionTile;
+      
+      Image tileImg = null;
+        File dir = new File(TILES_LOCATION);
+        File[] directoryListing = dir.listFiles();
+        if (directoryListing != null) {
+            for (File file : directoryListing) {
+                try {
+                    tileImg = new Image(new FileInputStream(file.getPath()));
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                TILE_IMAGES.put(Integer.parseInt(file.getName().replaceFirst("[.][^.]+$", "")), tileImg);
+            }
+        } else {
+            Logger.log("Directory not found", Logger.Level.ERROR);
+        }
+        currentImage = TILE_IMAGES.get(id);
     }
 
     /**
@@ -95,13 +133,22 @@ public class Tile {
         return weight;
     }
 
-    public void loadImage(String imageName) {
-
-        Image tileImg = new Image(imageName);
-        image = tileImg.getImage();
+  /**
+     * @return how the tile currently looks.
+     */
+    public Image getCurrentImage() {
+        return currentImage;
     }
 
-    public Image getImage() {
-        return image;
+    /**
+     * @param currentImage how the tile should look.
+     */
+    public void setCurrentImage(Image currentImage) {
+        this.currentImage = currentImage;
+      
+
+
+  
+
     }
 }

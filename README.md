@@ -20,7 +20,7 @@ Logger.log("Message To Log", Logger.Level.INFO)
 
 The levels are:
 
-```
+```java
 Logger.Level.INFO
 Logger.Level.WARNING
 Logger.Level.ERROR
@@ -29,9 +29,28 @@ Logger.Level.VERBOSE
 
 ## Linting
 
-Please install SonarLint for IntelliJ. It can be found by going to `Plugins > Marketplace > search for SonarLint`.
+Please install CheckStyle Linter for IntelliJ. It can be found by going to `Plugins > Marketplace > search for CheckStyle`.
 
-All code must pass the linter's rules before it can be committed.
+To use our custom file:
+
+1. Go to `File -> Settings` and search for `CheckStyle`.
+2. Click the '+' (plus) button on the right under the `Configuration File` section.
+3. Name it anything you'd like and check `Use Checkstyle file accessible via HTTP`.
+4. Insert `https://raw.githubusercontent.com/liamdp/linting-files/master/Java/sun_checks.xml` into the URL box.
+5. Click Next or Finish until you have finished.
+6. At the bottom of IntelliJ, click CheckStyle, and at the top of the window that pops up, ensure `Rules` is set to the description of the custom ruleset.
+7. Click the play button on the bottom left side of the CheckStyle window to check your work against the linting rules!
+
+The following rules are ignored:
+
+- `JavadocPackage`
+- `HideUtilityClassConstructor`
+- `HiddenField`
+- `FinalParameters`
+- `FinalClass`
+- `LineLength`
+
+All code must pass the linter's rules before it can be merged with the master branch.
 
 ## Committing Rules
 
@@ -76,6 +95,6 @@ that is in the master branch should run **without any** errors or warnings!
 
 ### After Pull Requests
 
-Please ensure to delete the branch from both Github and your local system before starting new work. 
+Please ensure to delete the branch from both Github and your local system before starting new work.
 
 **Do not** delete other people's branches. To avoid confusion it is suggested that you name your branch after yourself.
