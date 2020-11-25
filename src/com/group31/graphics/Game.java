@@ -48,17 +48,6 @@ public class Game extends Application {
         } catch (FileNotFoundException e) {
             Logger.log(e.toString(), Logger.Level.ERROR);
         }
-        for (int i = 0; i < 7; i++) {
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-            board.addRow(i, new ImageView(new Tile((int) ((Math.random() * (9 - 1)) + 1)).getCurrentImage()));
-        }
-        board.getChildren().remove(2, 2);
-        board.add(new ImageView(new Tile(10).getCurrentImage()), 3, 3);
         board.setAlignment(Pos.CENTER);
         board.setHgap(TILE_SPACING);
         board.setVgap(TILE_SPACING);
