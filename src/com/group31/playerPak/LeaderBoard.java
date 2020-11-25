@@ -1,25 +1,12 @@
 package com.group31.playerPak;
 
-import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
 import java.util.ArrayList;
 
 
-public class LeaderBoard extends Application {
-
-    @Override
-    public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
-        primaryStage.show();
-    }
-
+public class LeaderBoard  {
 
     public ArrayList<PlayerData> players = new ArrayList<>();
+    // not sure why theres a 2 dimentional array in the uml. I could change the above.
 
     public LeaderBoard (String file) {
 

@@ -5,25 +5,13 @@ import javafx.scene.image.Image;
 public class PlayerData {
 
 
-    public String name;// set to public for testing purpose
+    private String name;
     private Image sprite;
     private int wins;
     private int losses;
     private int played;
 
-    //test constructor
-    public PlayerData(){
 
-    }
-
-    // test constructor 2
-    public PlayerData(String name){
-        this.name = name;
-
-    }
-
-
-    //test constructor 3
     public PlayerData (String name, Image sprite) {
 
         this.name = name;
@@ -60,10 +48,8 @@ public class PlayerData {
 
         if (didWin){
             wins ++;
-
         }else{
             losses ++;
-
         }
 
         played ++;
