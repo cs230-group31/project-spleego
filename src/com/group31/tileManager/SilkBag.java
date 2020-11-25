@@ -33,7 +33,7 @@ public class SilkBag {
      * @return a Tile
      */
     private Tile genTile() {
-        Tile tile = new Tile(0);
+        Tile tile = null;
         return tile;
     }
 
