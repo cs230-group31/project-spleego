@@ -13,19 +13,17 @@ public class BackTrackTile extends ActionTile{
      * Uses superclass constructor
      * @param routing
      * @param id
-     * @param coord
-     * @param actionTile is set true
      */
-    public BackTrackTile(String routing, int id, int[] coord, boolean actionTile){
-        super(routing, id, coord, true);
+    public BackTrackTile(String routing, int id){
+        super(routing, id, true);
 
     }
     /**
-     * method to activate action effect??
+     * method to activate action effect
       */
     public void BackTrackEffect(){
         Logger.log("BackTrackEffect activated", Logger.Level.INFO);
-        //add an action here?
+        //TODO: functionality
     }
 
 }

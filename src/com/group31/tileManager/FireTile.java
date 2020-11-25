@@ -1,54 +1,28 @@
 package com.group31.tileManager;
 
-public class FireTile extends Tile{
+import com.group31.logger.Logger;
 
-    public FireTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
-    }
-
-    private void initTile(){
-        loadImage("FireImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
-
+/**
+ * This class is a subclass of ActionTile
+ * it has an fire effect
+ */
+public class FireTile extends ActionTile{
     /**
-	 * @param id Sets the id.
-	 */
-    public void setId(int id){
-        this.id = 11;
-    }
-
-    /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
+     * Uses superclass constructor
+     * @param routing
+     * @param id
+     * @param actionTile
      */
-    public void incCoords(int[] incAmount){
-        coord[X] += incAmount[X];
-        coord[Y] += incAmount[Y];
-    }
+    public FireTile(String routing, int id, boolean actionTile){
+        super(routing, id, actionTile);
 
+    }
     /**
-     * 
-     * @param true if tile is an action tile
+     * method to activate action effect
      */
-    public void setActionTile(boolean isAction){
-        isAction == true;
+    public void fireEffect() {
+        Logger.log("fire effect activated", Logger.Level.INFO);
+        //TODO: functionality
     }
-
-    /**
-     * @param weight Sets the weight.
-     */
-    public void setWeight(double weight) {
-        //this.weight = 0.15;
-    }
-
-    /*
-    public void fireEffect(){
-        
-    }*/
 
 }

@@ -4,6 +4,8 @@ import com.group31.logger.Logger;
 /**
  * This class is a subclass of Tile and represents
  * an action tile
+ * IMPORTANT: when player takes an action tile needs to setCoord()
+ * because tiles inside silkbag have no coords
  */
 public class ActionTile extends Tile {
     /**
@@ -11,10 +13,20 @@ public class ActionTile extends Tile {
      * @param routing
      * @param id
      * @param coord
-     * @param actionTile set true
      */
-    public ActionTile(String routing, int id, int[] coord, boolean actionTile){
+    public ActionTile(String routing, int id, int[] coord){
         super(routing, id, coord, true);
+        Logger.log("Action tile created", Logger.Level.INFO);
+    }
+
+    /**
+     * Uses superclass constructor with no coords
+     * @param routing
+     * @param id
+     * @param actionTile
+     */
+    public ActionTile(String routing, int id, boolean actionTile){
+        super(routing, id, true);
         Logger.log("Action tile created", Logger.Level.INFO);
     }
 }
