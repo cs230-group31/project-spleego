@@ -126,7 +126,6 @@ public class MainMenu extends Application {
      * Takes the main stage and displays a background with buttons.
      * @param stage JavaFX Stage of the main window.
      */
-    @SuppressWarnings("checkstyle:LineLength")
     public void start(final Stage stage) {
         stage.setHeight(WINDOW_HEIGHT);
         stage.setWidth(WINDOW_WIDTH);
@@ -179,7 +178,7 @@ public class MainMenu extends Application {
         ApiRequest request = new ApiRequest(MOTD_URL_BASE, PUZZLE_ROUTE);
         String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
         Text motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
-        motd.setFont(new Font("Comic Sans MS Bold", FONT_SIZE));
+        motd.setFont(new Font("Chiller", FONT_SIZE));
         motd.setFill(Color.WHITE);
         motd.setStroke(Color.DARKRED);
         motd.setStrokeWidth(FONT_STROKE);
