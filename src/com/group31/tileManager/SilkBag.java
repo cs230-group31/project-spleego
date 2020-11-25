@@ -1,51 +1,57 @@
 package com.group31.tileManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
- * this class stores a set of tiles, players can
- * can catch tiles from the bag
+ * Generates tiles for players/game to use.
  * @author Alvaro
  */
 public class SilkBag {
-
+    /**
+     * Keeps track of every tile.
+     */
     private ArrayList<Tile> tiles;
+    /**
+     * Stores the weighting (chance) for each tile.
+     */
+    private HashMap<Integer, Double> tileWeights;
 
     /**
-     * Class constructor
+     * Class constructor.
      * @param tilesNumber number of tiles inside the bag
      */
-    public SilkBag(int tilesNumber){
+    public SilkBag(int tilesNumber) {
         tiles = new ArrayList<>();
-        for (int index = 0; index < tilesNumber; index++){
+        for (int index = 0; index < tilesNumber; index++) {
             tiles.add(genTile());
         }
     }
 
     /**
-     * Generates a Tile
+     * Generates a Tile.
      * @return a Tile
      */
-    private Tile genTile(){
-        Tile tile = new Tile();
+    private Tile genTile() {
+        Tile tile = new Tile(0);
         return tile;
     }
 
-    /**
-     * testing
-     * @param index
-     * @return
-     */
+    ///**
+     //* Testing.
+     //* @param index
+     //* @return
+     //*/
     //public Tile getTile(int index){
     //
     //}
 
-    /**
-     * pseudo random tile generation using weights
-     * @param tiles arraylist of tiles
-     * @return tile
-     */
-    public Tile tileWeight(ArrayList<Tile> tiles) {
+    ///**
+     //* Pseudo random tile generation using weights.
+     //* @param tiles arraylist of tiles
+     //* @return tile
+     //*/
+    /*public Tile tileWeight(ArrayList<Tile> tiles) {
         double completeWeight = 0.0;
 
         for (Tile tile : tiles) {
@@ -60,5 +66,5 @@ public class SilkBag {
             }
         }
         throw new RuntimeException("Runtime error.");
-    }
+    }*/
 }
