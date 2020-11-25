@@ -50,8 +50,27 @@ public class Tile {
         this.coord[X] = coord[X];
         this.coord[Y] = coord[Y];
         this.actionTile = actionTile;
-      
-      Image tileImg = null;
+
+
+        currentImage = setImage(id);
+    }
+
+    /**
+     * Class constructor no setting coords
+     * use this for stores tiles inside silkbag
+     * @param routing
+     * @param id
+     * @param actionTile
+     */
+    public Tile(String routing, int id, boolean actionTile) {
+        this.routing = routing;
+        this.id = id;
+        this.actionTile = actionTile;
+
+        currentImage = setImage(id);
+    }
+    private Image setImage(int id){
+        Image tileImg = null;
         File dir = new File(TILES_LOCATION);
         File[] directoryListing = dir.listFiles();
         if (directoryListing != null) {
@@ -67,6 +86,7 @@ public class Tile {
             Logger.log("Directory not found", Logger.Level.ERROR);
         }
         currentImage = TILE_IMAGES.get(id);
+        return currentImage;
     }
     /**
      * get the routing
@@ -108,6 +128,9 @@ public class Tile {
     public boolean isActionTile(){
         return actionTile;
     }
+    public void setWeight(double weight) {
+        //this.weight = 0.15;
+    }
 
     /**
      * @return The weight of the tile.
@@ -128,10 +151,5 @@ public class Tile {
      */
     public void setCurrentImage(Image currentImage) {
         this.currentImage = currentImage;
-      
-
-
-  
-
     }
 }

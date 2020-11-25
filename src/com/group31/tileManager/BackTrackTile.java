@@ -1,54 +1,31 @@
 package com.group31.tileManager;
 
-public class BackTrackTile extends Tile{
+import com.group31.logger.Logger;
 
-    public BackTrackTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
-    }
-
-    private void initTile(){
-        loadImage("BackTrackImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
-
+/**
+ * This class is a subclass of ActionTile
+ * it has an BackTrack effect
+ * i don't understand this well if someone read this
+ * change this description
+ */
+public class BackTrackTile extends ActionTile{
     /**
-	 * @param id Sets the id.
-	 */
-    public void setId(int id){
-        this.id = 12;
-    }
-
-    /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
+     * Uses superclass constructor
+     * @param routing
+     * @param id
+     * @param coord
+     * @param actionTile is set true
      */
-    public void incCoords(int[] incAmount){
-        coord[X] += incAmount[X];
-        coord[Y] += incAmount[Y];
-    }
+    public BackTrackTile(String routing, int id, int[] coord, boolean actionTile){
+        super(routing, id, coord, true);
 
+    }
     /**
-     * 
-     * @param true if tile is an action tile
-     */
-    public void setActionTile(boolean isAction){
-        isAction == true;
-    }
-
-    /**
-     * @param weight Sets the weight.
-     */
-    public void setWeight(double weight) {
-        //this.weight = 0.15;
-    }
-
-    /*
+     * method to activate action effect??
+      */
     public void BackTrackEffect(){
-        
-    }*/
+        Logger.log("BackTrackEffect activated", Logger.Level.INFO);
+        //add an action here?
+    }
 
 }
