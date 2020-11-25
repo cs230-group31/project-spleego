@@ -8,6 +8,8 @@ import java.util.HashMap;
  * @author Alvaro
  */
 public class SilkBag {
+    //TODO: how much is maxtile?
+    public final int MAXTILES = 15;
     /**
      * Keeps track of every tile.
      */
@@ -18,25 +20,24 @@ public class SilkBag {
     private HashMap<Integer, Double> tileWeights;
 
     /**
-     * Class constructor.
-     * @param tilesNumber number of tiles inside the bag
+     * Class constructor
      */
-    public SilkBag(int tilesNumber) {
+    public SilkBag() {
         tiles = new ArrayList<>();
-        for (int index = 0; index < tilesNumber; index++) {
+        for (int index = 0; index < MAXTILES; index++) {
             tiles.add(genTile());
         }
     }
-
     /**
      * Generates a Tile.
      * @return a Tile
      */
     private Tile genTile() {
-        Tile tile = new Tile(0);
+        // TODO: code random tile generator
+        //test params
+        Tile tile = new FloorTile("bd", 0);
         return tile;
     }
-
     ///**
      //* Testing.
      //* @param index

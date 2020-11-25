@@ -9,10 +9,13 @@ public class FloorTile extends Tile {
      * @param routing
      * @param id
      * @param coord
-     * @param actionTile is set false
      */
-    public FloorTile(String routing, int id, int[] coord, boolean actionTile){
+    public FloorTile(String routing, int id, int[] coord){
         super(routing, id, coord, false);
+        Logger.log("Floor tile created", Logger.Level.INFO);
+    }
+    public FloorTile(String routing, int id) {
+        super(routing, id, false);
         Logger.log("Floor tile created", Logger.Level.INFO);
     }
 }

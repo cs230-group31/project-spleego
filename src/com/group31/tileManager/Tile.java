@@ -56,7 +56,7 @@ public class Tile {
     }
 
     /**
-     * Class constructor no setting coords
+     * Class constructor, no setting coords
      * use this for stores tiles inside silkbag
      * @param routing
      * @param id
@@ -69,6 +69,12 @@ public class Tile {
 
         currentImage = setImage(id);
     }
+
+    /**
+     * Set the image of the tile
+     * @param id to fetch the correct image
+     * @return the Image
+     */
     private Image setImage(int id){
         Image tileImg = null;
         File dir = new File(TILES_LOCATION);
