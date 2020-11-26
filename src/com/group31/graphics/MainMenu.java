@@ -16,6 +16,7 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.image.Image;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -54,9 +55,13 @@ public class MainMenu extends Application {
      */
     private static final double TITLE_IMAGE_WIDTH = 210.0;
     /**
+     * Name of the font.
+     */
+    private static final String FONT_FAMILY = "Ink Free";
+    /**
      * Size of the font.
      */
-    private static final double FONT_SIZE = 20.0;
+    private static final double FONT_SIZE = 40.0;
     /**
      * Stroke surrounding the font in pixels.
      */
@@ -64,7 +69,7 @@ public class MainMenu extends Application {
     /**
      * Width of the window in pixels.
      */
-    private static final double TEXT_WRAPPING_WIDTH = 600.0;
+    private static final double TEXT_WRAPPING_WIDTH = 1240.0;
     /**
      * File Path for the unpressed `START` button.
      */
@@ -175,19 +180,21 @@ public class MainMenu extends Application {
         titleBox.setAlignment(Pos.CENTER);
         titleBox.getChildren().add(new ImageView(titleImg));
 
+        FlowPane motdBox = new FlowPane();
         ApiRequest request = new ApiRequest(MOTD_URL_BASE, PUZZLE_ROUTE);
         String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
         Text motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
-        motd.setFont(new Font("Chiller", FONT_SIZE));
+        motd.setFont(new Font(FONT_FAMILY, FONT_SIZE));
         motd.setFill(Color.WHITE);
         motd.setStroke(Color.DARKRED);
         motd.setStrokeWidth(FONT_STROKE);
         motd.setWrappingWidth(TEXT_WRAPPING_WIDTH);
-        titleBox.getChildren().add(motd);
+        motdBox.getChildren().add(motd);
 
         root.setTop(titleBox);
         root.setLeft(new VBox());
         root.setCenter(buttonBox);
+        root.setBottom(motdBox);
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
