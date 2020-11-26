@@ -1,9 +1,12 @@
 package com.group31.tileManager;
 
 import javafx.scene.image.Image;
-
+import com.group31.logger.Logger;
 import java.util.Random;
 
+/**
+ * This class is subclass of Tile (no action tile)
+ */
 public class FloorTile extends Tile{
 
     /**
@@ -17,12 +20,13 @@ public class FloorTile extends Tile{
 
     public FloorTile(String routing, int id, int[] coord, Image currentImage){
         super(routing, id, coord, currentImage);
-        //setId();
+        setRouting(id);
         setImage(id);
+        Logger.log("Floor tile created", Logger.Level.INFO);
     }
 
     /**
-	 * Randomly selects 1 of 9 tile id.
+	 * 
 	 */
     /*
     public void setId(){
@@ -151,5 +155,25 @@ public class FloorTile extends Tile{
             
         }
     }*/
+
+    /**
+ * This class is subclass of Tile (no action tile)
+ */
+//public class FloorTile extends Tile {
+    /**
+     *  Uses superclass Constructor
+     * @param routing
+     * @param id
+     * @param coord
+     */
+    /*public FloorTile(String routing, int id, int[] coord){
+        super(routing, id, coord, false);
+        Logger.log("Floor tile created", Logger.Level.INFO);
+    }
+    public FloorTile(String routing, int id) {
+        super(routing, id, false);
+        Logger.log("Floor tile created", Logger.Level.INFO);
+    }
+}*/
 
 }

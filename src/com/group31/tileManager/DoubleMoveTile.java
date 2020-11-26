@@ -32,6 +32,10 @@ public class DoubleMoveTile extends ActionTile{
     //    this.weight = 10;
     //}
 
+    //public DoubleMoveTile(int id, boolean actionTile){
+    //    super(id, actionTile);
+    //}
+
     /*
     public void DoubleMoveEffect(){
         

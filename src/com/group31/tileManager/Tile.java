@@ -1,10 +1,16 @@
 package com.group31.tileManager;
+
+import com.group31.logger.Logger;
 import javafx.scene.image.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 
 /**
- * This class represents a tile which has coordinates [x, y] in the game board.
+ * This class represents a tile which has coordinates [x, y] in the
+ * game board
  * @author Alvaro
  */
 public class Tile {
@@ -21,11 +27,11 @@ public class Tile {
      */
     private String routing;
     /**
-     * holds the image of the tile.
+     * 
      */
-    private Image currentImage;
-
-    /**
+    private final int X = 0;
+    private final int Y = 1;
+     /**
      * Identifies the tile.
      */
     private final int id;
@@ -39,11 +45,20 @@ public class Tile {
      */
     private boolean isActionTile;
 
-    private int X = 0;
-    private int Y = 1;
+    /**
+     * Stores image of the tile.
+     */
+    private Image currentImage;
+    /*private String routing;
+    private int id;
+    private Image imageTexture;
+    private int[] coord;
+    private boolean actionTile;
+    private double weight;/*
 
     /**
      * Class constructor.
+     * @param routing of the tile
      * @param id identifies the tile
      * @param coord stores current coords of tile
      * @param currentImage the image of the tile
@@ -51,18 +66,57 @@ public class Tile {
     public Tile(String routing, int id, int[] coord, Image currentImage) {
         this.routing = routing;
         this.id = id;
+        coord = new int[2];
         this.coord[X] = coord[X];
         this.coord[Y] = coord[Y];
         this.currentImage = currentImage;
+        //currentImage = setImage(id);
+
+    /**
+     * Class constructor, no setting coords
+     * use this for stores tiles inside silkbag
+     * @param routing
+     * @param id
+     * @param actionTile
+     */
+    /*public Tile(String routing, int id, boolean actionTile) {
+        this.routing = routing;
+        this.id = id;
+        this.actionTile = actionTile;
+
+        currentImage = setImage(id);
+    }*/
     }
 
     /**
-     * Get tile ID.
-     * @return ID of the tile
+     * Class constructor, no setting coords
+     * use this for stores tiles inside silkbag
+     * @param routing
+     * @param id
+     * @param actionTile
      */
-    public int getId() {
+    /*public Tile(String routing, int id, boolean actionTile) {
+        this.routing = routing;
+        this.id = id;
+        this.actionTile = actionTile;
+
+        currentImage = setImage(id);
+    }*/
+
+    /**
+     * get the tile id
+     * @return the id
+     */
+    public int getId(){
         return id;
     }
+
+    /**
+     * @return The weight of the tile.
+     */    
+    //public double getWeight() {
+    //    return weight;
+    //}
 
     /**
      * @return how the tile currently looks.
@@ -72,10 +126,28 @@ public class Tile {
     }
 
     /**
-     * @return the routing of the tile.
+     * get the routing
+     * @return the routing of the tile
      */
     public String getRouting() {
         return routing;
+    }
+
+    /**
+     * get the tile's coords
+     * @return the tile's coords
+     */
+    public int[] getCoords(){
+        return coord;
+    }
+
+    /**
+     * change the current tile position on the gameboard
+     * @param incAmount amount of movement
+     */
+    public void incCoords(int[] incAmount){
+        coord[X] += incAmount[X];
+        coord[Y] += incAmount[Y];
     }
 
     /**
@@ -85,7 +157,19 @@ public class Tile {
         this.currentImage = currentImage;
     }
 
+    /**
+     * determnine if the tile is an action tile
+     * @return true if tile is an action tile
+     */
     public boolean isAction(){
         return isActionTile = false;
     }
+
+    /**
+     * to ask if the tile is an action tile
+     * @return true if tile is an action tile
+     */
+    //public boolean isActionTile(){
+    //    return actionTile;
+    //}
 }

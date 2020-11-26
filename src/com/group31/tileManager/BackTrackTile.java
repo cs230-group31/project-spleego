@@ -14,7 +14,13 @@ public class BackTrackTile extends ActionTile{
      */
     private int weight;
 
-    public BackTrackTile(int id, int weight){
+
+    /**
+     * Uses superclass constructor
+     * @param id
+     * @param weight
+     */
+     public BackTrackTile(int id, int weight){
         super(id, weight);
         this.id = 13;
         this.weight = 10;
@@ -34,9 +40,27 @@ public class BackTrackTile extends ActionTile{
     //   this.weight = 10;
     //}
 
-    /*
+    /**
+     * method to activate action effect
+      */
     public void BackTrackEffect(){
+        Logger.log("BackTrackEffect activated", Logger.Level.INFO);
+        //TODO: functionality
+    }
 
-    }*/
+    /**
+ * This class is a subclass of ActionTile
+ * it has an BackTrack effect
+ * i don't understand this well if someone read this
+ * change this description
+ */
+//public class BackTrackTile extends ActionTile{
+    /**
+     * Uses superclass constructor
+     * @param routing
+     * @param id
+     */
+    //public BackTrackTile(String routing, int id){
+     //   super(routing, id, true);
 
 }
