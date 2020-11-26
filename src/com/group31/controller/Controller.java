@@ -82,8 +82,8 @@ public class Controller {
      */
     public boolean validatePlayerMove(Player player, int playerX, int playerY, Movement.Move direction)
             throws InvalidMoveDirection {
-        int maxBoardX = 0;//gameboard.getMaxX();
-        int maxBoardY = 0;//gameboard.getMaxY();
+        int maxBoardX = 0; //gameboard.getMaxX();
+        int maxBoardY = 0; //gameboard.getMaxY();
         return Validation.validBoardMove(playerX, playerY, maxBoardX, maxBoardY, direction);
     }
 

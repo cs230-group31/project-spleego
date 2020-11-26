@@ -35,11 +35,12 @@ public class Logger {
         Timestamp time = new Timestamp(System.currentTimeMillis());
         switch (logLevel) {
             case ERROR:
-                System.err.printf("%s %s >> %s%n", time, logLevel, message);
             case WARNING:
                 System.err.printf("%s %s >> %s%n", time, logLevel, message);
+                break;
             default:
                 System.out.printf("%s %s >> %s%n", time, logLevel, message);
+                break;
         }
 
     }

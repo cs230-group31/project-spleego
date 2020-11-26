@@ -1,6 +1,5 @@
 package com.group31.tile_manager.action_tile;
 
-import javafx.scene.image.Image;
 import com.group31.logger.Logger;
 
 public class ActionTile {
