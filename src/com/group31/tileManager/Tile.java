@@ -1,6 +1,10 @@
-package com.group31.tile_manager;
+package com.group31.tileManager;
 
+import com.group31.logger.Logger;
 import javafx.scene.image.Image;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 
 

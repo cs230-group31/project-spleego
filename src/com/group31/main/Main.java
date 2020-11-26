@@ -10,7 +10,6 @@ import com.group31.controller.Controller;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
-
 import java.io.FileNotFoundException;
 import java.util.HashMap;
 
