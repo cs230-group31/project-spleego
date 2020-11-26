@@ -7,7 +7,6 @@ import com.group31.logger.Logger;
  * This class is subclass of Tile (no action tile)
  */
 public class FloorTile extends Tile{
-
     /**
      * holds the routing of the tile.
      */
@@ -21,93 +20,6 @@ public class FloorTile extends Tile{
         super(id, false, currentImage);
         this.routing = routing;
         Logger.log("Floor tile created", Logger.Level.INFO);
-    }
-
-    /**
-	 * 
-	 */
-    /*
-    public void setId(){
-        this.id = id;
-        Random r = new Random();
-        int min = 1;
-        int max = 10;
-        int randomID = r.nextInt(max-min) + min;
-        this.id = randomID;
-    }*/
-
-    public void setImage(int id){
-
-        switch (id) {
-            case 1:
-                currentImage = new Image("resources/images/1.png");
-                break;
-            case 2:
-                currentImage = new Image("resources/images/2.png");
-                break;
-            case 3:
-                currentImage = new Image("resources/images/3.png");
-                break;
-            case 4:
-                currentImage = new Image("resources/images/4.png");
-                break;
-            case 5:
-                currentImage = new Image("resources/images/5.png");
-                break;
-            case 6:
-                currentImage = new Image("resources/images/6.png");
-                break;
-            case 7:
-                currentImage = new Image("resources/images/7.png");
-                break;
-            case 8:
-                currentImage = new Image("resources/images/8.png");
-                break;
-            case 9:
-                currentImage = new Image("resources/images/9.png");
-                break;
-            case 10:
-                currentImage = new Image ("resources/images/10.png");
-                break;
-        }
-    }
-
-
-    private void setRouting(int id){
-
-        switch (id) {
-            case 1:
-                this.routing = "db";
-                break;
-            case 2:
-                this.routing = "ac";
-                break;
-            case 3:
-                this.routing = "ab";
-                break;
-            case 4:
-                this.routing = "cb";
-                break;
-            case 5:
-                this.routing = "dc";
-                break;
-            case 6:
-                this.routing = "da";
-                break;
-            case 7:
-                this.routing = "abc";
-                break;
-            case 8:
-                this.routing = "dcb";
-                break;
-            case 9:
-                this.routing = "adc";
-                break;
-            case 10:
-                this.routing = "dab";
-                break;
-
-        }
     }
 
     /**
