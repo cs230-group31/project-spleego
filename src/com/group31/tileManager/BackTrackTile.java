@@ -1,54 +1,42 @@
 package com.group31.tileManager;
 
-public class BackTrackTile extends Tile{
+import javafx.scene.image.Image;
 
-    public BackTrackTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
-    }
-
-    private void initTile(){
-        loadImage("BackTrackImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
+public class BackTrackTile extends ActionTile{
 
     /**
-	 * @param id Sets the id.
-	 */
-    public void setId(int id){
-        this.id = 12;
-    }
-
-    /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
+     * Identifies the tile.
      */
-    public void incCoords(int[] incAmount){
-        coord[X] += incAmount[X];
-        coord[Y] += incAmount[Y];
+    private final int id;
+
+    /**
+     * holds weight of the tile.
+     */
+    private int weight;
+
+    public BackTrackTile(int id, int weight){
+        super(id, weight);
+        this.id = 13;
+        this.weight = 10;
     }
 
     /**
-     * 
-     * @param true if tile is an action tile
+     * @param id Sets the id.
      */
-    public void setActionTile(boolean isAction){
-        isAction == true;
-    }
+    //public void setId(){
+    //    this.id = 13;
+    //}
 
     /**
      * @param weight Sets the weight.
      */
-    public void setWeight(double weight) {
-        //this.weight = 0.15;
-    }
+    //public void setWeight(){
+    //   this.weight = 10;
+    //}
 
     /*
     public void BackTrackEffect(){
-        
+
     }*/
 
 }

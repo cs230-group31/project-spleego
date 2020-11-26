@@ -18,6 +18,11 @@ public class SilkBag {
     private HashMap<Integer, Double> tileWeights;
 
     /**
+     * Stores the total amount of tiles.
+     */
+    //private double numOfTiles;
+
+    /**
      * Class constructor.
      * @param tilesNumber number of tiles inside the bag
      */
@@ -35,6 +40,24 @@ public class SilkBag {
     private Tile genTile() {
         Tile tile = null;
         return tile;
+    }
+
+    private void addTiles(int tilesNumber){
+        tileWeights.put(1, (double) (60/tilesNumber));
+        tileWeights.put(2, (double) (60/tilesNumber));
+        tileWeights.put(3, (double) (60/tilesNumber));
+        tileWeights.put(4, (double) (60/tilesNumber));
+        tileWeights.put(5, (double) (60/tilesNumber));
+        tileWeights.put(6, (double) (60/tilesNumber));
+        tileWeights.put(7, (double) (60/tilesNumber));
+        tileWeights.put(8, (double) (60/tilesNumber));
+        tileWeights.put(9, (double) (60/tilesNumber));
+        tileWeights.put(10, (double) (60/tilesNumber));
+
+        tileWeights.put(11, (double) (40/tilesNumber));
+        tileWeights.put(12, (double) (40/tilesNumber));
+        tileWeights.put(13, (double) (40/tilesNumber));
+        tileWeights.put(14, (double) (40/tilesNumber));
     }
 
     ///**

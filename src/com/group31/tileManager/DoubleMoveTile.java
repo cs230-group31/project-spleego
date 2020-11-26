@@ -1,50 +1,36 @@
 package com.group31.tileManager;
 
-public class DoubleMoveTile extends Tile{
+public class DoubleMoveTile extends ActionTile{
 
-    public DoubleMoveTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
+    /**
+     * Identifies the tile.
+     */
+    private int id;
+
+    /**
+     * holds weight of the tile.
+     */
+    private int weight;
+
+    public DoubleMoveTile(int id, int weight){
+        super(id, weight);
+        this.id = 14;
+        this.weight = 10;
     }
-
-    private void initTile(){
-        loadImage("DoubleMoveImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
 
     /**
 	 * @param id Sets the id.
 	 */
-    public void setId(int id){
-        this.id = 12;
-    }
-
-    /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
-     */
-    public void incCoords(int[] incAmount){
-        coord[X] += incAmount[X];
-        coord[Y] += incAmount[Y];
-    }
-
-    /**
-     * 
-     * @param true if tile is an action tile
-     */
-    public void setActionTile(boolean isAction){
-        isAction == true;
-    }
+    //public void setId(){
+    //    this.id = 12;
+    //}
 
     /**
      * @param weight Sets the weight.
      */
-    public void setWeight(double weight) {
-        //this.weight = 0.15;
-    }
+    //public void setWeight(){
+    //    this.weight = 10;
+    //}
 
     /*
     public void DoubleMoveEffect(){

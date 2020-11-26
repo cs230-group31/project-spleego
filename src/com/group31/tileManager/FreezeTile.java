@@ -1,50 +1,36 @@
 package com.group31.tileManager;
 
-public class FreezeTile extends Tile{
-
-    public FreezeTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
-    }
-
-    private void initTile(){
-        loadImage("freezeImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
+public class FreezeTile extends ActionTile{
 
     /**
-	 * @param id Sets the id.
-	 */
-    public void setId(int id){
+     * Identifies the tile.
+     */
+    private final int id;
+
+    /**
+     * holds weight of the tile.
+     */
+    private final int weight;
+
+    public FreezeTile(int id, int weight){
+        super(id, weight);
         this.id = 12;
+        this.weight = 10;
     }
 
     /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
+     * @param id Sets the id.
      */
-    public void incCoords(int[] incAmount){
-        coord[X] += incAmount[X];
-        coord[Y] += incAmount[Y];
-    }
-
-    /**
-     * 
-     * @param true if tile is an action tile
-     */
-    public void setActionTile(boolean isAction){
-        isAction == true;
-    }
+    //public void setId(){
+    //   this.id = 12;
+    //}
 
     /**
      * @param weight Sets the weight.
      */
-    public void setWeight(double weight) {
-        //this.weight = 0.15;
-    }
+    //public void setWeight(){
+    //    this.weight = 10;
+    //}
 
     /*
     public void freezeEffect(){

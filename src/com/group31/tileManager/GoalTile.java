@@ -1,43 +1,37 @@
 package com.group31.tileManager;
 
-public class GoalTile extends Tile{
+import javafx.scene.image.Image;
 
-    public GoalTile(int id, int[] coord, boolean actionTile){
-        super(id, coord, actionTile);
-        initTile();
-    }
-
-    private void initTile(){
-        loadImage("GoalImg_path");
-    }
-
-/*
-    public String setRouting(){
-    }*/
+public class GoalTile{
 
     /**
-	 * @param id Sets the id.
-	 */
-    public void setId(int id){
-        this.id = 10;
-    }
-
-    /**
-     * change the current tile position on the gameboard
-     * @param incAmount amount of movement
+     * Identifies the tile.
      */
-    public void setCoords(int[] goalCoords){
-        //coord[X] = 15;
-        //coord[Y] = 15;
+    private final int id;
+
+    /**
+     * holds the image of the tile.
+     */
+    private final Image currentImage;
+
+    public GoalTile(){
+        this.id = 0;
+        this.currentImage = new Image("resources/images/0.png");
     }
 
     /**
-     * 
-     * @param true if tile is an action tile
+     * @param id Sets the id.
      */
-    public void setActionTile(boolean isAction){
-        isAction == false;
-    }
+    //private void setId(){
+    //    this.id = 12;
+    //}
+
+    /**
+     * @param currentImage Sets the image.
+     */
+    //private void setImage(){
+    //    this.currentImage = new Image("resources/images/0.png");
+    //}
 
     /*
     public void gameWon(boolean goalReached){
