@@ -1,6 +1,8 @@
-package com.group31.tileManager;
+package com.group31.tile_manager.action_tile;
 
-public class FreezeTile extends ActionTile{
+import com.group31.tile_manager.action_tile.ActionTile;
+
+public class FreezeTile extends ActionTile {
 
     /**
      * Identifies the tile.

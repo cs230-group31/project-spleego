@@ -1,7 +1,6 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
-import com.group31.tileManager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -46,7 +45,7 @@ public class Game extends Application {
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(bg));
         } catch (FileNotFoundException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
         board.setAlignment(Pos.CENTER);
         board.setHgap(TILE_SPACING);

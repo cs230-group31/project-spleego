@@ -1,6 +1,6 @@
-package com.group31.tileManager;
+package com.group31.tile_manager.action_tile;
 
-public class DoubleMoveTile extends ActionTile{
+public class DoubleMoveTile extends ActionTile {
 
     /**
      * Identifies the tile.

@@ -1,4 +1,4 @@
-package com.group31.tileManager;
+package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
 
@@ -6,7 +6,7 @@ import com.group31.logger.Logger;
  * This class is a subclass of ActionTile
  * it has an fire effect
  */
-public class FireTile extends ActionTile{
+public class FireTile extends ActionTile {
     /**
      * Identifies the tile.
      */

@@ -1,9 +1,10 @@
-package com.group31.tileManager;
+package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
+import com.group31.tile_manager.action_tile.ActionTile;
 import javafx.scene.image.Image;
 
-public class BackTrackTile extends ActionTile{
+public class BackTrackTile extends ActionTile {
 
     /**
      * Identifies the tile.

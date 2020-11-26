@@ -4,8 +4,8 @@ import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
 import com.group31.services.FileManager;
-import com.group31.tileManager.SilkBag;
-import com.group31.tileManager.Tile;
+import com.group31.tile_manager.silk_bag.SilkBag;
+import com.group31.tile_manager.Tile;
 
 public class Controller {
 
@@ -82,8 +82,8 @@ public class Controller {
      */
     public boolean validatePlayerMove(Player player, int playerX, int playerY, Movement.Move direction)
             throws InvalidMoveDirection {
-        int maxBoardX = gameboard.getMaxX();
-        int maxBoardY = gameboard.getMaxY();
+        int maxBoardX = 0;//gameboard.getMaxX();
+        int maxBoardY = 0;//gameboard.getMaxY();
         return Validation.validBoardMove(playerX, playerY, maxBoardX, maxBoardY, direction);
     }
 

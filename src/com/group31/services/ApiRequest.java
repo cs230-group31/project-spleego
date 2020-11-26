@@ -64,7 +64,7 @@ public class ApiRequest {
             connection = connectionGet(url);
             return read(connection);
         } catch (Exception e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
         } finally {
             if (connection != null) {
                 connection.disconnect();

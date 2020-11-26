@@ -1,4 +1,4 @@
-package com.group31.tileManager;
+package com.group31.tile_manager;
 import com.group31.logger.Logger;
 
 import javafx.scene.image.Image;

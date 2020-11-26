@@ -143,7 +143,7 @@ public class MainMenu extends Application {
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(bg));
         } catch (FileNotFoundException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
 
         ImageButton start = new ImageButton(START_UNPRESSED_URL, START_PRESSED_URL);
@@ -168,7 +168,7 @@ public class MainMenu extends Application {
            titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), TITLE_IMAGE_WIDTH,
                    TITLE_IMAGE_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
 
         VBox titleBox = new VBox();
@@ -206,7 +206,7 @@ public class MainMenu extends Application {
      * Launches the GUI.
      * @param args Runtime Arguments.
      */
-    public static void main(final String[] args) {
+    public static void run(final String[] args) {
         launch(args);
     }
 }

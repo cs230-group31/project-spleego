@@ -1,4 +1,6 @@
-package com.group31.tileManager;
+package com.group31.tile_manager.silk_bag;
+
+import com.group31.tile_manager.Tile;
 
 import java.util.ArrayList;
 import java.util.HashMap;
