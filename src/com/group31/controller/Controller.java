@@ -4,8 +4,8 @@ import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
 import com.group31.services.FileManager;
-import com.group31.tile_manager.Silkbag;
-import com.group31.tile_manager.Tile;
+import com.group31.tileManager.SilkBag;
+import com.group31.tileManager.Tile;
 
 public class Controller {
 
@@ -20,7 +20,7 @@ public class Controller {
     /**
      * The silk bag.
      */
-    private Silkbag silkbag;
+    private SilkBag silkbag;
     /**
      * Legal place points for tiles on the game board.
      */
@@ -36,7 +36,7 @@ public class Controller {
      * @param gameboard The game board for a game.
      * @param silkbag The silk bag for a game.
      */
-    public Controller(Player[] players, Gameboard gameboard, Silkbag silkbag) {
+    public Controller(Player[] players, Gameboard gameboard, SilkBag silkbag) {
         this.players = players;
         this.gameboard = gameboard;
         this.silkbag = silkbag;
