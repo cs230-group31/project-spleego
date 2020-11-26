@@ -52,9 +52,12 @@ public class ActionTile {
     //public class ActionTile extends Tile {
     /**
      * Uses superclass constructor
+     * @param routing
      * @param id
+     * @param coord
      */
     //public ActionTile(String routing, int id, int[] coord){
+    //    super(routing, id, coord, true);
     //    Logger.log("Action tile created", Logger.Level.INFO);
     //}
 
