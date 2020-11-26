@@ -18,9 +18,8 @@ public class FloorTile extends Tile{
     private Image currentImage;
 
     public FloorTile(String routing, int id, int[] coord, Image currentImage){
-        super(routing, id, coord, currentImage);
-        setRouting(id);
-        setImage(id);
+        super(id, false, currentImage);
+        this.routing = routing;
         Logger.log("Floor tile created", Logger.Level.INFO);
     }
 
