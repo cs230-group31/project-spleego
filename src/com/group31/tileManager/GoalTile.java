@@ -21,6 +21,10 @@ public class GoalTile extends Tile{
      * holds the routing of the tile.
      */
     private final String routing;
+    /**
+     * holds the coord of the tile.
+     */
+    private int[] coord;
 
     private final int X = 0;
     private final int Y = 0;
@@ -43,7 +47,7 @@ public class GoalTile extends Tile{
     //}
 
     /**
-     * @param currentImage Sets the image.
+     * //@param currentImage Sets the image.
      */
     //private void setImage(){
     //    this.currentImage = new Image("resources/images/0.png");

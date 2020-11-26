@@ -26,7 +26,7 @@ public class SilkBag {
 
     /**
      * Class constructor.
-     * @param MAXTILES number of tiles inside the bag
+     * //@param MAXTILES number of tiles inside the bag
      */
     public SilkBag() {
         tiles = new ArrayList<>();
@@ -41,7 +41,7 @@ public class SilkBag {
     private Tile genTile() {
         // TODO: code random tile generator
         //test params
-        Tile tile = new FloorTile("bd", 0);
+        Tile tile = null; //new FloorTile("bd", 0);
         return tile;
     }
 
