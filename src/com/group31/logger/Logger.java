@@ -33,6 +33,14 @@ public class Logger {
      */
     public static void log(String message, Level logLevel) {
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        System.out.printf("%s %s >> %s%n", time, logLevel, message);
+        switch (logLevel) {
+            case ERROR:
+                System.err.printf("%s %s >> %s%n", time, logLevel, message);
+            case WARNING:
+                System.err.printf("%s %s >> %s%n", time, logLevel, message);
+            default:
+                System.out.printf("%s %s >> %s%n", time, logLevel, message);
+        }
+
     }
 }
