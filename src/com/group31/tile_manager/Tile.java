@@ -91,8 +91,7 @@ public class Tile {
      * @param actionTile true if this tile is an ActionTile
      * @param currentImage image to display for that tile
      */
-    public Tile(String routing, int id, boolean actionTile, Image currentImage) {
-        this.routing = routing;
+    public Tile(int id, boolean actionTile, Image currentImage) {
         this.id = id;
         this.actionTile = actionTile;
         this.currentImage = currentImage;
