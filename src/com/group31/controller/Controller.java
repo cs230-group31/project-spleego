@@ -4,13 +4,8 @@ import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
 import com.group31.services.FileManager;
-<<<<<<< HEAD
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
-=======
-import com.group31.tileManager.SilkBag;
-import com.group31.tileManager.Tile;
->>>>>>> origin/merge-master
 
 public class Controller {
 

@@ -168,11 +168,7 @@ public class MainMenu extends Application {
            titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), TITLE_IMAGE_WIDTH,
                    TITLE_IMAGE_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
-<<<<<<< HEAD:src/com/group31/graphics/MainMenu.java
             Logger.log(e.getMessage(), Logger.Level.ERROR);
-=======
-            Logger.log(e.toString(), Logger.Level.ERROR);
->>>>>>> origin/merge-master:src/com/group31/graphics/GUI.java
         }
 
         VBox titleBox = new VBox();

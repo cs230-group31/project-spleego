@@ -1,16 +1,11 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
-<<<<<<< HEAD
-=======
-import com.group31.tileManager.Tile;
->>>>>>> origin/merge-master
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -49,11 +44,7 @@ public class Game extends Application {
                     BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
             root.setBackground(new Background(bg));
         } catch (FileNotFoundException e) {
-<<<<<<< HEAD
             Logger.log(e.getMessage(), Logger.Level.ERROR);
-=======
-            Logger.log(e.toString(), Logger.Level.ERROR);
->>>>>>> origin/merge-master
         }
         board.setAlignment(Pos.CENTER);
         board.setHgap(TILE_SPACING);
