@@ -23,7 +23,7 @@ public class Settings {
      * Updates settings value if the key exists.
      * @param args Settings to change.
      */
-    public static void updateSettings(final String[] args) {
+    public static void updateSettings(String[] args) {
         for (String setting : args) {
             String[] settingNameValue = setting.split(":");
             if (settings.containsKey(settingNameValue[SETTING_KEY])) {
@@ -37,8 +37,7 @@ public class Settings {
      * Initialises settings.
      * @param allSettingsData All settings (keys and values).
      */
-    public static void setAllSettings(
-            final HashMap<String, String> allSettingsData) {
+    public static void setAllSettings(HashMap<String, String> allSettingsData) {
         settings = allSettingsData;
     }
 

@@ -29,7 +29,7 @@ public class ImageButton extends Parent {
         try {
             unpressedImage = new Image(new FileInputStream(unpressed), BUTTON_WIDTH, BUTTON_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
         try {
             pressedImage = new Image(new FileInputStream(pressed), BUTTON_WIDTH, BUTTON_HEIGHT, true, false);
