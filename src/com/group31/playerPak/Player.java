@@ -1,84 +1,127 @@
 package com.group31.playerPak;
 
+
+//import com.group31.tileManager.Tile;
 import javafx.scene.image.Image;
-import org.jetbrains.annotations.NotNull;
 import javafx.scene.paint.Color;
 import java.util.Random;
 
 public class Player {
-
-
+    /** stores player name.*/
     private String playerName;
+    /** stores the player sprite.*/
     private Image playerSprite;
+    /** stores the player colour.*/
     private Color colour;
+    /** stores the player location.*/
     private int[] playerLocation; // location is kept in array size of 2
-    private Tile[] playerHand;
-    private PlayerData playerData;
+  //  /** stores the playerhand.*/
+    //private Tile[] playerHand;
+    /** stores the previous location of the player.*/
     private int[] prevLocation;
+    /** stores the previous previous location.*/
     private int[] prevPrevLocation;
+    /** stores the players hand sizes.*/
     private Random playerHandSize = new Random();
-    private int hanSize = playerHandSize.nextInt(15); //set size of player hand to 15(dont know how big)
+    /** refrences which element x is on array for location.*/
+    private final int x = 0;
+    /** refrences which element y is on array for location.*/
+    private final int y = 1; // these are to identify x and y
+    //private PlayerData playerData; (wasnt used for anything)
+    //private int hanSize = playerHandSize.nextInt(15); //set size of player hand to 15(dont know how big)
 
+    /**
+     * constructor for Player.
+     * @param playerData used to store object PlayerData
+     * @param location used to store location of player in array
+     */
+    public Player(PlayerData playerData, int[] location) {
 
-
-    public Player (@NotNull PlayerData playerData, int[] location){
-
-        this.playerData = playerData;
-        this.playerData = playerData;
-        playerLocation = location;
-        playerName = playerData.getName();
-        playerSprite = playerData.getSprite();
+        //this.playerData = playerData; (wasnt used for anything)
+        this.playerLocation = location;
+        this.playerName = playerData.getName();
+        this.playerSprite = playerData.getSprite();
     }
 
-    public String getPlayerName(){
+    /**
+     * gets the player name.
+     * @return player name
+     */
+    public String getPlayerName() {
 
-        return playerName;
+        return this.playerName;
+    }
+    /**
+     * gets the player sprite.
+     * @return player sprite
+     */
+    public Image getPlayerSprite() {
+
+        return this.playerSprite;
+    }
+    /**
+     * gets the player colour.
+     * @return player colour
+     */
+    public Color getPlayerColour() {
+
+        return this.colour;
+    }
+    /**
+     * gets the player location.
+     * @return player location
+     */
+    public int[] getPlayerLocation() {
+
+        return this.playerLocation;
+    }
+    /**
+     * gets the player's last turn.
+     * @return player last turn
+     */
+    public int[] getLastTurn() {
+
+        return this.prevLocation;
+    }
+    /**
+     * gets the player 2 turns back.
+     * @return player last last turn
+     */
+    public int[] getLastLastTurn() {
+
+        return this.prevPrevLocation;
     }
 
-    public Image getPlayerSprite(){
-
-        return playerSprite;
-    }
-
-    public Color getPlayerColour(){
-
-        return colour;
-    }
-
-    public int[] getPlayerLocation(){
-
-        return playerLocation;
-    }
-
-    public int[] getLastTurn(){
-
-        return prevLocation;
-    }
-
-    public int[] getLastLastTurn(){
-
-        return prevPrevLocation;
-    }
-
-    public void playTile(Tile theTile, int locX, int locY){
+ //   /**
+ //    * something.
+ //    * @param theTile s
+ //    * @param locX s
+  //   * @param locY s
+  //   */
+    //public void playTile(Tile theTile, int locX, int locY) {
 
         //not sure how it will be implemented atm
-    }
+    //}
 
-    public void movePlayer(int movX, int movY){
+    /**
+     *  will move the player to a new location.
+     * @param movX coordinate x to move to
+     * @param movY coordinate y to move to
+     */
+    public void movePlayer(int movX, int movY) {
 
-        prevPrevLocation = prevLocation;
-        prevLocation = playerLocation;
+        this.prevPrevLocation = this.prevLocation;
+        this.prevLocation = this.playerLocation;
         // section above just stores last 2 locations
 
-        playerLocation[0] = movX;
-        playerLocation[1] = movY;
-
-    }
-
-    public Tile drawTile(){
-
-        return playerHand[hanSize];// draws random tile size up to 15
+        this.playerLocation[x] = movX;
+        this.playerLocation[y] = movY;
 
     }
 }
+ //   public Tile drawTile() {
+//
+  //      return playerHand[hanSize]; // draws random tile size up to 15
+//
+  //  }
+
