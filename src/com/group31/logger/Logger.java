@@ -2,7 +2,7 @@ package com.group31.logger;
 
 import java.sql.Timestamp;
 
-public final class Logger {
+public class Logger {
 
     /**
      * Log levels that can be used.
@@ -31,8 +31,16 @@ public final class Logger {
      * @param message Message to print to the console.
      * @param logLevel Severity of the message.
      */
-    public static void log(final String message, final Level logLevel) {
+    public static void log(String message, Level logLevel) {
         Timestamp time = new Timestamp(System.currentTimeMillis());
-        System.out.printf("%s %s >> %s%n", time, logLevel, message);
+        switch (logLevel) {
+            case ERROR:
+                System.err.printf("%s %s >> %s%n", time, logLevel, message);
+            case WARNING:
+                System.err.printf("%s %s >> %s%n", time, logLevel, message);
+            default:
+                System.out.printf("%s %s >> %s%n", time, logLevel, message);
+        }
+
     }
 }

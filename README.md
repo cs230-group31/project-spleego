@@ -45,6 +45,10 @@ The following rules are ignored:
 
 - `JavadocPackage`
 - `HideUtilityClassConstructor`
+- `HiddenField`
+- `FinalParameters`
+- `FinalClass`
+- `LineLength`
 
 All code must pass the linter's rules before it can be merged with the master branch.
 
