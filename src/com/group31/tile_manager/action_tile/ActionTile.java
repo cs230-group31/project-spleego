@@ -1,5 +1,4 @@
 package com.group31.tile_manager.action_tile;
-
 import com.group31.logger.Logger;
 
 public class ActionTile {

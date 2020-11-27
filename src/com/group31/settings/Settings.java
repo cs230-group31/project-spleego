@@ -1,7 +1,7 @@
 package com.group31.settings;
 
-import com.group31.logger.Logger;
 
+import com.group31.logger.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -50,7 +50,6 @@ public class Settings {
     public static Map<String, String> getAllSettings() {
         return settings;
     }
-
     /**
      * Writes all the settings to the console.
      * For debugging purposes only!
@@ -60,5 +59,4 @@ public class Settings {
             Logger.log(String.format("%s : %s", key, settings.get(key)), Logger.Level.VERBOSE);
         }
     }
-
 }
