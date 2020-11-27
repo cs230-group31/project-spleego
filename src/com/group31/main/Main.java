@@ -8,6 +8,7 @@ import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.controller.Controller;
 import com.group31.services.FileManager;
+import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
@@ -21,13 +22,18 @@ public class Main {
      * @param args Args passed in at runtime.
      */
     public static void main(String[] args) {
-        HashMap<String, String> settings = buildSettings();
+        //init settings
+        HashMap<String, String> settings = initSettings();
         Settings.setAllSettings(settings);
 
         if (args.length != 0) {
             Settings.updateSettings(args);
         }
 
+        // testing
+        Settings.dumpSettingsToConsole();
+
+        // init components
         Leaderboard leaderboard = initLeaderBoard();
         SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
@@ -46,12 +52,17 @@ public class Main {
      * Calls getSettingsFromArray to build a Hashmap of settings.
      * @return HashMap containing all settings.
      */
-    private static HashMap<String, String> buildSettings() {
+    private static HashMap<String, String> initSettings() {
         boolean allowFileCreation = true;
-        String[] settings = null;
+        String settingsDirectory = "settings/";
+        String settingsFile = "settings.txt";
         try {
-            FileManager.setDirectory("./settings/", allowFileCreation);
-            return getSettingsFromArray(FileManager.read("settings.txt"));
+            FileManager.setDirectory(settingsDirectory, allowFileCreation);
+            if (FileManager.fileExists(settingsFile)) {
+                return DefaultSettings.getDefaultSettings();
+            } else {
+                return getSettingsFromArray(FileManager.read(settingsFile));
+            }
         } catch (NoSuchDirectory | FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
@@ -85,7 +96,7 @@ public class Main {
     }
 
     /**
-     * Initialises SilkBag
+     * Initialises SilkBag.
      * @return A new instance of SilkBag.
      */
     private static SilkBag initSilkBag() {
@@ -94,7 +105,7 @@ public class Main {
     }
 
     /**
-     * Initialises Gameboard
+     * Initialises Gameboard.
      * @return A new instance of Gameboard.
      */
     private static Gameboard initGameboard() {
