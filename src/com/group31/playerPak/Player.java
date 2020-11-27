@@ -1,10 +1,9 @@
 package com.group31.playerPak;
 
-
-//import com.group31.tileManager.Tile;
+import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import java.util.Random;
+import java.util.ArrayList;
 
 public class Player {
     /** stores player name.*/
@@ -15,25 +14,21 @@ public class Player {
     private Color colour;
     /** stores the player location.*/
     private int[] playerLocation; // location is kept in array size of 2
-  //  /** stores the playerhand.*/
-    //private Tile[] playerHand;
+    /** stores the playerhand.*/
+    private ArrayList<Tile> playerHand = new ArrayList<>();
     /** stores the previous location of the player.*/
     private int[] prevLocation;
     /** stores the previous previous location.*/
     private int[] prevPrevLocation;
-    /** stores the players hand sizes.*/
-    private Random playerHandSize = new Random();
     /** refrences which element x is on array for location.*/
     private final int x = 0;
     /** refrences which element y is on array for location.*/
     private final int y = 1; // these are to identify x and y
-    //private PlayerData playerData; (wasnt used for anything)
-    //private int hanSize = playerHandSize.nextInt(15); //set size of player hand to 15(dont know how big)
-
     /**
      * constructor for Player.
+     *
      * @param playerData used to store object PlayerData
-     * @param location used to store location of player in array
+     * @param location   used to store location of player in array
      */
     public Player(PlayerData playerData, int[] location) {
 
@@ -45,46 +40,57 @@ public class Player {
 
     /**
      * gets the player name.
+     *
      * @return player name
      */
     public String getPlayerName() {
 
         return this.playerName;
     }
+
     /**
      * gets the player sprite.
+     *
      * @return player sprite
      */
     public Image getPlayerSprite() {
 
         return this.playerSprite;
     }
+
     /**
      * gets the player colour.
+     *
      * @return player colour
      */
     public Color getPlayerColour() {
 
         return this.colour;
     }
+
     /**
      * gets the player location.
+     *
      * @return player location
      */
     public int[] getPlayerLocation() {
 
         return this.playerLocation;
     }
+
     /**
      * gets the player's last turn.
+     *
      * @return player last turn
      */
     public int[] getLastTurn() {
 
         return this.prevLocation;
     }
+
     /**
      * gets the player 2 turns back.
+     *
      * @return player last last turn
      */
     public int[] getLastLastTurn() {
@@ -92,19 +98,21 @@ public class Player {
         return this.prevPrevLocation;
     }
 
- //   /**
- //    * something.
- //    * @param theTile s
- //    * @param locX s
-  //   * @param locY s
-  //   */
-    //public void playTile(Tile theTile, int locX, int locY) {
+    /**
+     * something.
+     *
+     * @param theTile s
+     * @param locX    s
+     * @param locY    s
+     */
+    public void playTile(Tile theTile, int locX, int locY) {
 
         //not sure how it will be implemented atm
-    //}
+    }
 
     /**
-     *  will move the player to a new location.
+     * will move the player to a new location.
+     *
      * @param movX coordinate x to move to
      * @param movY coordinate y to move to
      */
@@ -118,10 +126,14 @@ public class Player {
         this.playerLocation[y] = movY;
 
     }
-}
- //   public Tile drawTile() {
-//
-  //      return playerHand[hanSize]; // draws random tile size up to 15
-//
-  //  }
 
+    /**
+     * adds tile from silk bag to playerhand.
+     * @param tile identifier for the object tile
+     */
+    public void drawTile(Tile tile) {
+
+        playerHand.add(tile);
+
+    }
+}
