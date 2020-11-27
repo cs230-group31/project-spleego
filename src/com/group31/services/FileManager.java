@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManager {
-  
+
     /**
      * Directory of the file we are reading/writing to.
      */
@@ -41,7 +41,7 @@ public class FileManager {
             throw new NoSuchDirectory();
         }
     }
-  
+
     /**
      * Writes to a file.
      * @param content Content to write.
@@ -90,6 +90,7 @@ public class FileManager {
         File file = new File(requestedDirectory);
         return file.mkdirs();
     }
+
     /**
      * Ensures the directory has been set, if not, throw an error.
      * @throws NoSuchDirectory If the directory does not exist.
@@ -108,4 +109,5 @@ public class FileManager {
     public static boolean fileExists(String fileName) {
         return Files.exists(Paths.get(directory));
     }
+
 }
