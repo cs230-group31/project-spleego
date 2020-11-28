@@ -7,11 +7,14 @@ import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.controller.Controller;
+import com.group31.player.PlayerData;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
+import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -92,7 +95,7 @@ public class Main {
      */
     private static Leaderboard initLeaderBoard() {
         // TODO: load stats, initialises, pass back
-        return new Leaderboard();
+        return new Leaderboard("");
     }
 
     /**
@@ -101,7 +104,7 @@ public class Main {
      */
     private static SilkBag initSilkBag() {
         // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        return new SilkBag();
+        return new SilkBag(new ArrayList<Tile>());
     }
 
     /**
@@ -125,7 +128,7 @@ public class Main {
         Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i <= numberOfPlayers - 1; i++) {
 
-            players[i] = new Player();
+            players[i] = new Player(new PlayerData(null, null), null);
 
         }
 
