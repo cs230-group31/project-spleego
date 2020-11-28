@@ -5,38 +5,36 @@ import javafx.scene.image.Image;
 public class PlayerData {
 
     /**
-     * stores players name.
+     * Player to store data about.
+     */
+    private final Player player;
+    /**
+     * Stores players name.
      */
     private String name;
     /**
-     * stores players sprite.
+     * Stores players sprite.
      */
     private Image sprite;
     /**
-     * stores players wins.
+     * Stores players wins.
      */
     private int wins;
     /**
-     * stores players losses.
+     * Stores players losses.
      */
     private int losses;
     /**
-     * stores the number of time the player has played.
+     * Stores the number of time the player has played.
      */
     private int played;
 
     /**
-     *  constructor for PlayerData.
-     * @param name name used for player name
-     * @param sprite image for playerSprite
+     * Player data constructor.
+     * @param player Player to store data about.
      */
-    public PlayerData(String name, Image sprite) {
-
-        this.name = name;
-        this.sprite = sprite;
-        this.wins = 0;
-        this.losses = 0;
-        this.played = 0;
+    public PlayerData(Player player) {
+        this.player = player;
     }
 
     /**

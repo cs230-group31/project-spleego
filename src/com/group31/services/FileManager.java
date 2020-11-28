@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class FileManager {
     /**
@@ -104,6 +105,6 @@ public class FileManager {
      * @return If the file exists or not.
      */
     public static boolean fileExists(String fileName) {
-        return Files.exists(Paths.get(directory));
+        return Files.exists(Paths.get(String.format("%s%s", directory, fileName)));
     }
 }

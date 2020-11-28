@@ -1,5 +1,8 @@
 package com.group31.settings;
 
+import org.omg.CORBA.UserException;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DefaultSettings {
@@ -39,6 +42,19 @@ public class DefaultSettings {
         defaultSettings.put("exit_button_pressed", "resources/images/exit pressed.png");
 
         return defaultSettings;
+    }
+
+    /**
+     * Gets the default settings as an array.
+     * @return Array of settings.
+     */
+    public static String[] getDefaultSettingsArray() {
+        ArrayList<String> settings = new ArrayList<>();
+        getDefaultSettings().forEach((k, v) -> {
+            settings.add(String.format("%s;%s", k, v));
+        });
+        String[] settingsArray = new String[settings.size()];
+        return settings.toArray(settingsArray);
     }
 
 }

@@ -3,32 +3,23 @@ package com.group31.controller;
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
-import com.group31.services.FileManager;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
 public class Controller {
 
     /**
-     * Array of players.
+     * Array of players that are playing the game.
      */
-    private Player[] players;
+    private final Player[] players;
     /**
-     * The game board.
+     * Instance of the gameboard.
      */
-    private Gameboard gameboard;
+    private final Gameboard gameboard;
     /**
-     * The silk bag.
+     * Instance of the silkbag.
      */
-    private SilkBag silkbag;
-    /**
-     * Legal place points for tiles on the game board.
-     */
-    private int[] permittedPlacePoint;
-    /**
-     * The file manager.
-     */
-    private FileManager fileManager;
+    private final SilkBag silkbag;
 
     /**
      * Controller deals with game logic, loading and saving.

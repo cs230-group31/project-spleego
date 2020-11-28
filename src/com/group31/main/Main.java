@@ -7,13 +7,12 @@ import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.controller.Controller;
-import com.group31.player.PlayerData;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
-import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -21,7 +20,6 @@ public class Main {
 
     /**
      * Initialises the components and runs the app.
-     *
      * @param args Args passed in at runtime.
      */
     public static void main(String[] args) {
@@ -52,24 +50,26 @@ public class Main {
     }
 
     /**
-     * Calls getSettingsFromArray to build a Hashmap of settings.
+     * Initialises settings.
      * @return HashMap containing all settings.
      */
     private static HashMap<String, String> initSettings() {
         boolean allowFileCreation = true;
         String settingsDirectory = "settings/";
         String settingsFile = "settings.txt";
+        String delimiter = ",";
         try {
             FileManager.setDirectory(settingsDirectory, allowFileCreation);
-            if (FileManager.fileExists(settingsFile)) {
+            if (!FileManager.fileExists(settingsFile)) {
+                FileManager.write(DefaultSettings.getDefaultSettingsArray(), settingsFile);
                 return DefaultSettings.getDefaultSettings();
             } else {
                 return getSettingsFromArray(FileManager.read(settingsFile));
             }
-        } catch (NoSuchDirectory | FileNotFoundException e) {
+        } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-        // HANDLE THIS!!!
+        // TODO: HANDLE THIS!!!
         return null;
     }
 
@@ -83,7 +83,7 @@ public class Main {
         int settingKey = 0;
         int settingValue = 1;
         for (String setting : settingsArray) {
-            String[] settingNameValue = setting.split(":");
+            String[] settingNameValue = setting.split(";");
             settings.put(settingNameValue[settingKey], settingNameValue[settingValue]);
         }
         return settings;
@@ -128,7 +128,7 @@ public class Main {
         Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i <= numberOfPlayers - 1; i++) {
 
-            players[i] = new Player(new PlayerData(null, null), null);
+            players[i] = new Player(null, null, null, null);
 
         }
 

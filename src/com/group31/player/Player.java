@@ -7,62 +7,75 @@ import java.util.ArrayList;
 
 public class Player {
 
-    /** stores player name.*/
-    private String playerName;
-    /** stores the player sprite.*/
-    private Image playerSprite;
-    /** stores the player colour.*/
-    private Color colour;
-    /** stores the player location.*/
-    private int[] playerLocation; // location is kept in array size of 2
-    /** stores the playerhand.*/
-    private ArrayList<Tile> playerHand = new ArrayList<>();
-    /** stores the previous location of the player.*/
-    private int[] prevLocation;
-    /** stores the previous previous location.*/
-    private int[] prevPrevLocation;
-    /** refrences which element x is on array for location.*/
-    private final int x = 0;
-    /** refrences which element y is on array for location.*/
-    private final int y = 1; // these are to identify x and y
     /**
-     * constructor for Player.
-     *
-     * @param playerData used to store object PlayerData
-     * @param location   used to store location of player in array
+     * Player's name.
      */
-    public Player(PlayerData playerData, int[] location) {
+    private final String name;
 
-        //this.playerData = playerData; (wasnt used for anything)
-        this.playerLocation = location;
-        this.playerName = playerData.getName();
-        this.playerSprite = playerData.getSprite();
+    /**
+     * Player's sprite.
+     */
+    private final Image sprite;
+
+    /**
+     * Player's colour.
+     */
+    private final Color colour;
+
+    /**
+     * Player's location.
+     */
+    private final int[] location;
+
+    /**
+     * Stores the player's hand.
+     */
+    private final ArrayList<Tile> hand = new ArrayList<>();
+
+    /**
+     * Stores the previous location of the player.
+     */
+    private int[] prevLocation;
+
+    /**
+     * Stores the previous previous location.
+     */
+    private int[] prevPrevLocation;
+
+    /**
+     * // TODO: better desc for this please.
+     * Player constructor.
+     * @param name Player's name.
+     * @param sprite Player's sprite.
+     * @param colour Player's colour.
+     * @param location Player's location.
+     */
+    public Player(String name, Image sprite, Color colour, int[] location) {
+        this.name = name;
+        this.sprite = sprite;
+        this.colour = colour;
+        this.location = location;
     }
 
     /**
-     * gets the player name.
-     *
+     * Gets the player name.
      * @return player name
      */
     public String getPlayerName() {
-
-        return this.playerName;
+        return this.name;
     }
 
     /**
-     * gets the player sprite.
-     *
-     * @return player sprite
+     * Gets the player sprite.
+     * @return Player sprite.
      */
     public Image getPlayerSprite() {
-
-        return this.playerSprite;
+        return this.sprite;
     }
 
     /**
-     * gets the player colour.
-     *
-     * @return player colour
+     * Gets the player colour.
+     * @return Player colour.
      */
     public Color getPlayerColour() {
 
@@ -70,19 +83,17 @@ public class Player {
     }
 
     /**
-     * gets the player location.
-     *
-     * @return player location
+     * Gets the player location.
+     * @return player location.
      */
     public int[] getPlayerLocation() {
 
-        return this.playerLocation;
+        return this.location;
     }
 
     /**
-     * gets the player's last turn.
-     *
-     * @return player last turn
+     * Gets the player's last turn.
+     * @return Player's last turn.
      */
     public int[] getLastTurn() {
 
@@ -90,52 +101,46 @@ public class Player {
     }
 
     /**
-     * gets the player 2 turns back.
-     *
-     * @return player last last turn
+     * Gets the player 2 turns back.
+     * @return Player last last turn.
      */
     public int[] getLastLastTurn() {
-
         return this.prevPrevLocation;
     }
 
     /**
-     * something.
-     *
-     * @param theTile s
-     * @param locX    s
-     * @param locY    s
+     * Puts a tile on the gameboard.
+     * @param tile Tile we are adding to the gameboard.
+     * @param insertX X coordinate of the place we will add the tile.
+     * @param insertY Y coordinate of the place we will add the tile.
      */
-    public void playTile(Tile theTile, int locX, int locY) {
-
-        //not sure how it will be implemented atm
+    public void playTile(Tile tile, int insertX, int insertY) {
+        // TODO: Put tile on gameboard.
     }
 
-    /**
-     * will move the player to a new location.
-     *
-     * @param movX coordinate x to move to
-     * @param movY coordinate y to move to
-     */
-    public void movePlayer(int movX, int movY) {
+    // TODO: This should go in the controller.
+//    /**
+//     * will move the player to a new location.
+//     *
+//     * @param movX coordinate x to move to
+//     * @param movY coordinate y to move to
+//     */
+//    public void movePlayer(int movX, int movY) {
+//        this.prevPrevLocation = this.prevLocation;
+//        this.prevLocation = this.location;
+//        // section above just stores last 2 locations
+//
+//        this.location[x] = movX;
+//        this.location[y] = movY;
+//    }
 
-        this.prevPrevLocation = this.prevLocation;
-        this.prevLocation = this.playerLocation;
-        // section above just stores last 2 locations
-
-        this.playerLocation[x] = movX;
-        this.playerLocation[y] = movY;
-
-    }
-
-    /**
-     * adds tile from silk bag to playerhand.
-     * @param tile identifier for the object tile
-     */
-    public void drawTile(Tile tile) {
-
-        playerHand.add(tile);
-
-    }
+    // TODO: This should be in the controller.
+//    /**
+//     * Takes a tile from the silkbag and appends it the the player's hand.
+//     * @param tile identifier for the object tile
+//     */
+//    public void drawTile(Tile tile) {
+//        hand.add(tile);
+//    }
 
 }
