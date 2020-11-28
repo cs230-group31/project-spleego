@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * This class represents a tile which has coordinates [x, y] in the
- * game board
+ * game board.
  * @author Alvaro
  */
 public class Tile {
@@ -22,10 +22,13 @@ public class Tile {
      */
     private String routing;
     /**
-     *
+     * Tile X Coordinate.
      */
-    private final int X = 0;
-    private final int Y = 1;
+    private final int xCoord = 0;
+    /**
+     * Tile Y Coordinate.
+     */
+    private final int yCoord = 1;
     /**
      * Identifies the tile.
      */
@@ -86,7 +89,6 @@ public class Tile {
     /**
      * Class constructor for generic Tile.
      * Use this for storing tiles inside SilkBag.
-     * @param routing sides that this tile connects
      * @param id id of the tile
      * @param actionTile true if this tile is an ActionTile
      * @param currentImage image to display for that tile

@@ -1,7 +1,5 @@
 package com.group31.tile_manager.action_tile;
 
-import com.group31.tile_manager.action_tile.ActionTile;
-
 public class FreezeTile extends ActionTile {
 
     /**
@@ -14,29 +12,35 @@ public class FreezeTile extends ActionTile {
      */
     private final int weight;
 
-    public FreezeTile(int id, int weight){
+    /**
+     * TODO: Please ensure the following is actually what this class does:
+     * FreezeTile stops a player moving while they are on the tile and the tile is frozen.
+     * @param id ID of the tile.
+     * @param weight Weight of the tile (likeliness to be pulled from SilkBag).
+     */
+    public FreezeTile(int id, int weight) {
         super(id, weight);
-        this.id = 12;
-        this.weight = 10;
+        this.id = id;
+        this.weight = weight;
     }
 
-    /**
-     * @param id Sets the id.
-     */
-    //public void setId(){
-    //   this.id = 12;
-    //}
+//    /**
+//     * @param id Sets the id.
+//     */
+//    public void setId(){
+//       this.id = 12;
+//    }
+//
+//    /**
+//     * @param weight Sets the weight.
+//     */
+//    public void setWeight(){
+//        this.weight = 10;
+//    }
 
-    /**
-     * @param weight Sets the weight.
-     */
-    //public void setWeight(){
-    //    this.weight = 10;
-    //}
 
-    /*
-    public void freezeEffect(){
-        
-    }*/
+//    public void freezeEffect(){
+//
+//    }
 
 }

@@ -12,33 +12,38 @@ public class DoubleMoveTile extends ActionTile {
      */
     private int weight;
 
-    public DoubleMoveTile(int id, int weight){
+    /**
+     * Allows a player to make 2 moves at once.
+     * @param id ID of the tile.
+     * @param weight Weight of the tile (likeliness to be pulled from silkbag).
+     */
+    public DoubleMoveTile(int id, int weight) {
         super(id, weight);
-        this.id = 14;
-        this.weight = 10;
+        this.id = id;
+        this.weight = weight;
     }
 
-    /**
-	 * @param id Sets the id.
-	 */
-    //public void setId(){
-    //    this.id = 12;
-    //}
+//    /**
+//     * Sets the ID.
+//     */
+//    public void setId(){
+//        this.id = 12;
+//    }
 
-    /**
-     * @param weight Sets the weight.
-     */
-    //public void setWeight(){
-    //    this.weight = 10;
-    //}
+//    /**
+//     * @param weight Sets the weight.
+//     */
+//    public void setWeight(){
+//        this.weight = 10;
+//    }
+//
+//    public DoubleMoveTile(int id, boolean actionTile){
+//        super(id, actionTile);
+//    }
 
-    //public DoubleMoveTile(int id, boolean actionTile){
-    //    super(id, actionTile);
-    //}
 
-    /*
-    public void DoubleMoveEffect(){
-        
-    }*/
+//    public void DoubleMoveEffect(){
+//
+//    }
 
 }

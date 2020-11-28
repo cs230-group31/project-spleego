@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManager {
-  
     /**
      * Directory of the file we are reading/writing to.
      */
@@ -41,7 +40,6 @@ public class FileManager {
             throw new NoSuchDirectory();
         }
     }
-  
     /**
      * Writes to a file.
      * @param content Content to write.
