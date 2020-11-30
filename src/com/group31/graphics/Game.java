@@ -52,9 +52,9 @@ public class Game extends Application {
         board.setHgap(TILE_SPACING);
         board.setVgap(TILE_SPACING);
         // TEMPORARY TESTING
-        for(int iRow=0; iRow<5;iRow++) {
-            for(int iCol=0; iCol<5;iCol++) {
-                board.add(new ImageView(SilkBag.genFloorTile().getCurrentImage()),iCol,iRow);
+        for (int iRow = 0; iRow < 5; iRow++) {
+            for (int iCol = 0; iCol < 5; iCol++) {
+                board.add(new ImageView(SilkBag.genFloorTile().getCurrentImage()), iCol, iRow);
             }
         }
         //TODO: make these boxes represent player hands
