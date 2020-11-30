@@ -1,7 +1,13 @@
 package com.group31.tile_manager.silk_bag;
 
+import com.group31.logger.Logger;
 import com.group31.tile_manager.Tile;
+import javafx.scene.image.Image;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Generates tiles for players/game to use.
@@ -13,6 +19,12 @@ public class SilkBag {
      * Maximum amount of tiles a player can hold.
      */
     private final int maxTiles = 15;
+    private static final int MIN_FLOOR_TILE = 1;
+    private static final int MAX_FLOOR_TILE = 10;
+    //TODO: take from settings not here
+    private static final String TILE_IMAGE_URL = "resources/images/tiles/";
+    private static final double TILE_WIDTH = 64.0;
+    private static final double TILE_HEIGHT = 64.0;
     /**
      * Keeps track of every tile.
      */
@@ -26,7 +38,7 @@ public class SilkBag {
 //     * Stores the total amount of tiles.
 //     */
 //    private double numOfTiles;
-
+    //TODO: SilkBag does more than generate random tiles, it is the controller for tile distribution
     /**
      * Silk bag constructor.
      * @param tiles Arraylist of tiles to put into the silkbag.
@@ -46,6 +58,19 @@ public class SilkBag {
         //test params
         Tile tile = null; //new FloorTile("bd", 0);
         return tile;
+    }
+
+    public static Tile genFloorTile() {
+        Random random = new Random();
+        int ranInt = random.nextInt(MAX_FLOOR_TILE - MIN_FLOOR_TILE) + MIN_FLOOR_TILE;
+        Image tileImage = null;
+        try {
+            tileImage = new Image(new FileInputStream(TILE_IMAGE_URL+ranInt+".png"),
+                    TILE_WIDTH, TILE_HEIGHT, true, false);
+        } catch (FileNotFoundException e) {
+            Logger.log("Could not find tile image", Logger.Level.ERROR);
+        }
+        return new Tile(ranInt, false,tileImage);
     }
 
     // TODO: Rethink this!
