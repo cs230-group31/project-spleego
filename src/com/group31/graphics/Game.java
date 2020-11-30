@@ -1,11 +1,13 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
+import com.group31.tile_manager.silk_bag.SilkBag;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
 import javafx.scene.layout.BackgroundPosition;
@@ -49,6 +51,13 @@ public class Game extends Application {
         board.setAlignment(Pos.CENTER);
         board.setHgap(TILE_SPACING);
         board.setVgap(TILE_SPACING);
+        // TEMPORARY TESTING
+        for(int iRow=0; iRow<5;iRow++) {
+            for(int iCol=0; iCol<5;iCol++) {
+                board.add(new ImageView(SilkBag.genFloorTile().getCurrentImage()),iCol,iRow);
+            }
+        }
+        //TODO: make these boxes represent player hands
         root.setLeft(new VBox());
         root.setTop(new HBox());
         root.setRight(new VBox());
