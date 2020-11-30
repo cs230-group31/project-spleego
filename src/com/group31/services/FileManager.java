@@ -5,13 +5,16 @@ import com.group31.logger.Logger;
 import java.io.FileNotFoundException;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.ObjectOutputStream;
 import java.io.FileWriter;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class FileManager {
     /**
@@ -29,6 +32,7 @@ public class FileManager {
     public static void setDirectory(String requestedDirectory, boolean allowCreation) throws NoSuchDirectory {
         if (Files.exists(Paths.get(requestedDirectory))) {
             directory = requestedDirectory;
+            Logger.log(String.format("Directory changed to %s", directory), Logger.Level.INFO);
         } else if (allowCreation) {
             String logMessage = makeDir(requestedDirectory)
                     ? String.format("Directory '%s' was created.", requestedDirectory)
@@ -38,7 +42,7 @@ public class FileManager {
         } else {
             Logger.log("Request made to change file directory but requested directory does not exist.",
                     Logger.Level.ERROR);
-            throw new NoSuchDirectory();
+            throw new NoSuchDirectory("Request made to change file directory but requested directory does not exist.");
         }
     }
     /**
@@ -57,6 +61,7 @@ public class FileManager {
             writer.write(line);
             writer.newLine();
         }
+        Logger.log(String.format("Successfully wrote %s to %s.", fileName, directory), Logger.Level.INFO);
         writer.close();
     }
 
@@ -77,7 +82,47 @@ public class FileManager {
             content.add(scanner.nextLine());
         }
         String[] settings = new String[content.size()];
+        Logger.log(String.format("Successfully read %s from %s.", fileName, directory), Logger.Level.INFO);
         return content.toArray(settings);
+    }
+
+    /**
+     * Serializes an object to the filesystem.
+     * @param object Object to serialize.
+     * @param identifier Name of the file (without extension).
+     * @throws IOException If the file cannot be created/found.
+     * @throws NoSuchDirectory If the directory cannot be set/created.
+     */
+    public static void serializeWrite(Object object, String identifier) throws IOException, NoSuchDirectory {
+        checkDirectorySet();
+        Logger.log(String.format("Attempting to serialize %s to %s.", identifier, directory), Logger.Level.INFO);
+        FileOutputStream fileOut = new FileOutputStream(String.format("%s%s.ser", directory, identifier));
+        ObjectOutputStream objectOut = new ObjectOutputStream(fileOut);
+        objectOut.writeObject(object);
+        objectOut.close();
+        fileOut.close();
+        Logger.log(String.format("Successfully serialized %s to %s.", identifier, directory), Logger.Level.INFO);
+    }
+
+    /**
+     * Deserializes a serialized file from the filesystem.
+     * @param identifier Filename (without extension).
+     * @return An object representing the deserialized file.
+     * @throws NoSuchDirectory If the directory cannot be found.
+     * @throws IOException If the file cannot be found.
+     * @throws ClassNotFoundException If we cannot deserialize the file into an object.
+     */
+    public static Object deserializeRead(String identifier)
+            throws NoSuchDirectory, IOException, ClassNotFoundException {
+        checkDirectorySet();
+        Logger.log(String.format("Attempting to deserialize %s%s.", directory, identifier), Logger.Level.INFO);
+        FileInputStream fileIn = new FileInputStream(String.format("%s%s.ser", directory, identifier));
+        ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+        Object object = objectIn.readObject();
+        objectIn.close();
+        fileIn.close();
+        Logger.log(String.format("Successfully deserialized %s from %s.", identifier, directory), Logger.Level.INFO);
+        return object;
     }
 
     /**
@@ -100,8 +145,8 @@ public class FileManager {
     }
 
     /**
-     * Checks if a file exists.
-     * @param fileName File we want to check.
+     * Checks if a file exists in the FileManager's current directory.
+     * @param fileName Location of the file we want to check.
      * @return If the file exists or not.
      */
     public static boolean fileExists(String fileName) {

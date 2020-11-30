@@ -3,9 +3,11 @@ package com.group31.player;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
 
     /**
      * Player's name.
@@ -23,9 +25,14 @@ public class Player {
     private final Color colour;
 
     /**
-     * Player's location.
+     * Player's current location on the board.
      */
-    private final int[] location;
+    private int[] location;
+
+    /**
+     * Starting location of the player.
+     */
+    private final int[] startingLocation;
 
     /**
      * Stores the player's hand.
@@ -33,35 +40,29 @@ public class Player {
     private final ArrayList<Tile> hand = new ArrayList<>();
 
     /**
-     * Stores the previous location of the player.
+     * Stores the previous two turns. (Where they moved from during the past two turns).
      */
-    private int[] prevLocation;
+    private int[] prevTwoTurns;
 
     /**
-     * Stores the previous previous location.
-     */
-    private int[] prevPrevLocation;
-
-    /**
-     * // TODO: better desc for this please.
-     * Player constructor.
+     * Class for a player who has or is playing the game.
      * @param name Player's name.
      * @param sprite Player's sprite.
      * @param colour Player's colour.
-     * @param location Player's location.
+     * @param startingLocation Player's location.
      */
-    public Player(String name, Image sprite, Color colour, int[] location) {
+    public Player(String name, Image sprite, Color colour, int[] startingLocation) {
         this.name = name;
         this.sprite = sprite;
         this.colour = colour;
-        this.location = location;
+        this.startingLocation = startingLocation;
     }
 
     /**
      * Gets the player name.
      * @return player name
      */
-    public String getPlayerName() {
+    public String getName() {
         return this.name;
     }
 
@@ -69,7 +70,7 @@ public class Player {
      * Gets the player sprite.
      * @return Player sprite.
      */
-    public Image getPlayerSprite() {
+    public Image getSprite() {
         return this.sprite;
     }
 
@@ -77,7 +78,7 @@ public class Player {
      * Gets the player colour.
      * @return Player colour.
      */
-    public Color getPlayerColour() {
+    public Color getColour() {
 
         return this.colour;
     }
@@ -86,26 +87,17 @@ public class Player {
      * Gets the player location.
      * @return player location.
      */
-    public int[] getPlayerLocation() {
+    public int[] getCurrentLocation() {
 
         return this.location;
     }
 
     /**
-     * Gets the player's last turn.
-     * @return Player's last turn.
+     * Gets the player's past two turns.
+     * @return Player's last two turns.
      */
-    public int[] getLastTurn() {
-
-        return this.prevLocation;
-    }
-
-    /**
-     * Gets the player 2 turns back.
-     * @return Player last last turn.
-     */
-    public int[] getLastLastTurn() {
-        return this.prevPrevLocation;
+    public int[] getPrevTwoTurns() {
+        return this.prevTwoTurns;
     }
 
     /**

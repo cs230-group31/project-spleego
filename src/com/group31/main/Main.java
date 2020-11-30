@@ -69,8 +69,8 @@ public class Main {
         } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-        // TODO: HANDLE THIS!!!
-        return null;
+        Logger.log("Failed to save settings to a file, using default settings.", Logger.Level.WARNING);
+        return DefaultSettings.getDefaultSettings();
     }
 
     /**
@@ -95,7 +95,7 @@ public class Main {
      */
     private static Leaderboard initLeaderBoard() {
         // TODO: load stats, initialises, pass back
-        return new Leaderboard("");
+        return null; //new Leaderboard("");
     }
 
     /**
