@@ -19,11 +19,26 @@ public class SilkBag {
      * Maximum amount of tiles a player can hold.
      */
     private final int maxTiles = 15;
+    /**
+     * The lowest number that represents a floor tile in tiles.
+     */
     private static final int MIN_FLOOR_TILE = 1;
+    /**
+     * The highest number that represents a floor tile in tiles.
+     */
     private static final int MAX_FLOOR_TILE = 10;
     //TODO: take from settings not here
+    /**
+     * The path to the folder containing all tile images.
+     */
     private static final String TILE_IMAGE_URL = "resources/images/tiles/";
+    /**
+     * The width of a tile image in pixels.
+     */
     private static final double TILE_WIDTH = 64.0;
+    /**
+     * The height of a tile image in pixels.
+     */
     private static final double TILE_HEIGHT = 64.0;
     /**
      * Keeps track of every tile.
@@ -60,17 +75,21 @@ public class SilkBag {
         return tile;
     }
 
+    /**
+     * Generates a random floor tile.
+     * @return the floor tile
+     */
     public static Tile genFloorTile() {
         Random random = new Random();
         int ranInt = random.nextInt(MAX_FLOOR_TILE - MIN_FLOOR_TILE) + MIN_FLOOR_TILE;
         Image tileImage = null;
         try {
-            tileImage = new Image(new FileInputStream(TILE_IMAGE_URL+ranInt+".png"),
+            tileImage = new Image(new FileInputStream(TILE_IMAGE_URL + ranInt + ".png"),
                     TILE_WIDTH, TILE_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
             Logger.log("Could not find tile image", Logger.Level.ERROR);
         }
-        return new Tile(ranInt, false,tileImage);
+        return new Tile(ranInt, false, tileImage);
     }
 
     // TODO: Rethink this!
