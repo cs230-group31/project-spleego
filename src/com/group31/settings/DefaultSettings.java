@@ -1,7 +1,5 @@
 package com.group31.settings;
 
-import org.omg.CORBA.UserException;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
