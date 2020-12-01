@@ -23,9 +23,9 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+
 public class MainMenu extends Application {
     /**
      * Height of the window in pixels.

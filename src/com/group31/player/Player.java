@@ -3,7 +3,6 @@ package com.group31.player;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 

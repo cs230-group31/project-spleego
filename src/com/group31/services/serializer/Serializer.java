@@ -1,9 +1,10 @@
-package com.group31.services;
+package com.group31.services.serializer;
 
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
+import com.group31.services.FileManager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -65,7 +66,10 @@ public class Serializer {
                 FileManager.setDirectory(SERIALIZED_OBJECTS_FILE, false);
                 String fileName = String.format("%s.%s", identifier, FILE_EXTENSION);
                 if (FileManager.fileExists(fileName)) {
-                    return (Player) FileManager.deserializeRead(identifier);
+                    identifiers.remove(identifier);
+                    Player playerToReturn = (Player) FileManager.deserializeRead(identifier);
+                    FileManager.deleteFile(String.format("%s.ser", identifier));
+                    return playerToReturn;
                 } else {
                     throw new FileNotFoundException("File to deserialize was not found.");
                 }

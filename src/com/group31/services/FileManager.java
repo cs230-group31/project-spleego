@@ -1,5 +1,6 @@
 package com.group31.services;
 
+import com.group31.exceptions.NoFilesInDir;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.logger.Logger;
 import java.io.FileNotFoundException;
@@ -123,6 +124,61 @@ public class FileManager {
         fileIn.close();
         Logger.log(String.format("Successfully deserialized %s from %s.", identifier, directory), Logger.Level.INFO);
         return object;
+    }
+
+    /**
+     * Gets all files in a directory.
+     * @return All files in the set directory.
+     * @throws NoSuchDirectory If the directory is not set.
+     */
+    public static File[] getAllFilesInDir() throws NoSuchDirectory {
+        checkDirectorySet();
+        return new File(directory).listFiles();
+    }
+
+    /**
+     * Gets all files in a directory which name names that contain the search term.
+     * @param searchTerm Term to look for in each file name.
+     * @return Files that have the search term in their name.
+     * @throws NoSuchDirectory If the directory has not been set/cannot be found.
+     * @throws NoFilesInDir If there are no files in the directory.
+     */
+    public static File[] getAllFilesInDir(String searchTerm) throws NoSuchDirectory, NoFilesInDir {
+        checkDirectorySet();
+        File[] files = new File(directory).listFiles();
+        if (files.length < 1) {
+            throw new NoFilesInDir(String.format("No files found in %s", directory));
+        }
+        ArrayList<File> matchingFiles = new ArrayList<>();
+        for (File file : files) {
+            if (file.getName().toLowerCase().contains(searchTerm)) {
+                matchingFiles.add(file);
+            }
+        }
+        return matchingFiles.toArray(new File[0]);
+    }
+
+    /**
+     * Deletes a file.
+     * @param fileName Name of file to delete.
+     * @throws NoSuchDirectory If the directory has not been set.
+     * @throws FileNotFoundException If the file cannot be found.
+     */
+    public static void deleteFile(String fileName) throws NoSuchDirectory, FileNotFoundException {
+        checkDirectorySet();
+
+        String dirFileName = String.format("%s%s", directory, fileName);
+        if (Files.exists(Paths.get(dirFileName))) {
+            File fileToDelete = new File(dirFileName);
+            if (fileToDelete.delete()) {
+                Logger.log(String.format("%s was deleted from %s.", fileName, directory), Logger.Level.INFO);
+            } else {
+                Logger.log(String.format("Failed to delete %s from %s.", fileName, directory), Logger.Level.ERROR);
+            }
+        } else {
+            throw new FileNotFoundException(String.format(
+                    "Failed to delete %s from %s. File does not exist", fileName, directory));
+        }
     }
 
     /**
