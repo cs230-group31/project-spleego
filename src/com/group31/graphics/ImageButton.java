@@ -8,6 +8,9 @@ import javafx.scene.image.ImageView;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * @author aaron
+ */
 public class ImageButton extends Parent {
     /**
      * Height of the button in pixels.

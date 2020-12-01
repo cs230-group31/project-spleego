@@ -26,6 +26,9 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
+/**
+ * @author aaron
+ */
 public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
