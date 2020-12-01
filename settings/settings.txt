@@ -22,4 +22,4 @@ title_image_url;resources/images/title.png
 title_image_height;315
 settings_button_pressed;resources/images/settings pressed.png
 font_family;Ink Free
-button_spacing;15
+button_spacing;10

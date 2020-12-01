@@ -19,7 +19,7 @@ public class DefaultSettings {
 
         defaultSettings.put("window_height", "720");
         defaultSettings.put("window_width", "1280");
-        defaultSettings.put("button_spacing", "15");
+        defaultSettings.put("button_spacing", "10");
         defaultSettings.put("menu_image_url", "resources/images/background 1280 x 720.png");
         defaultSettings.put("title_image_url", "resources/images/title.png");
         defaultSettings.put("title_image_height", "315");

@@ -26,7 +26,7 @@ public class Game extends Application {
     /**
      * Space between tiles in pixels.
      */
-    private static final double TILE_SPACING = 5.0;
+    private static final double TILE_SPACING = 3.0;
     /**
      * File Path for the table background image.
      */
