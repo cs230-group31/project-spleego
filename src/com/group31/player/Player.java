@@ -5,6 +5,7 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Player implements Serializable {
 
@@ -39,6 +40,11 @@ public class Player implements Serializable {
     private final ArrayList<Tile> hand = new ArrayList<>();
 
     /**
+     * UUID of an instance of the Player class.
+     */
+    private final String instanceUuid;
+
+    /**
      * Stores the previous two turns. (Where they moved from during the past two turns).
      */
     private int[] prevTwoTurns;
@@ -55,6 +61,7 @@ public class Player implements Serializable {
         this.sprite = sprite;
         this.colour = colour;
         this.startingLocation = startingLocation;
+        this.instanceUuid = UUID.randomUUID().toString();
     }
 
     /**
@@ -107,6 +114,14 @@ public class Player implements Serializable {
      */
     public void playTile(Tile tile, int insertX, int insertY) {
         // TODO: Put tile on gameboard.
+    }
+
+    /**
+     * Gets this instance's UUID.
+     * @return This instance's UUID.
+     */
+    public String getUuid() {
+        return this.instanceUuid;
     }
 
     // TODO: This should go in the controller.

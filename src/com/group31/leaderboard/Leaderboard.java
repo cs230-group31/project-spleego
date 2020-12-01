@@ -56,7 +56,7 @@ public class Leaderboard {
      */
     private static void saveLeaderboard() {
         for (Player player : players) {
-            String identifier = String.format("Player_%s", player.getUuid);
+            String identifier = String.format("Player_%s", player.getUuid());
             Serializer.serialize(player, identifier);
         }
     }
