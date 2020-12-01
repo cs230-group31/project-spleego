@@ -25,6 +25,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public class MainMenu extends Application {
     /**
@@ -186,11 +187,17 @@ public class MainMenu extends Application {
         titleBox.setAlignment(Pos.CENTER);
         titleBox.getChildren().add(new ImageView(titleImg));
 
-        // TODO: catch if no response from server.
         FlowPane motdBox = new FlowPane();
         ApiRequest request = new ApiRequest(MOTD_URL_BASE, PUZZLE_ROUTE);
-        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
-        Text motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
+        Text motd = new Text(String.format("Fetching response from %s.", MOTD_URL_BASE));
+        try {
+            String res = request.getResponse();
+            String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
+            motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
+        } catch (IOException e) {
+            Logger.log(String.format("No response from %s.", MOTD_URL_BASE), Logger.Level.ERROR);
+            motd = new Text(String.format("No response from %s.", MOTD_URL_BASE));
+        }
         motd.setFont(new Font(FONT_FAMILY, FONT_SIZE));
         motd.setFill(Color.WHITE);
         motd.setStroke(Color.DARKRED);
@@ -206,15 +213,6 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    ///**
-     //* Updates the size of the window.
-    //*@param stage JavaFX Stage of the main window.
-     //*/
-    /*
-    public void updateRes(final Stage stage) {
-        stage.setHeight();
-    }
-    */
 
     /**
      * Launches the GUI.
