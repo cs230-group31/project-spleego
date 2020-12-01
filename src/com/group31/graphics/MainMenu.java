@@ -27,6 +27,9 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+/**
+ * @author aaron
+ */
 public class MainMenu extends Application {
     /**
      * Height of the window in pixels.

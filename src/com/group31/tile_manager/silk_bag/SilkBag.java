@@ -1,12 +1,14 @@
 package com.group31.tile_manager.silk_bag;
 
 import com.group31.logger.Logger;
+import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 /**
@@ -14,11 +16,6 @@ import java.util.Random;
  * @author Alvaro
  */
 public class SilkBag {
-    //TODO: how much is maxtile?
-    /**
-     * Maximum amount of tiles a player can hold.
-     */
-    private final int maxTiles = 15;
     /**
      * The lowest number that represents a floor tile in tiles.
      */
@@ -44,6 +41,10 @@ public class SilkBag {
      * Keeps track of every tile.
      */
     private final ArrayList<Tile> tiles;
+    /**
+     * Stores the routings of each FloorTile for use in the FloorTile constructor.
+     */
+    private static  HashMap<Integer, String> tileRoutings = new HashMap<>();
 //    /**
 //     * Stores the weighting (chance) for each tile.
 //     */
@@ -56,14 +57,30 @@ public class SilkBag {
     //TODO: SilkBag does more than generate random tiles, it is the controller for tile distribution
     /**
      * Silk bag constructor.
-     * @param tiles Arraylist of tiles to put into the silkbag.
+     * @param tiles ArrayList of tiles to put into the SilkBag.
+     * @param maxTiles amount of tiles in the SilkBag.
      */
-    public SilkBag(ArrayList<Tile> tiles) {
+    public SilkBag(ArrayList<Tile> tiles, int maxTiles) {
         this.tiles = tiles;
         for (int index = 0; index < maxTiles; index++) {
-            tiles.add(genTile());
+            tiles.add(genFloorTile());
         }
+
+//        // TODO: Settings
+//        tileRoutings = new HashMap<>();
+//        tileRoutings.put(0, "abcd");
+//        tileRoutings.put(1, "bd");
+//        tileRoutings.put(2, "ac");
+//        tileRoutings.put(3, "ab");
+//        tileRoutings.put(4, "bc");
+//        tileRoutings.put(5, "cd");
+//        tileRoutings.put(6, "da");
+//        tileRoutings.put(7, "abc");
+//        tileRoutings.put(8, "bcd");
+//        tileRoutings.put(9, "cda");
+//        tileRoutings.put(10, "dab");
     }
+
     /**
      * Generates a Tile.
      * @return a Tile
@@ -79,7 +96,7 @@ public class SilkBag {
      * Generates a random floor tile.
      * @return the floor tile
      */
-    public static Tile genFloorTile() {
+    public Tile genFloorTile() {
         Random random = new Random();
         int ranInt = random.nextInt(MAX_FLOOR_TILE - MIN_FLOOR_TILE) + MIN_FLOOR_TILE;
         Image tileImage = null;
@@ -89,7 +106,15 @@ public class SilkBag {
         } catch (FileNotFoundException e) {
             Logger.log("Could not find tile image", Logger.Level.ERROR);
         }
-        return new Tile(ranInt, false, tileImage);
+        return new FloorTile(tileRoutings.get(ranInt), ranInt, tileImage);
+    }
+
+    /**
+     * Takes a tile and places it in the SilkBag.
+     * @param tile the tile to add
+     */
+    public void addTile(Tile tile) {
+        tiles.add(tile);
     }
 
     // TODO: Rethink this!

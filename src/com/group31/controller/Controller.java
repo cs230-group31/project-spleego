@@ -7,30 +7,27 @@ import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
 public class Controller {
-
+    /**
+     * Instance of the controller.
+     */
+    private static Controller instance = null;
     /**
      * Array of players that are playing the game.
      */
-    private final Player[] players;
+    private Player[] players;
     /**
      * Instance of the gameboard.
      */
-    private final Gameboard gameboard;
+    private Gameboard gameboard;
     /**
      * Instance of the silkbag.
      */
-    private final SilkBag silkbag;
+    private SilkBag silkbag;
 
     /**
      * Controller deals with game logic, loading and saving.
-     * @param players Array of players playing the game.
-     * @param gameboard The game board for a game.
-     * @param silkbag The silk bag for a game.
      */
-    public Controller(Player[] players, Gameboard gameboard, SilkBag silkbag) {
-        this.players = players;
-        this.gameboard = gameboard;
-        this.silkbag = silkbag;
+    private Controller() {
     }
 
     /**
@@ -85,4 +82,32 @@ public class Controller {
         // save the game passing info to the file reader
     }
 
+    /**
+     * @return the GameBoard
+     */
+    public Gameboard getGameboard() {
+        return gameboard;
+    }
+
+    /**
+     * This instance of Controller.
+     * @return the current Controller instance
+     */
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
+        }
+        return instance;
+    }
+
+    /**
+     * @param players Array of players playing the game.
+     * @param gameboard The game board for a game.
+     * @param silkbag The silk bag for a game.
+     */
+    public void init(Player[] players, Gameboard gameboard, SilkBag silkbag) {
+        this.players = players;
+        this.gameboard = gameboard;
+        this.silkbag = silkbag;
+    }
 }

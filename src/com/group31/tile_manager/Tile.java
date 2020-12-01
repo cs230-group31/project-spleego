@@ -18,25 +18,23 @@ public class Tile {
      */
     private static final String TILES_LOCATION = "resources/images/tiles";
     /**
-     * holds the routing of the tile.
-     */
-    private String routing;
-    /**
-     * Tile X Coordinate.
-     */
-    private final int xCoord = 0;
-    /**
-     * Tile Y Coordinate.
-     */
-    private final int yCoord = 1;
-    /**
      * Identifies the tile.
      */
     private final int id;
-    /**
-     * Stores coords of the tile.
-     */
-    private int[] coord;
+
+    //TODO: first off pick one, then put it in floor tile becasue action tiles do not have coordinates
+//    /**
+//     * Tile X Coordinate.
+//     */
+//    private final int xCoord = 0;
+//    /**
+//     * Tile Y Coordinate.
+//     */
+//    private final int yCoord = 1;
+//    /**
+//     * Stores coords of the tile.
+//     */
+//    private int[] coord;
 
     /**
      * true if action file, false if not.
@@ -119,13 +117,6 @@ public class Tile {
     public Image getCurrentImage() {
         return currentImage;
     }
-
-    /*/**
-     * @return the routing of the tile
-     *//*
-    public String getRouting() {
-        return routing;
-    }*/
 
     /*/**
      * @return the tile's coords

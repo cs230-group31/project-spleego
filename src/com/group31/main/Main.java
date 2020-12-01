@@ -38,15 +38,15 @@ public class Main {
         Leaderboard leaderboard = initLeaderBoard();
         SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
+        gameboard.genBoard(silkbag);
         Player[] players = initPlayers();
-
-        // start GUI
-        String[] launchArgs = {};
-        MainMenu.run(launchArgs);
 
         //init the controller
         initController(players, gameboard, silkbag);
 
+        // start GUI
+        String[] launchArgs = {};
+        MainMenu.run(launchArgs);
     }
 
     /**
@@ -104,7 +104,7 @@ public class Main {
      */
     private static SilkBag initSilkBag() {
         // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        return new SilkBag(new ArrayList<Tile>());
+        return new SilkBag(new ArrayList<Tile>(), 10);
     }
 
     /**
@@ -113,7 +113,9 @@ public class Main {
      */
     private static Gameboard initGameboard() {
         // TODO: loads size, saved state if any, initialises, pass back
-        return new Gameboard();
+        int boardRows = 5;
+        int boardCols = 5;
+        return new Gameboard(boardRows, boardCols);
     }
 
     /**
@@ -146,7 +148,7 @@ public class Main {
                                        SilkBag silkbag) {
 
         // start the game.
-        Controller controller = new Controller(players, gameboard, silkbag);
-
+        Controller controller = Controller.getInstance();
+        controller.init(players, gameboard, silkbag);
     }
 }
