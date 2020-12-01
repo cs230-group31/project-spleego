@@ -5,28 +5,51 @@ import com.group31.logger.Logger;
 
 /**
  * This class is subclass of Tile (no action tile).
+ * @author aaron
  */
 public class FloorTile extends Tile {
     /**
      * holds the routing of the tile.
      */
-    private String routing;
-    /**
-     * holds the image of the tile.
-     */
-    private Image currentImage;
+    private final String routing;
+
+//    /**
+//     * <PLEASE ADD JAVADOC HERE>.
+//     * @param routing
+//     * @param id
+//     * @param coord
+//     * @param currentImage
+//     */
+//    public FloorTile(String routing, int id, int[] coord, Image currentImage) {
+//        super(id, false, currentImage);
+//        this.routing = routing;
+//        Logger.log("Floor tile created", Logger.Level.INFO);
+//    }
 
     /**
-     * <PLEASE ADD JAVADOC HERE>.
-     * @param routing
-     * @param id
-     * @param coord
-     * @param currentImage
+     *
+     * @param routing routing (valid connections to other tiles) of the tile
+     * @param id unique id of the tile
+     * @param currentImage the image the tile should display
      */
-    public FloorTile(String routing, int id, int[] coord, Image currentImage) {
-        super(id, false, currentImage);
-        this.routing = routing;
-        Logger.log("Floor tile created", Logger.Level.INFO);
+    public FloorTile(String routing, int id, Image currentImage) {
+    super(id, false, currentImage);
+    this.routing = routing;
+    Logger.log(this.getId() + " tile created, routing: " + this.getRouting(), Logger.Level.INFO);
+    }
+
+    /**
+     * @return the routing of this tile
+     */
+    public String getRouting() {
+        return routing;
+    }
+
+    /**
+     * @return image of the tile.
+     */
+    public Image getCurrentImage() {
+        return super.getCurrentImage();
     }
 
 //    /**
