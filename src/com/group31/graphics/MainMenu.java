@@ -34,108 +34,103 @@ public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
      */
-    private static final double WINDOW_HEIGHT = Double.parseDouble(Settings.getAllSettings().get("window_height"));
+    private static final double WINDOW_HEIGHT = Settings.getDouble("window_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double WINDOW_WIDTH = Double.parseDouble(Settings.getAllSettings().get("window_width"));
+    private static final double WINDOW_WIDTH = Settings.getDouble("window_width");
     /**
      * Space between buttons in pixels.
      */
-    private static final double BUTTON_SPACING = Double.parseDouble(Settings.getAllSettings().get("button_spacing"));
+    private static final double BUTTON_SPACING = Settings.getDouble("button_spacing");
     /**
      * File Path for the menu background image.
      */
-    private static final String MENU_IMAGE_URL = Settings.getAllSettings().get("menu_image_url");
+    private static final String MENU_IMAGE_URL = Settings.get("menu_image_url");
     /**
      * File Path for the title image.
      */
-    private static final String TITLE_IMAGE_URL = Settings.getAllSettings().get("title_image_url");
+    private static final String TITLE_IMAGE_URL = Settings.get("title_image_url");
     /**
      * Height of the title image in pixels.
      */
-    private static final double TITLE_IMAGE_HEIGHT = Double.parseDouble(
-            Settings.getAllSettings().get("title_image_height"));
+    private static final double TITLE_IMAGE_HEIGHT = Settings.getDouble("title_image_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double TITLE_IMAGE_WIDTH = Double.parseDouble(
-            Settings.getAllSettings().get("title_image_width"));
+    private static final double TITLE_IMAGE_WIDTH = Settings.getDouble("title_image_width");
     /**
      * Name of the font.
      */
-    private static final String FONT_FAMILY = Settings.getAllSettings().get("font_family");
+    private static final String FONT_FAMILY = Settings.get("font_family");
     /**
      * Size of the font.
      */
-    private static final double FONT_SIZE = Double.parseDouble(Settings.getAllSettings().get("font_size"));
+    private static final double FONT_SIZE = Settings.getDouble("font_size");
     /**
      * Stroke surrounding the font in pixels.
      */
-    private static final double FONT_STROKE = Double.parseDouble(Settings.getAllSettings().get("font_stroke"));
+    private static final double FONT_STROKE = Settings.getDouble("font_stroke");
     /**
      * Width of the window in pixels.
      */
-    private static final double TEXT_WRAPPING_WIDTH = Double.parseDouble(
-            Settings.getAllSettings().get("text_wrapping_width"));
+    private static final double TEXT_WRAPPING_WIDTH = Settings.getDouble("text_wrapping_width");
     /**
      * File Path for the unpressed `START` button.
      */
-    private static final String START_UNPRESSED_URL = Settings.getAllSettings().get("start_button_unpressed_url");
+    private static final String START_UNPRESSED_URL = Settings.get("start_button_unpressed_url");
     /**
      * File Path for the pressed `START` button.
      */
-    private static final String START_PRESSED_URL = Settings.getAllSettings().get("start_button_pressed_url");
+    private static final String START_PRESSED_URL = Settings.get("start_button_pressed_url");
     /**
      * File Path for the unpressed `LEADERBOARD` button.
      */
-    private static final String LEADERBOARD_UNPRESSED_URL = Settings.getAllSettings().get(
-            "leaderboard_button_unpressed_url");
+    private static final String LEADERBOARD_UNPRESSED_URL = Settings.get("leaderboard_button_unpressed_url");
     /**
      * File Path for the pressed `LEADERBOARD` button.
      */
-    private static final String LEADERBOARD_PRESSED_URL = Settings.getAllSettings().get(
-            "leaderboard_button_pressed_url");
+    private static final String LEADERBOARD_PRESSED_URL = Settings.get("leaderboard_button_pressed_url");
     /**
      * File Path for the unpressed `HOW TO PLAY` button.
      */
-    private static final String HOW_TO_PLAY_UNPRESSED_URL = Settings.getAllSettings().get("how_play_button_unpressed");
+    private static final String HOW_TO_PLAY_UNPRESSED_URL = Settings.get("how_play_button_unpressed");
     /**
      * File Path for the pressed `HOW TO PLAY` button.
      */
-    private static final String HOW_TO_PLAY_PRESSED_URL = Settings.getAllSettings().get("how_play_button_pressed");
+    private static final String HOW_TO_PLAY_PRESSED_URL = Settings.get("how_play_button_pressed");
     /**
      * File Path for the unpressed `SETTINGS` button.
      */
-    private static final String SETTINGS_UNPRESSED_URL = Settings.getAllSettings().get("settings_button_unpressed");
+    private static final String SETTINGS_UNPRESSED_URL = Settings.get("settings_button_unpressed");
     /**
      * File Path for the pressed `SETTINGS` button.
      */
-    private static final String SETTINGS_PRESSED_URL = Settings.getAllSettings().get("settings_button_pressed");
+    private static final String SETTINGS_PRESSED_URL = Settings.get("settings_button_pressed");
     /**
      * File Path for the unpressed `EXIT` button.
      */
-    private static final String EXIT_UNPRESSED_URL = Settings.getAllSettings().get("exit_button_unpressed");
+    private static final String EXIT_UNPRESSED_URL = Settings.get("exit_button_unpressed");
     /**
      * File Path for the pressed `EXIT` button.
      */
-    private static final String EXIT_PRESSED_URL = Settings.getAllSettings().get("exit_button_pressed");
+    private static final String EXIT_PRESSED_URL = Settings.get("exit_button_pressed");
     /**
      * URL for MOTD request.
      */
-    private static final String MOTD_URL_BASE = Settings.getAllSettings().get("api_url_base");
+    private static final String MOTD_URL_BASE = Settings.get("api_url_base");
     /**
      * Puzzle route.
      */
-    private static final String PUZZLE_ROUTE = Settings.getAllSettings().get("puzzle_route");
+    private static final String PUZZLE_ROUTE = Settings.get("puzzle_route");
     /**
      * Message route.
      */
-    private static final String MESSAGE_ROUTE = Settings.getAllSettings().get("message_route");
+    private static final String MESSAGE_ROUTE = Settings.get("message_route");
     /**
      * Token identifier.
      */
-    private static final String TOKEN_IDENTIFIER = Settings.getAllSettings().get("token_identifier");
+    private static final String TOKEN_IDENTIFIER = Settings.get("token_identifier");
 
     /**
      * Takes the main stage and displays a background with buttons.

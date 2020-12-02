@@ -1,7 +1,5 @@
 package com.group31.services;
 
-import com.group31.logger.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;

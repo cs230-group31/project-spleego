@@ -2,6 +2,7 @@ package com.group31.graphics;
 
 import com.group31.controller.Controller;
 import com.group31.logger.Logger;
+import com.group31.settings.Settings;
 import com.group31.tile_manager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -28,15 +29,15 @@ import java.util.ArrayList;
  * @author Emily
  */
 public class Game extends Application {
-    //TODO: SETTINGS
+
     /**
      * Space between tiles in pixels.
      */
-    private static final double TILE_SPACING = 3.0;
+    private static final double TILE_SPACING = Settings.getDouble("tile_spacing");
     /**
      * File Path for the table background image.
      */
-    private static final String TABLE_IMAGE_URL = "resources/images/table.png";
+    private static final String TABLE_IMAGE_URL = Settings.get("table_image_url");
     /**
      * Represents the board of tiles.
      */
