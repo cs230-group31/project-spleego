@@ -87,6 +87,7 @@ public class Tile {
     /**
      * Class constructor for generic Tile.
      * Use this for storing tiles inside SilkBag.
+     * @param routing sides that this tile connects
      * @param id id of the tile
      * @param actionTile true if this tile is an ActionTile
      * @param currentImage image to display for that tile
