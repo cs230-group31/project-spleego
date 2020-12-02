@@ -17,12 +17,7 @@ public class FireTile extends ActionTile {
      */
     private final int weight;
 
-    /**
-     * class constructor for FireTile.
-     * @param id id of the tile
-     * @param weight weight of the tile
-     */
-    public FireTile(int id, int weight) {
+    public FireTile(int id, int weight){
         super(id, weight);
         this.id = 11;
         this.weight = 10;

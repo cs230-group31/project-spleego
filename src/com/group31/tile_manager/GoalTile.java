@@ -6,14 +6,8 @@ import javafx.scene.image.Image;
 /**
  * This represents the Goal Tile.
  */
-public class GoalTile extends FloorTile {
-    /**
-     *  Constructor for GoalTile.
-     * @param routing  sides that this tile connects
-     * @param id id of the tile
-     * @param coord keeps the coordinates of the tile on the gameboard
-     * @param currentImage image to display for that tile
-     */
+public class GoalTile extends FloorTile{
+
     public GoalTile(String routing, int id, int[] coord, Image currentImage) {
         super(routing, id, coord, currentImage);
     }
