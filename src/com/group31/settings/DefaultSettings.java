@@ -1,5 +1,6 @@
 package com.group31.settings;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class DefaultSettings {
@@ -18,7 +19,7 @@ public class DefaultSettings {
 
         defaultSettings.put("window_height", "720");
         defaultSettings.put("window_width", "1280");
-        defaultSettings.put("button_spacing", "15");
+        defaultSettings.put("button_spacing", "10");
         defaultSettings.put("menu_image_url", "resources/images/background 1280 x 720.png");
         defaultSettings.put("title_image_url", "resources/images/title.png");
         defaultSettings.put("title_image_height", "315");
@@ -38,7 +39,35 @@ public class DefaultSettings {
         defaultSettings.put("exit_button_unpressed", "resources/images/exit unpressed.png");
         defaultSettings.put("exit_button_pressed", "resources/images/exit pressed.png");
 
+        defaultSettings.put("tile_route_id_0", "abcd");
+        defaultSettings.put("tile_route_id_1", "bd");
+        defaultSettings.put("tile_route_id_2", "ac");
+        defaultSettings.put("tile_route_id_3", "ab");
+        defaultSettings.put("tile_route_id_4", "bc");
+        defaultSettings.put("tile_route_id_5", "cd");
+        defaultSettings.put("tile_route_id_6", "da");
+        defaultSettings.put("tile_route_id_7", "abc");
+        defaultSettings.put("tile_route_id_8", "bcd");
+        defaultSettings.put("tile_route_id_9", "cda");
+        defaultSettings.put("tile_route_id_10", "dab");
+
+        defaultSettings.put("tile_spacing", "3");
+        defaultSettings.put("table_image_url", "resources/images/table.png");
+
         return defaultSettings;
+    }
+
+    /**
+     * Gets the default settings as an array.
+     * @return Array of settings.
+     */
+    public static String[] getDefaultSettingsArray() {
+        ArrayList<String> settings = new ArrayList<>();
+        getDefaultSettings().forEach((k, v) -> {
+            settings.add(String.format("%s;%s", k, v));
+        });
+        String[] settingsArray = new String[settings.size()];
+        return settings.toArray(settingsArray);
     }
 
 }

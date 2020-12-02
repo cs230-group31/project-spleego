@@ -3,6 +3,7 @@ package com.group31.graphics;
 import com.group31.logger.Logger;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
+import com.group31.settings.Settings;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.geometry.Pos;
@@ -22,110 +23,114 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+
+/**
+ * @author aaron
+ */
 public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
      */
-    private static final double WINDOW_HEIGHT = 720.0;
+    private static final double WINDOW_HEIGHT = Settings.getDouble("window_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double WINDOW_WIDTH = 1280.0;
+    private static final double WINDOW_WIDTH = Settings.getDouble("window_width");
     /**
      * Space between buttons in pixels.
      */
-    private static final double BUTTON_SPACING = 15.0;
+    private static final double BUTTON_SPACING = Settings.getDouble("button_spacing");
     /**
      * File Path for the menu background image.
      */
-    private static final String MENU_IMAGE_URL = "resources/images/background 1280 x 720.png";
+    private static final String MENU_IMAGE_URL = Settings.get("menu_image_url");
     /**
      * File Path for the title image.
      */
-    private static final String TITLE_IMAGE_URL = "resources/images/title.png";
+    private static final String TITLE_IMAGE_URL = Settings.get("title_image_url");
     /**
      * Height of the title image in pixels.
      */
-    private static final double TITLE_IMAGE_HEIGHT = 315.0;
+    private static final double TITLE_IMAGE_HEIGHT = Settings.getDouble("title_image_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double TITLE_IMAGE_WIDTH = 210.0;
+    private static final double TITLE_IMAGE_WIDTH = Settings.getDouble("title_image_width");
     /**
      * Name of the font.
      */
-    private static final String FONT_FAMILY = "Ink Free";
+    private static final String FONT_FAMILY = Settings.get("font_family");
     /**
      * Size of the font.
      */
-    private static final double FONT_SIZE = 40.0;
+    private static final double FONT_SIZE = Settings.getDouble("font_size");
     /**
      * Stroke surrounding the font in pixels.
      */
-    private static final double FONT_STROKE = 1.0;
+    private static final double FONT_STROKE = Settings.getDouble("font_stroke");
     /**
      * Width of the window in pixels.
      */
-    private static final double TEXT_WRAPPING_WIDTH = 1240.0;
+    private static final double TEXT_WRAPPING_WIDTH = Settings.getDouble("text_wrapping_width");
     /**
      * File Path for the unpressed `START` button.
      */
-    private static final String START_UNPRESSED_URL = "resources/images/start unpressed.png";
+    private static final String START_UNPRESSED_URL = Settings.get("start_button_unpressed_url");
     /**
      * File Path for the pressed `START` button.
      */
-    private static final String START_PRESSED_URL = "resources/images/start pressed.png";
+    private static final String START_PRESSED_URL = Settings.get("start_button_pressed_url");
     /**
      * File Path for the unpressed `LEADERBOARD` button.
      */
-    private static final String LEADERBOARD_UNPRESSED_URL = "resources/images/leaderboard unpressed.png";
+    private static final String LEADERBOARD_UNPRESSED_URL = Settings.get("leaderboard_button_unpressed_url");
     /**
      * File Path for the pressed `LEADERBOARD` button.
      */
-    private static final String LEADERBOARD_PRESSED_URL = "resources/images/leaderboard pressed.png";
+    private static final String LEADERBOARD_PRESSED_URL = Settings.get("leaderboard_button_pressed_url");
     /**
      * File Path for the unpressed `HOW TO PLAY` button.
      */
-    private static final String HOW_TO_PLAY_UNPRESSED_URL = "resources/images/how to play unpressed.png";
+    private static final String HOW_TO_PLAY_UNPRESSED_URL = Settings.get("how_play_button_unpressed");
     /**
      * File Path for the pressed `HOW TO PLAY` button.
      */
-    private static final String HOW_TO_PLAY_PRESSED_URL = "resources/images/how to play pressed.png";
+    private static final String HOW_TO_PLAY_PRESSED_URL = Settings.get("how_play_button_pressed");
     /**
      * File Path for the unpressed `SETTINGS` button.
      */
-    private static final String SETTINGS_UNPRESSED_URL = "resources/images/settings unpressed.png";
+    private static final String SETTINGS_UNPRESSED_URL = Settings.get("settings_button_unpressed");
     /**
      * File Path for the pressed `SETTINGS` button.
      */
-    private static final String SETTINGS_PRESSED_URL = "resources/images/settings pressed.png";
+    private static final String SETTINGS_PRESSED_URL = Settings.get("settings_button_pressed");
     /**
      * File Path for the unpressed `EXIT` button.
      */
-    private static final String EXIT_UNPRESSED_URL = "resources/images/exit unpressed.png";
+    private static final String EXIT_UNPRESSED_URL = Settings.get("exit_button_unpressed");
     /**
      * File Path for the pressed `EXIT` button.
      */
-    private static final String EXIT_PRESSED_URL = "resources/images/exit pressed.png";
+    private static final String EXIT_PRESSED_URL = Settings.get("exit_button_pressed");
     /**
      * URL for MOTD request.
      */
-    private static final String MOTD_URL_BASE = "http://cswebcat.swansea.ac.uk/";
+    private static final String MOTD_URL_BASE = Settings.get("api_url_base");
     /**
      * Puzzle route.
      */
-    private static final String PUZZLE_ROUTE = "puzzle";
+    private static final String PUZZLE_ROUTE = Settings.get("puzzle_route");
     /**
      * Message route.
      */
-    private static final String MESSAGE_ROUTE = "message";
+    private static final String MESSAGE_ROUTE = Settings.get("message_route");
     /**
      * Token identifier.
      */
-    private static final String TOKEN_IDENTIFIER = "?solution=";
+    private static final String TOKEN_IDENTIFIER = Settings.get("token_identifier");
 
     /**
      * Takes the main stage and displays a background with buttons.
@@ -182,8 +187,15 @@ public class MainMenu extends Application {
 
         FlowPane motdBox = new FlowPane();
         ApiRequest request = new ApiRequest(MOTD_URL_BASE, PUZZLE_ROUTE);
-        String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
-        Text motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
+        Text motd = new Text(String.format("Fetching response from %s.", MOTD_URL_BASE));
+        try {
+            String res = request.getResponse();
+            String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
+            motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
+        } catch (IOException e) {
+            Logger.log(String.format("No response from %s.", MOTD_URL_BASE), Logger.Level.ERROR);
+            motd = new Text(String.format("No response from %s.", MOTD_URL_BASE));
+        }
         motd.setFont(new Font(FONT_FAMILY, FONT_SIZE));
         motd.setFill(Color.WHITE);
         motd.setStroke(Color.DARKRED);
@@ -199,15 +211,6 @@ public class MainMenu extends Application {
         stage.setScene(scene);
         stage.show();
     }
-    ///**
-     //* Updates the size of the window.
-    //*@param stage JavaFX Stage of the main window.
-     //*/
-    /*
-    public void updateRes(final Stage stage) {
-        stage.setHeight();
-    }
-    */
 
     /**
      * Launches the GUI.

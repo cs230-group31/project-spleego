@@ -51,6 +51,32 @@ public class Settings {
         return settings;
     }
     /**
+     * Gets a setting.
+     * @param key Setting name.
+     * @return Setting value.
+     */
+    public static String get(String key) {
+        if (settings.containsKey(key)) {
+            return settings.get(key);
+        }
+        // TODO: find a better way to handle this.
+        return null;
+    }
+
+    /**
+     * Gets a setting and parses it to a double.
+     * @param key Setting name.
+     * @return Setting value.
+     */
+    public static Double getDouble(String key) {
+        if (settings.containsKey(key)) {
+            return Double.parseDouble(settings.get(key));
+        }
+        // TODO: find a better way to handle this.
+        return 1.0;
+    }
+
+    /**
      * Writes all the settings to the console.
      * For debugging purposes only!
      */

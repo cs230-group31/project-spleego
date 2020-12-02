@@ -3,43 +3,31 @@ package com.group31.controller;
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
-import com.group31.services.FileManager;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
 public class Controller {
-
     /**
-     * Array of players.
+     * Instance of the controller.
+     */
+    private static Controller instance = null;
+    /**
+     * Array of players that are playing the game.
      */
     private Player[] players;
     /**
-     * The game board.
+     * Instance of the gameboard.
      */
     private Gameboard gameboard;
     /**
-     * The silk bag.
+     * Instance of the silkbag.
      */
     private SilkBag silkbag;
-    /**
-     * Legal place points for tiles on the game board.
-     */
-    private int[] permittedPlacePoint;
-    /**
-     * The file manager.
-     */
-    private FileManager fileManager;
 
     /**
      * Controller deals with game logic, loading and saving.
-     * @param players Array of players playing the game.
-     * @param gameboard The game board for a game.
-     * @param silkbag The silk bag for a game.
      */
-    public Controller(Player[] players, Gameboard gameboard, SilkBag silkbag) {
-        this.players = players;
-        this.gameboard = gameboard;
-        this.silkbag = silkbag;
+    private Controller() {
     }
 
     /**
@@ -88,10 +76,61 @@ public class Controller {
     }
 
     /**
+     * If the player's location one turn and two turns ago are not on fire,
+     * move them back two turns, otherwise move them back one turn.
+     * If their location one turn ago is on fire, do not move them.
+     * @param player the target player.
+     */
+    public void backtrackPlayer(Player player) {
+        if (!gameboard.getBoardState()
+                [player.getLastLastTurn()[0]]
+                [player.getLastLastTurn()[1]].isOnFire()) {
+            if (!gameboard.getBoardState()
+                    [player.getLastTurn()[0]]
+                    [player.getLastTurn()[1]].isOnFire()) {
+                player.setLocation(player.getLastLastTurn()[0],
+                        player.getLastLastTurn()[1]);
+            }
+        } else if (!gameboard.getBoardState()
+                [player.getLastTurn()[0]]
+                [player.getLastTurn()[1]].isOnFire()) {
+            player.setLocation(player.getLastTurn()[0],
+                    player.getLastTurn()[1]);
+        }
+    }
+    /**
      * Saves the game.
      */
     public void saveGame() {
         // save the game passing info to the file reader
     }
 
+    /**
+     * @return the GameBoard
+     */
+    public Gameboard getGameboard() {
+        return gameboard;
+    }
+
+    /**
+     * This instance of Controller.
+     * @return the current Controller instance
+     */
+    public static Controller getInstance() {
+        if (instance == null) {
+            instance = new Controller();
+        }
+        return instance;
+    }
+
+    /**
+     * @param players Array of players playing the game.
+     * @param gameboard The game board for a game.
+     * @param silkbag The silk bag for a game.
+     */
+    public void init(Player[] players, Gameboard gameboard, SilkBag silkbag) {
+        this.players = players;
+        this.gameboard = gameboard;
+        this.silkbag = silkbag;
+    }
 }

@@ -10,15 +10,16 @@ import com.group31.controller.Controller;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
+import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
-import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
 
     /**
      * Initialises the components and runs the app.
-     *
      * @param args Args passed in at runtime.
      */
     public static void main(String[] args) {
@@ -37,37 +38,39 @@ public class Main {
         Leaderboard leaderboard = initLeaderBoard();
         SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
+        gameboard.genBoard(silkbag);
         Player[] players = initPlayers();
-
-        // start GUI
-        String[] launchArgs = {};
-        MainMenu.run(launchArgs);
 
         //init the controller
         initController(players, gameboard, silkbag);
 
+        // start GUI
+        String[] launchArgs = {};
+        MainMenu.run(launchArgs);
     }
 
     /**
-     * Calls getSettingsFromArray to build a Hashmap of settings.
+     * Initialises settings.
      * @return HashMap containing all settings.
      */
     private static HashMap<String, String> initSettings() {
         boolean allowFileCreation = true;
         String settingsDirectory = "settings/";
         String settingsFile = "settings.txt";
+        String delimiter = ",";
         try {
             FileManager.setDirectory(settingsDirectory, allowFileCreation);
-            if (FileManager.fileExists(settingsFile)) {
+            if (!FileManager.fileExists(settingsFile)) {
+                FileManager.write(DefaultSettings.getDefaultSettingsArray(), settingsFile);
                 return DefaultSettings.getDefaultSettings();
             } else {
                 return getSettingsFromArray(FileManager.read(settingsFile));
             }
-        } catch (NoSuchDirectory | FileNotFoundException e) {
+        } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-        // HANDLE THIS!!!
-        return null;
+        Logger.log("Failed to save settings to a file, using default settings.", Logger.Level.WARNING);
+        return DefaultSettings.getDefaultSettings();
     }
 
     /**
@@ -80,7 +83,7 @@ public class Main {
         int settingKey = 0;
         int settingValue = 1;
         for (String setting : settingsArray) {
-            String[] settingNameValue = setting.split(":");
+            String[] settingNameValue = setting.split(";");
             settings.put(settingNameValue[settingKey], settingNameValue[settingValue]);
         }
         return settings;
@@ -92,7 +95,7 @@ public class Main {
      */
     private static Leaderboard initLeaderBoard() {
         // TODO: load stats, initialises, pass back
-        return new Leaderboard();
+        return null; //new Leaderboard("");
     }
 
     /**
@@ -101,7 +104,7 @@ public class Main {
      */
     private static SilkBag initSilkBag() {
         // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        return new SilkBag();
+        return new SilkBag(new ArrayList<Tile>(), 10);
     }
 
     /**
@@ -110,7 +113,9 @@ public class Main {
      */
     private static Gameboard initGameboard() {
         // TODO: loads size, saved state if any, initialises, pass back
-        return new Gameboard();
+        int boardRows = 5;
+        int boardCols = 5;
+        return new Gameboard(boardRows, boardCols);
     }
 
     /**
@@ -125,7 +130,7 @@ public class Main {
         Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i <= numberOfPlayers - 1; i++) {
 
-            players[i] = new Player();
+            players[i] = new Player(null, null, null, null);
 
         }
 
@@ -143,7 +148,7 @@ public class Main {
                                        SilkBag silkbag) {
 
         // start the game.
-        Controller controller = new Controller(players, gameboard, silkbag);
-
+        Controller controller = Controller.getInstance();
+        controller.init(players, gameboard, silkbag);
     }
 }
