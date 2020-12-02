@@ -45,9 +45,13 @@ public class Player implements Serializable {
     private final String instanceUuid;
 
     /**
-     * Stores the previous two turns. (Where they moved from during the past two turns).
+     * Stores where the player was a turn ago.
      */
-    private int[] prevTwoTurns;
+    private int[] lastTurn;
+    /**
+     * Stores where the player was two turns ago.
+     */
+    private int[] lastLastTurn;
 
     /**
      * Class for a player who has or is playing the game.
@@ -94,16 +98,16 @@ public class Player implements Serializable {
      * @return player location.
      */
     public int[] getCurrentLocation() {
-
         return this.location;
     }
 
     /**
-     * Gets the player's past two turns.
-     * @return Player's last two turns.
+     * Moves the player to the location x,y in the gameboard.
+     * @param x x coordinate of the destination.
+     * @param y y coordinate of the destination.
      */
-    public int[] getPrevTwoTurns() {
-        return this.prevTwoTurns;
+    public void setLocation(int x, int y) {
+        this.location = new int[]{x, y};
     }
 
     /**
@@ -123,6 +127,22 @@ public class Player implements Serializable {
     public String getUuid() {
         return this.instanceUuid;
     }
+
+    /**
+     * @return where the player was 1 turn ago.
+     */
+    public int[] getLastTurn() {
+        return lastTurn;
+    }
+
+    /**
+     * @return where the player was 2 turns ago.
+     */
+    public int[] getLastLastTurn() {
+        return lastLastTurn;
+    }
+
+
 
     // TODO: This should go in the controller.
 //    /**
