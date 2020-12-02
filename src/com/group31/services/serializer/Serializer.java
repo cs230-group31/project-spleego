@@ -112,14 +112,4 @@ public class Serializer {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
     }
-
-// USAGE: TODO: REMOVE
-//    public static void main(String[] args) {
-//        serialize(new Player("Moe", null, null, null), "name1");
-//        try {
-//            Logger.log(deserializePlayer("name1").getName(), Logger.Level.VERBOSE);
-//        } catch (ObjectNeverSerialized e) {
-//            Logger.log(e.getMessage(), Logger.Level.ERROR);
-//        }
-//    }
 }
