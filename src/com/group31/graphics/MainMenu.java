@@ -34,15 +34,15 @@ public class MainMenu extends Application {
     /**
      * Height of the window in pixels.
      */
-    private static final double WINDOW_HEIGHT = Settings.getDouble("window_height");
+    private static final double WINDOW_HEIGHT = Settings.getSettingAsDouble("window_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double WINDOW_WIDTH = Settings.getDouble("window_width");
+    private static final double WINDOW_WIDTH = Settings.getSettingAsDouble("window_width");
     /**
      * Space between buttons in pixels.
      */
-    private static final double BUTTON_SPACING = Settings.getDouble("button_spacing");
+    private static final double BUTTON_SPACING = Settings.getSettingAsDouble("button_spacing");
     /**
      * File Path for the menu background image.
      */
@@ -54,11 +54,11 @@ public class MainMenu extends Application {
     /**
      * Height of the title image in pixels.
      */
-    private static final double TITLE_IMAGE_HEIGHT = Settings.getDouble("title_image_height");
+    private static final double TITLE_IMAGE_HEIGHT = Settings.getSettingAsDouble("title_image_height");
     /**
      * Width of the window in pixels.
      */
-    private static final double TITLE_IMAGE_WIDTH = Settings.getDouble("title_image_width");
+    private static final double TITLE_IMAGE_WIDTH = Settings.getSettingAsDouble("title_image_width");
     /**
      * Name of the font.
      */
@@ -66,15 +66,15 @@ public class MainMenu extends Application {
     /**
      * Size of the font.
      */
-    private static final double FONT_SIZE = Settings.getDouble("font_size");
+    private static final double FONT_SIZE = Settings.getSettingAsDouble("font_size");
     /**
      * Stroke surrounding the font in pixels.
      */
-    private static final double FONT_STROKE = Settings.getDouble("font_stroke");
+    private static final double FONT_STROKE = Settings.getSettingAsDouble("font_stroke");
     /**
      * Width of the window in pixels.
      */
-    private static final double TEXT_WRAPPING_WIDTH = Settings.getDouble("text_wrapping_width");
+    private static final double TEXT_WRAPPING_WIDTH = Settings.getSettingAsDouble("text_wrapping_width");
     /**
      * File Path for the unpressed `START` button.
      */

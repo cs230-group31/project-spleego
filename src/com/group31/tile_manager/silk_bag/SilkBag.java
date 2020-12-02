@@ -1,6 +1,7 @@
 package com.group31.tile_manager.silk_bag;
 
 import com.group31.logger.Logger;
+import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
@@ -62,24 +63,19 @@ public class SilkBag {
      */
     public SilkBag(ArrayList<Tile> tiles, int maxTiles) {
         this.tiles = tiles;
+        initRoutingArray();
         for (int index = 0; index < maxTiles; index++) {
             tiles.add(genFloorTile());
         }
+    }
 
-//        // TODO: Settings
-        //TODO: what if we put these in a package and access them like Weighting.ZERO
-//        tileRoutings = new HashMap<>();
-//        tileRoutings.put(0, "abcd");
-//        tileRoutings.put(1, "bd");
-//        tileRoutings.put(2, "ac");
-//        tileRoutings.put(3, "ab");
-//        tileRoutings.put(4, "bc");
-//        tileRoutings.put(5, "cd");
-//        tileRoutings.put(6, "da");
-//        tileRoutings.put(7, "abc");
-//        tileRoutings.put(8, "bcd");
-//        tileRoutings.put(9, "cda");
-//        tileRoutings.put(10, "dab");
+    private void initRoutingArray() {
+        int numRoutes = Settings.getSettingAsInt("num_tile_routes");
+        for (int i = 0; i <= numRoutes; i++) {
+            String tileRoutingSettingKey = String.format("tile_route_id_%s", i);
+            String tileRoutingSettingValue = Settings.get(tileRoutingSettingKey);
+            tileRoutings.put(i, tileRoutingSettingValue);
+        }
     }
 
     /**
