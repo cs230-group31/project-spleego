@@ -9,9 +9,17 @@ import com.group31.logger.Logger;
  */
 public class FloorTile extends Tile {
     /**
-     * holds the routing of the tile.
+     * Holds the routing of the tile.
      */
     private final String routing;
+    /**
+     * Stores whether the tile is on fire or not.
+     */
+    private boolean onFire;
+    /**
+     * Stores whether the tile is on ice or not.
+     */
+    private boolean onIce;
 
 //    /**
 //     * <PLEASE ADD JAVADOC HERE>.
@@ -39,7 +47,8 @@ public class FloorTile extends Tile {
     }
 
     /**
-     * @return the routing of this tile
+     * @return the routing of this tile, representing the sides you can
+     * travel to from this tile.
      */
     public String getRouting() {
         return routing;
@@ -50,6 +59,34 @@ public class FloorTile extends Tile {
      */
     public Image getCurrentImage() {
         return super.getCurrentImage();
+    }
+
+    /**
+     * @return True if the tile is on fire, false otherwise.
+     */
+    public boolean isOnFire() {
+        return onFire;
+    }
+
+    /**
+     * @param onFire boolean variable for if the tile is on fire
+     */
+    public void setOnFire(boolean onFire) {
+        this.onFire = onFire;
+    }
+
+    /**
+     * @return True if the tile is on ice, false otherwise.
+     */
+    public boolean isOnIce() {
+        return onIce;
+    }
+
+    /**
+     * @param onIce boolean variable for if the tile is on ice
+     */
+    public void setOnIce(boolean onIce) {
+        this.onIce = onIce;
     }
 
 //    /**
