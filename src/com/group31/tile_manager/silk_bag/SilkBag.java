@@ -97,7 +97,7 @@ public class SilkBag {
      * Generates a random floor tile.
      * @return the floor tile
      */
-    public Tile genFloorTile() {
+    public FloorTile genFloorTile() {
         Random random = new Random();
         int ranInt = random.nextInt(MAX_FLOOR_TILE - MIN_FLOOR_TILE) + MIN_FLOOR_TILE;
         Image tileImage = null;
