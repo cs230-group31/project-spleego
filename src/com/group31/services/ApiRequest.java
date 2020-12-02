@@ -1,7 +1,5 @@
 package com.group31.services;
 
-import com.group31.logger.Logger;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,20 +55,12 @@ public class ApiRequest {
      * Gets the response from the server.
      * @return The response as a string.
      */
-    public String getResponse() {
-        HttpURLConnection connection = null;
-        try {
-            URL url = this.token == null ? buildUrl() : buildUrlWithToken();
-            connection = connectionGet(url);
-            return read(connection);
-        } catch (Exception e) {
-            Logger.log(e.getMessage(), Logger.Level.ERROR);
-        } finally {
-            if (connection != null) {
-                connection.disconnect();
-            }
-        }
-        return null;
+    public String getResponse() throws IOException {
+        URL url = this.token == null ? buildUrl() : buildUrlWithToken();
+        HttpURLConnection connection = connectionGet(url);
+        String res = read(connection);
+        connection.disconnect();
+        return res;
     }
 
     /**
