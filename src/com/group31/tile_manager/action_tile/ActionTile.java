@@ -1,48 +1,18 @@
 package com.group31.tile_manager.action_tile;
 import com.group31.logger.Logger;
+import com.group31.tile_manager.Tile;
+import javafx.scene.image.Image;
 
-public class ActionTile {
-
-    /**
-     * Identifies the tile.
-     */
-    private final int id;
-
-    /**
-     * holds weight of the tile.
-     */
-    private final int weight;
-
-    /**
-     * true if action file, false if not.
-     */
-    private boolean isActionTile;
+public class ActionTile extends Tile {
 
     /**
      * Class constructor.
      * @param id identifies the tile
-     * @param weight the weight of the tile
+     * @param currentImage image of the tile
      */
-    public ActionTile(int id, int weight) {
-        this.id = id;
-        this.weight = weight;
+    public ActionTile(int id, Image currentImage) {
+        super(id, true, currentImage);
         Logger.log("Action tile created", Logger.Level.INFO);
-    }
-
-    /**
-     * Gets ID of the tile.
-     * @return Tile's ID.
-     */
-    public int getID() {
-        return this.id;
-    }
-
-    /**
-     * Gets weight of the tile (likeliness to be pulled out of the silkbag.
-     * @return Tile's weight.
-     */
-    public int getWeight() {
-        return this.weight;
     }
 
     // TODO: I don't think this is needed, but can add back in if it is.
