@@ -1,6 +1,6 @@
 package com.group31.gameboard;
 
-import com.group31.tile_manager.Tile;
+import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
 /**
@@ -10,7 +10,7 @@ public class Gameboard {
     /**
      * 2D array of the tiles on the board.
      */
-    private final Tile[][] boardState;
+    private final FloorTile[][] boardState;
     /**
      * The amount of rows the board has.
      */
@@ -28,7 +28,7 @@ public class Gameboard {
     public Gameboard(int width, int height) {
         boardRows = width;
         boardColumns = height;
-        boardState = new Tile[boardRows][boardColumns];
+        boardState = new FloorTile[boardRows][boardColumns];
     }
 
     /**
@@ -51,7 +51,7 @@ public class Gameboard {
      * @param tile the tile to insert
      * @param col the column that identifies the row
      */
-    public void addTileToRow(SilkBag silkBag, Tile tile, int col) {
+    public void addTileToRow(SilkBag silkBag, FloorTile tile, int col) {
         silkBag.addTile(boardState[boardRows - 1][col]);
         for (int r = 0; r < boardRows - 1; r++) {
             boardState[r + 1][col] = boardState[r][col];
@@ -67,7 +67,7 @@ public class Gameboard {
      * @param tile the tile to insert.
      * @param row the row that identifies the column
      */
-    public void addTileToCol(SilkBag silkBag, Tile tile, int row) {
+    public void addTileToCol(SilkBag silkBag, FloorTile tile, int row) {
         silkBag.addTile(boardState[row][boardColumns]);
         for (int c = 0; c < boardColumns - 1; c++) {
             boardState[row][c + 1] = boardState[row][c];
@@ -78,7 +78,7 @@ public class Gameboard {
     /**
      * @return the board state
      */
-    public Tile[][] getBoardState() {
+    public FloorTile[][] getBoardState() {
         return boardState;
     }
 
