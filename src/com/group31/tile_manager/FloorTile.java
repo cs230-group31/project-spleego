@@ -4,9 +4,9 @@ import javafx.scene.image.Image;
 import com.group31.logger.Logger;
 
 /**
- * This class is subclass of Tile (no action tile)
+ * This class is subclass of Tile (no action tile).
  */
-public class FloorTile extends Tile{
+public class FloorTile extends Tile {
     /**
      * holds the routing of the tile.
      */
@@ -16,7 +16,14 @@ public class FloorTile extends Tile{
      */
     private Image currentImage;
 
-    public FloorTile(String routing, int id, int[] coord, Image currentImage){
+    /**
+     *  Constructor for FloorTile.
+     * @param routing sides that this tile connects
+     * @param id id of the tile
+     * @param coord keeps the coordinates of the tile on the gameboard
+     * @param currentImage image to display for that tile
+     */
+    public FloorTile(String routing, int id, int[] coord, Image currentImage) {
         super(id, false, currentImage);
         this.routing = routing;
         Logger.log("Floor tile created", Logger.Level.INFO);

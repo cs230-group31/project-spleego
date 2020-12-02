@@ -29,15 +29,27 @@ public class ActionTile {
         Logger.log("Action tile created", Logger.Level.INFO);
     }
 
-    public int getID(){
+    /**
+     * gets the id of the tile.
+     * @return id of the tile
+     */
+    public int getID() {
         return id;
     }
 
-    public int getWeight(){
+    /**
+     *  gets the weight of the tile.
+     * @return  the weight of the tile
+     */
+    public int getWeight() {
         return weight;
     }
 
-    public boolean isAction(){
+    /**
+     *  determines whether the tile is an action tile or not.
+     * @return the boolean isActionTile
+     */
+    public boolean isAction() {
         return isActionTile = true;
     }
 
@@ -50,9 +62,9 @@ public class ActionTile {
     //public class ActionTile extends Tile {
     /**
      * Uses superclass constructor
-     * @param routing
-     * @param id
-     * @param coord
+     * @param routing sides that this tile connects
+     * @param id id of the tile
+     * @param coord keeps the coordinates of the tile on the gameboard
      */
     //public ActionTile(String routing, int id, int[] coord){
     //    super(routing, id, coord, true);
@@ -61,8 +73,8 @@ public class ActionTile {
 
     /**
      * Uses superclass constructor with no coords
-     * @param routing
-     * @param id
+     * @param routing sides that this tile connects
+     * @param id id of the tile
      * @param actionTile
      */
     //public ActionTile(String routing, int id, boolean actionTile){

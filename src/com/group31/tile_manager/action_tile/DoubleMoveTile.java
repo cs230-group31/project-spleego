@@ -12,7 +12,12 @@ public class DoubleMoveTile extends ActionTile {
      */
     private int weight;
 
-    public DoubleMoveTile(int id, int weight){
+    /**
+     * Constructor for the class DoubleMoveTile.
+     * @param id id of the tile
+     * @param weight weight of the tile
+     */
+    public DoubleMoveTile(int id, int weight) {
         super(id, weight);
         this.id = 14;
         this.weight = 10;

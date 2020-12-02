@@ -10,6 +10,9 @@ import java.util.HashMap;
  * @author Alvaro
  */
 public class SilkBag {
+    /**
+     * sets the maximum number of tiles.
+     */
     //TODO: how much is maxtile?
     public final int MAXTILES = 15;
     /**

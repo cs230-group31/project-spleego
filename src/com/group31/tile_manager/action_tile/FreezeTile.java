@@ -14,7 +14,12 @@ public class FreezeTile extends ActionTile {
      */
     private final int weight;
 
-    public FreezeTile(int id, int weight){
+    /**
+     * class constructor for FreezeTile
+     * @param id id of the tile
+     * @param weight weight of the tile
+     */
+    public FreezeTile(int id, int weight) {
         super(id, weight);
         this.id = 12;
         this.weight = 10;
