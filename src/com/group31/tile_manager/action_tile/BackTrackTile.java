@@ -20,11 +20,10 @@ public class BackTrackTile extends ActionTile {
      * Backtrack sends a player back two turns.
      * @param id Tile's ID.
      * @param currentImage Tile's image.
-     * @param id1
      */
-     public BackTrackTile(int id, Image currentImage, int id1) {
+     public BackTrackTile(int id, Image currentImage) {
         super(id, currentImage);
-         this.id = id1;
+         this.id = id;
      }
 
 //    /**

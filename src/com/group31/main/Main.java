@@ -19,6 +19,11 @@ import java.util.HashMap;
 public class Main {
 
     /**
+     * Specifies which environment the app is running in: 'dev' or 'prod'.
+     */
+    private static String env = "dev";
+
+    /**
      * Initialises the components and runs the app.
      * @param args Args passed in at runtime.
      */
@@ -27,8 +32,8 @@ public class Main {
         HashMap<String, String> settings = initSettings();
         Settings.setAllSettings(settings);
 
-        if (args.length != 0) {
-            Settings.updateSettings(args);
+        if (env.equals("dev")) {
+            Settings.setAllSettings(DefaultSettings.getDefaultSettings());
         }
 
         // testing
@@ -55,7 +60,7 @@ public class Main {
      */
     private static HashMap<String, String> initSettings() {
         boolean allowFileCreation = true;
-        String settingsDirectory = "settings/";
+        String settingsDirectory = "data/settings/";
         String settingsFile = "settings.txt";
         String delimiter = ",";
         try {
