@@ -76,6 +76,29 @@ public class Controller {
     }
 
     /**
+     * If the player's location one turn and two turns ago are not on fire,
+     * move them back two turns, otherwise move them back one turn.
+     * If their location one turn ago is on fire, do not move them.
+     * @param player the target player.
+     */
+    public void backtrackPlayer(Player player) {
+        if (!gameboard.getBoardState()
+                [player.getLastLastTurn()[0]]
+                [player.getLastLastTurn()[1]].isOnFire()) {
+            if (!gameboard.getBoardState()
+                    [player.getLastTurn()[0]]
+                    [player.getLastTurn()[1]].isOnFire()) {
+                player.setLocation(player.getLastLastTurn()[0],
+                        player.getLastLastTurn()[1]);
+            }
+        } else if (!gameboard.getBoardState()
+                [player.getLastTurn()[0]]
+                [player.getLastTurn()[1]].isOnFire()) {
+            player.setLocation(player.getLastTurn()[0],
+                    player.getLastTurn()[1]);
+        }
+    }
+    /**
      * Saves the game.
      */
     public void saveGame() {
