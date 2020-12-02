@@ -23,11 +23,31 @@ public class Controller {
      * Instance of the silkbag.
      */
     private SilkBag silkbag;
+    /**
+     *  Tracks if the game has been won.
+     */
+    private boolean gameWon;
 
     /**
      * Controller deals with game logic, loading and saving.
      */
     private Controller() {
+        gameWon = false;
+    }
+
+    /**
+     * Uses a while loop to execute until a player moves onto the goal tile.
+     */
+    public void playGame() {
+
+    }
+
+    /**
+     * Checks every player's location and compares if they are in the same place as a goal tile.
+     * @return True if a player is on top of a goal tile, false otherwise.
+     */
+    private boolean hasWon() {
+
     }
 
     /**
