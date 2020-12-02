@@ -67,6 +67,7 @@ public class SilkBag {
         }
 
 //        // TODO: Settings
+        //TODO: what if we put these in a package and access them like Weighting.ZERO
 //        tileRoutings = new HashMap<>();
 //        tileRoutings.put(0, "abcd");
 //        tileRoutings.put(1, "bd");
