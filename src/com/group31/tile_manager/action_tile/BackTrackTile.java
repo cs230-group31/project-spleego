@@ -1,6 +1,7 @@
 package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
+import javafx.scene.image.Image;
 
 public class BackTrackTile extends ActionTile {
 
@@ -16,15 +17,15 @@ public class BackTrackTile extends ActionTile {
 
 
     /**
-     * Uses superclass constructor.
-     * @param id
-     * @param weight
+     * Backtrack sends a player back two turns.
+     * @param id Tile's ID.
+     * @param currentImage Tile's image.
+     * @param id1
      */
-     public BackTrackTile(int id, int weight) {
-        super(id, weight);
-        this.id = id;
-        this.weight = weight;
-    }
+     public BackTrackTile(int id, Image currentImage, int id1) {
+        super(id, currentImage);
+         this.id = id1;
+     }
 
 //    /**
 //     * @param id Sets the id.

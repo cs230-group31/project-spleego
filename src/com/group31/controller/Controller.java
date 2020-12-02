@@ -47,7 +47,7 @@ public class Controller {
      * @return True if a player is on top of a goal tile, false otherwise.
      */
     private boolean hasWon() {
-
+        return false;
     }
 
     /**
