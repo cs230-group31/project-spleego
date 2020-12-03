@@ -4,7 +4,6 @@ import com.group31.exceptions.NoFilesInDir;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.logger.Logger;
 import javafx.scene.image.Image;
-
 import java.io.FileNotFoundException;
 import java.io.BufferedWriter;
 import java.io.File;
