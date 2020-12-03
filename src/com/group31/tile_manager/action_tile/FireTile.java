@@ -7,11 +7,10 @@ public class FireTile extends ActionTile {
 
     /**
      * Fire tile ensures no player can step on a tile that is on fire, because it's on fire.
-     * @param id ID of the tile.
-     * @param currentImage Image of the tile
      */
-    public FireTile(int id, Image currentImage) {
-        super(id, currentImage);
+    public FireTile() {
+        //Image image = new Image();
+        super(ActionTile.FIRETILE/*, image*/);
     }
 
 //    /**

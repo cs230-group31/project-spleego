@@ -1,4 +1,5 @@
 package com.group31.tile_manager;
+
 import javafx.scene.image.Image;
 import java.util.HashMap;
 
@@ -21,8 +22,57 @@ public class Tile {
      * Identifies the tile.
      */
     private final int id;
+    /**
+     * true if action file, false if not.
+     */
+    private boolean actionTile;
+    /**
+     * Image of the tile
+     */
+    private Image currentImage;
+    /**
+     * Class constructor for generic Tile.
+     * Use this for storing tiles inside SilkBag.
+     * @param id id of the tile
+     * @param actionTile true if this tile is an ActionTile
+     * @param currentImage image to display for that tile
+     */
+    public Tile(int id, boolean actionTile, Image currentImage) {
+        this.id = id;
+        this.actionTile = actionTile;
+        this.currentImage = currentImage;
+    }
+    /**
+     * @return the id
+     */
+    public int getId() {
+        return id;
+    }
+    /**
+     * @return how the tile currently looks.
+     */
+    public Image getCurrentImage() {
+        return currentImage;
 
-    //TODO: first off pick one, then put it in floor tile becasue action tiles do not have coordinates
+    }
+    /**
+     * @param currentImage how the tile should look.
+     */
+    public void setCurrentImage(Image currentImage) {
+        this.currentImage = currentImage;
+    }
+
+    /**
+     * @return true if tile is an action tile
+     */
+    public boolean isActionTile() {
+        return actionTile;
+    }
+}
+
+
+
+//TODO: first off pick one, then put it in floor tile becasue action tiles do not have coordinates
 //    /**
 //     * Tile X Coordinate.
 //     */
@@ -36,20 +86,7 @@ public class Tile {
 //     */
 //    private int[] coord;
 
-    /**
-     * true if action file, false if not.
-     */
-    private boolean actionTile;
-
-    /**
-     * Stores image of the tile.
-     */
-    private Image currentImage;
     /*private String routing;
-    private int id;
-    private Image imageTexture;
-    private int[] coord;
-    private boolean actionTile;
     private double weight;*/
 
     /* /**
@@ -84,26 +121,6 @@ public class Tile {
     }
     }*/
 
-    /**
-     * Class constructor for generic Tile.
-     * Use this for storing tiles inside SilkBag.
-     * @param routing sides that this tile connects
-     * @param id id of the tile
-     * @param actionTile true if this tile is an ActionTile
-     * @param currentImage image to display for that tile
-     */
-    public Tile(int id, boolean actionTile, Image currentImage) {
-        this.id = id;
-        this.actionTile = actionTile;
-        this.currentImage = currentImage;
-    }
-
-    /**
-     * @return the id
-     */
-    public int getId() {
-        return id;
-    }
 
     /*/**
      * @return The weight of the tile.
@@ -112,12 +129,7 @@ public class Tile {
     //    return weight;
     //}
 
-    /**
-     * @return how the tile currently looks.
-     */
-    public Image getCurrentImage() {
-        return currentImage;
-    }
+
 
     /*/**
      * @return the tile's coords
@@ -135,17 +147,3 @@ public class Tile {
         coord[Y] += incAmount[Y];
     }*/
 
-    /**
-     * @param currentImage how the tile should look.
-     */
-    public void setCurrentImage(Image currentImage) {
-        this.currentImage = currentImage;
-    }
-
-    /**
-     * @return true if tile is an action tile
-     */
-    public boolean isActionTile() {
-        return actionTile;
-    }
-}
