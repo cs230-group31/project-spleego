@@ -56,6 +56,16 @@ public class DefaultSettings {
         defaultSettings.put("tile_spacing", "3");
         defaultSettings.put("table_image_url", "resources/images/table.png");
 
+        defaultSettings.put("tile_width", "64");
+        defaultSettings.put("tile_height", "64");
+        defaultSettings.put("tile_images_url", "resources/images/tiles/");
+
+        defaultSettings.put("tile_weight_fire", "15");
+        defaultSettings.put("tile_weight_freeze", "15");
+        defaultSettings.put("tile_weight_backtrack", "10");
+        defaultSettings.put("tile_weight_doublemove", "10");
+        defaultSettings.put("tile_weight_floortile", "50");
+
         return defaultSettings;
     }
 

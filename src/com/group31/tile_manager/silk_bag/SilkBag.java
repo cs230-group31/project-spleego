@@ -1,110 +1,118 @@
 package com.group31.tile_manager.silk_bag;
 
-import com.group31.logger.Logger;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Random;
+import com.group31.tile_manager.action_tile.FireTile;
+import com.group31.tile_manager.action_tile.FreezeTile;
+import com.group31.tile_manager.action_tile.DoubleMoveTile;
+import com.group31.tile_manager.action_tile.BackTrackTile;
 
 /**
  * Generates tiles for players/game to use.
- * @author Alvaro
+ * @author Alvaro, Liam, Moe, Aaron
  */
 public class SilkBag {
+
     /**
-     * The lowest number that represents a floor tile in tiles.
+     * Amount of tiles to be generated.
      */
-    private static final int MIN_FLOOR_TILE = 1;
-    /**
-     * The highest number that represents a floor tile in tiles.
-     */
-    private static final int MAX_FLOOR_TILE = 10;
-    //TODO: take from settings not here
-    /**
-     * The path to the folder containing all tile images.
-     */
-    private static final String TILE_IMAGE_URL = "resources/images/tiles/";
-    /**
-     * The width of a tile image in pixels.
-     */
-    private static final double TILE_WIDTH = 64.0;
-    /**
-     * The height of a tile image in pixels.
-     */
-    private static final double TILE_HEIGHT = 64.0;
-    /**
-     * Keeps track of every tile.
-     */
-    private final ArrayList<Tile> tiles;
+    private final int maxTiles;
+
     /**
      * Stores the routings of each FloorTile for use in the FloorTile constructor.
      */
-    private static  HashMap<Integer, String> tileRoutings = new HashMap<>();
-//    /**
-//     * Stores the weighting (chance) for each tile.
-//     */
-//    private final HashMap<Integer, Double> tileWeights;
+    private HashMap<Integer, String> tileRoutings;
 
-//    /**
-//     * Stores the total amount of tiles.
-//     */
-//    private double numOfTiles;
-    //TODO: SilkBag does more than generate random tiles, it is the controller for tile distribution
     /**
-     * Silk bag constructor.
-     * @param tiles ArrayList of tiles to put into the SilkBag.
-     * @param maxTiles amount of tiles in the SilkBag.
+     * Tile weights (amount of tiles we want on the gameboard (out of the total).
      */
-    public SilkBag(ArrayList<Tile> tiles, int maxTiles) {
-        this.tiles = tiles;
-        initRoutingArray();
-        for (int index = 0; index < maxTiles; index++) {
-            tiles.add(genFloorTile());
-        }
+    private final HashMap<String, Integer> weights;
+
+    /**
+     * Width of a tile.
+     */
+    private double tileWidth;
+
+    /**
+     * Height of a tile.
+     */
+    private double tileHeight;
+
+    /**
+     * Location of tile images.
+     */
+    private String tileImagesUrl;
+
+    /**
+     * Stores the total amount of tiles inside the bag.
+     */
+    private static double numOfTiles;
+
+    /**
+     * Keeps track of every tile.
+     */
+    private ArrayList<Tile> tiles;
+
+    /**
+     * SilkBag contains all the tiles that can be played on the board.
+     * @param maxTiles Total amount of tiles.
+     */
+    public SilkBag(int maxTiles) {
+        this.maxTiles = maxTiles;
+
+        this.tileRoutings = initRouting();
+        this.weights = initWeights();
+        this.tileImagesUrl = Settings.get("tile_images_url");
+        this.tileHeight = Settings.getSettingAsDouble("tile_height");
+        this.tileWidth = Settings.getSettingAsDouble("tile_width");
     }
 
-    private void initRoutingArray() {
+    private HashMap<Integer, String> initRouting() {
+        HashMap<Integer, String> routings = new HashMap<>();
         int numRoutes = Settings.getSettingAsInt("num_tile_routes");
-        for (int i = 0; i <= numRoutes; i++) {
+        for (int i = 0; i <= numRoutes - 1; i++) {
             String tileRoutingSettingKey = String.format("tile_route_id_%s", i);
             String tileRoutingSettingValue = Settings.get(tileRoutingSettingKey);
-            tileRoutings.put(i, tileRoutingSettingValue);
+            routings.put(i, tileRoutingSettingValue);
         }
+        return routings;
     }
 
-    /**
-     * Generates a Tile.
-     * @return a Tile
-     */
-    private Tile genTile() {
-        // TODO: code random tile generator
-        //test params
-        Tile tile = null; //new FloorTile("bd", 0);
-        return tile;
+    private HashMap<String, Integer> initWeights() {
+        HashMap<String, Integer> weights = new HashMap<>();
+        weights.put("tile_weight_fire", Settings.getSettingAsInt("tile_weight_fire"));
+        weights.put("tile_weight_freeze", Settings.getSettingAsInt("tile_weight_freeze"));
+        weights.put("tile_weight_backtrack", Settings.getSettingAsInt("tile_weight_backtrack"));
+        weights.put("tile_weight_doublemove", Settings.getSettingAsInt("tile_weight_doublemove"));
+        weights.put("tile_weight_floortile", Settings.getSettingAsInt("tile_weight_floortile"));
+
+        return weights;
     }
 
     /**
      * Generates a random floor tile.
      * @return the floor tile
      */
-    public FloorTile genFloorTile() {
+    public FloorTile genFloorTile() throws FileNotFoundException {
         Random random = new Random();
-        int ranInt = random.nextInt(MAX_FLOOR_TILE - MIN_FLOOR_TILE) + MIN_FLOOR_TILE;
-        Image tileImage = null;
-        try {
-            tileImage = new Image(new FileInputStream(TILE_IMAGE_URL + ranInt + ".png"),
-                    TILE_WIDTH, TILE_HEIGHT, true, false);
-        } catch (FileNotFoundException e) {
-            Logger.log("Could not find tile image", Logger.Level.ERROR);
-        }
-        String routing = tileRoutings.get(ranInt);
-        return new FloorTile(routing, ranInt, tileImage);
+
+        // Tiles routing size could be 11, but nextInt() takes 11 and produces range 0 to 10, which is what
+        // we want as the tiles are named from 0 to 10.
+        int randomKey = random.nextInt(tileRoutings.size());
+
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+
+        String routing = tileRoutings.get(randomKey);
+        return new FloorTile(routing, tileImage);
     }
 
     /**
@@ -115,53 +123,44 @@ public class SilkBag {
         tiles.add(tile);
     }
 
-    // TODO: Rethink this!
-//    private void addWeights(int MAXTILES){
-//        tileWeights.put(1, (double) (60/MAXTILES));
-//        tileWeights.put(2, (double) (60/MAXTILES));
-//        tileWeights.put(3, (double) (60/MAXTILES));
-//        tileWeights.put(4, (double) (60/MAXTILES));
-//        tileWeights.put(5, (double) (60/MAXTILES));
-//        tileWeights.put(6, (double) (60/MAXTILES));
-//        tileWeights.put(7, (double) (60/MAXTILES));
-//        tileWeights.put(8, (double) (60/MAXTILES));
-//        tileWeights.put(9, (double) (60/MAXTILES));
-//        tileWeights.put(10, (double) (60/MAXTILES));
+    private FireTile genFireTile() {
+        return new FireTile(null);
+    }
+
+    private FreezeTile getFreezeTile() {
+        return new FreezeTile(null);
+    }
+
+    private BackTrackTile getBackTrackTile() {
+        return new BackTrackTile(null);
+    }
+
+    private DoubleMoveTile genDoubleMoveTile() {
+        return new DoubleMoveTile(null);
+    }
+
+    /**
+     * Generates the tiles of the bag randomly, each type of tile has a different odd to appear
+     * you can change the odds in the constants of this class.
+     * @param maxTiles amount of tiles to be generated
+     */
+    public void getWeightedTiles(int maxTiles) {
+        int numFloorTiles = Settings.getSettingAsInt("tile_weight_floortile");
+        int numFireTiles = Settings.getSettingAsInt("tile_weight_fire");
+        int numFreezeTiles = Settings.getSettingAsInt("tile_weight_freeze");
+        int numBacktrackTiles = Settings.getSettingAsInt("tile_weight_backtrack");
+        int numDoublemoveTiles = Settings.getSettingAsInt("tile_weight_doublemove");
+
+        // Logger.log("Could not find tile image.", Logger.Level.ERROR);
+
+
+//        int randomNumber;
+//        Random rand = new Random();
 //
-//        tileWeights.put(11, (double) (40/MAXTILES));
-//        tileWeights.put(12, (double) (40/MAXTILES));
-//        tileWeights.put(13, (double) (40/MAXTILES));
-//        tileWeights.put(14, (double) (40/MAXTILES));
-//    }
+//        for (int i = 0; i < maxTiles; i++) {
+//            randomNumber = rand.nextInt(MAX_RAND_INT);
+//
+//        }
+    }
 
-    ///**
-     //* Testing.
-     //* @param index
-     //* @return
-     //*/
-    //public Tile getTile(int index){
-    //
-    //}
-
-    ///**
-     //* Pseudo random tile generation using weights.
-     //* @param tiles arraylist of tiles
-     //* @return tile
-     //*/
-    /*public Tile tileWeight(ArrayList<Tile> tiles) {
-        double completeWeight = 0.0;
-
-        for (Tile tile : tiles) {
-            completeWeight += tile.getWeight();
-        }
-        double r = Math.random() * completeWeight;
-        double countWeight = 0.0;
-        for (Tile tile : tiles) {
-            countWeight += tile.getWeight();
-            if (countWeight >= r) {
-                return tile;
-            }
-        }
-        throw new RuntimeException("Runtime error.");
-    }*/
 }

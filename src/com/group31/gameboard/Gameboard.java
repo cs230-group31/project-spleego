@@ -3,6 +3,8 @@ package com.group31.gameboard;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
+import java.io.FileNotFoundException;
+
 /**
  * @author aaron
  */
@@ -35,7 +37,7 @@ public class Gameboard {
      * Fills the board with random floor tiles.
      * @param silkBag the silk bag for the game
      */
-    public void genBoard(SilkBag silkBag) {
+    public void genBoard(SilkBag silkBag) throws FileNotFoundException {
         for (int r = 0; r <  boardRows; r++) {
             for (int c = 0; c < boardColumns; c++) {
                 boardState[r][c] = silkBag.genFloorTile();
