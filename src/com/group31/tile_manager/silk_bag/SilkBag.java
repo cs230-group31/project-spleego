@@ -60,7 +60,6 @@ public class SilkBag {
      */
     private ArrayList<Tile> tiles;
 
-
     /**
      * SilkBag contains all the tiles that can be played on the board.
      * @param maxTiles Total amount of tiles.
