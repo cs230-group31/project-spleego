@@ -75,14 +75,6 @@ public class Settings {
         return 1.0;
     }
 
-    public static int getSettingAsInt(String key) {
-        if (settings.containsKey(key)) {
-            return Integer.parseInt(settings.get(key));
-        }
-        // TODO: find a better way to handle this.
-        return 1;
-    }
-
     /**
      * Gets a setting and parses it to an integer.
      * @param key Setting name.
