@@ -23,14 +23,13 @@ public class Leaderboard {
      * @param playersDirectory The directory where the players file's are kept.
      */
     public static void initialise(String playersDirectory) {
-        String searchTerm = "player";
         try {
-            FileManager.setDirectory(playersDirectory, false);
-            for (File player : FileManager.getAllFilesInDir(searchTerm)) {
+            FileManager.setDirectory(playersDirectory, true);
+            for (File player : FileManager.getAllFilesInDir()) {
                 String rawFileName = player.getName().replaceFirst("[.][^.]+$", "");
                 players.add(Serializer.deserializePlayer(rawFileName));
             }
-        } catch (NoSuchDirectory | NoFilesInDir | ObjectNeverSerialized e) {
+        } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
     }
@@ -48,18 +47,17 @@ public class Leaderboard {
      * @return Leaderboard data.
      */
     public static Player[] getLeaderboardData() {
-        return (Player[]) players.toArray();
+        return players.toArray(new Player[0]);
     }
 
     /**
      * Saves all the players on the leaderboard to the file system.
      */
-    private static void saveLeaderboard() {
+    public static void saveLeaderboard() {
         for (Player player : players) {
             String identifier = String.format("Player_%s", player.getUuid());
-            Serializer.serialize(player, identifier);
+            String folder = "Players";
+            Serializer.serialize(player, identifier, folder);
         }
     }
-
-
 }

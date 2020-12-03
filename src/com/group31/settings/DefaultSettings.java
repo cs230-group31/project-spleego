@@ -66,6 +66,8 @@ public class DefaultSettings {
         defaultSettings.put("tile_weight_doublemove", "10");
         defaultSettings.put("tile_weight_floortile", "50");
 
+        defaultSettings.put("serialized_player_files", "data/serializing/serialized/Players/");
+
         return defaultSettings;
     }
 

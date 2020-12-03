@@ -41,8 +41,6 @@ public class FileManager {
             directory = requestedDirectory;
             Logger.log(logMessage, Logger.Level.INFO);
         } else {
-            Logger.log("Request made to change file directory but requested directory does not exist.",
-                    Logger.Level.ERROR);
             throw new NoSuchDirectory("Request made to change file directory but requested directory does not exist.");
         }
     }
