@@ -1,6 +1,5 @@
 package com.group31.tile_manager.silk_bag;
 
-import com.group31.logger.Logger;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
@@ -22,7 +21,7 @@ import com.group31.tile_manager.action_tile.BackTrackTile;
 public class SilkBag {
 
     /**
-     * Amount of tiles to be generated
+     * Amount of tiles to be generated.
      */
     private final int maxTiles;
 
@@ -31,12 +30,24 @@ public class SilkBag {
      */
     private HashMap<Integer, String> tileRoutings;
 
+    /**
+     * Tile weights (amount of tiles we want on the gameboard (out of the total).
+     */
     private final HashMap<String, Integer> weights;
 
+    /**
+     * Width of a tile.
+     */
     private double tileWidth;
 
+    /**
+     * Height of a tile.
+     */
     private double tileHeight;
 
+    /**
+     * Location of tile images.
+     */
     private String tileImagesUrl;
 
     /**
@@ -50,6 +61,10 @@ public class SilkBag {
     private ArrayList<Tile> tiles;
 
 
+    /**
+     * SilkBag contains all the tiles that can be played on the board.
+     * @param maxTiles Total amount of tiles.
+     */
     public SilkBag(int maxTiles) {
         this.maxTiles = maxTiles;
 
@@ -93,7 +108,6 @@ public class SilkBag {
         // we want as the tiles are named from 0 to 10.
         int randomKey = random.nextInt(tileRoutings.size());
 
-        // TODO: let the filemanager handle reading files.
         String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
@@ -111,28 +125,24 @@ public class SilkBag {
     }
 
     private FireTile genFireTile() {
-        // TODO: implement
         return new FireTile(null);
     }
 
     private FreezeTile getFreezeTile() {
-        // TODO: implement
         return new FreezeTile(null);
     }
 
     private BackTrackTile getBackTrackTile() {
-        // TODO: implement
         return new BackTrackTile(null);
     }
 
     private DoubleMoveTile genDoubleMoveTile() {
-        // TODO: implement
         return new DoubleMoveTile(null);
     }
 
     /**
      * Generates the tiles of the bag randomly, each type of tile has a different odd to appear
-     * you can change the odds in the constants of this class
+     * you can change the odds in the constants of this class.
      * @param maxTiles amount of tiles to be generated
      */
     public void getWeightedTiles(int maxTiles) {

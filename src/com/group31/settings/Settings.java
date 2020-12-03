@@ -60,7 +60,6 @@ public class Settings {
         if (settings.containsKey(key)) {
             return settings.get(key);
         }
-        // TODO: find a better way to handle this.
         return null;
     }
 
@@ -73,15 +72,18 @@ public class Settings {
         if (settings.containsKey(key)) {
             return Double.parseDouble(settings.get(key));
         }
-        // TODO: find a better way to handle this.
         return 1.0;
     }
 
+    /**
+     * Gets a setting and parses it to an integer.
+     * @param key Setting name.
+     * @return Setting value.
+     */
     public static int getSettingAsInt(String key) {
         if (settings.containsKey(key)) {
             return Integer.parseInt(settings.get(key));
         }
-        // TODO: find a better way to handle this.
         return 1;
     }
 

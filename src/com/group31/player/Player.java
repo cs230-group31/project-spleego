@@ -117,7 +117,6 @@ public class Player implements Serializable {
      * @param insertY Y coordinate of the place we will add the tile.
      */
     public void playTile(Tile tile, int insertX, int insertY) {
-        // TODO: Put tile on gameboard.
     }
 
     /**
@@ -142,31 +141,5 @@ public class Player implements Serializable {
         return lastLastTurn;
     }
 
-
-
-    // TODO: This should go in the controller.
-//    /**
-//     * will move the player to a new location.
-//     *
-//     * @param movX coordinate x to move to
-//     * @param movY coordinate y to move to
-//     */
-//    public void movePlayer(int movX, int movY) {
-//        this.prevPrevLocation = this.prevLocation;
-//        this.prevLocation = this.location;
-//        // section above just stores last 2 locations
-//
-//        this.location[x] = movX;
-//        this.location[y] = movY;
-//    }
-
-    // TODO: This should be in the controller.
-//    /**
-//     * Takes a tile from the silkbag and appends it the the player's hand.
-//     * @param tile identifier for the object tile
-//     */
-//    public void drawTile(Tile tile) {
-//        hand.add(tile);
-//    }
 
 }

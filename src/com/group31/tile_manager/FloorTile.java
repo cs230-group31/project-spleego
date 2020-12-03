@@ -22,6 +22,9 @@ public class FloorTile extends Tile {
      */
     private boolean onIce;
 
+    /**
+     * Instance's UUID.
+     */
     private final String uuid;
 
     /**
@@ -37,6 +40,10 @@ public class FloorTile extends Tile {
                 Logger.Level.INFO);
     }
 
+    /**
+     * Gets the instance's UUID.
+     * @return Instance's UUID.
+     */
     public String getUuid() {
         return this.uuid;
     }

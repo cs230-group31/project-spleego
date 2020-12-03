@@ -5,7 +5,6 @@ import com.group31.gameboard.Gameboard;
 import com.group31.logger.Logger;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
-import com.group31.tile_manager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -25,7 +24,6 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
 
 /**
  * @author Emily
@@ -125,44 +123,40 @@ public class Game extends Application {
         }
     }
 
-    /**
-     * Redraws the player's hand with the tiles provided.
-     * @param player which position the players are at the table,
-     *               starting with 1 at the top going clockwise
-     * @param hand the hand of the corresponding player
-     */
-    public static void updatePlayerHand(int player, ArrayList<Tile> hand) {
-        switch (player) {
-            //noinspection CheckStyle
-            case 1:
-                playerOneHand.getChildren().clear();
-                for (Tile tile : hand) {
-                    playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-                }
-                break;
-            //noinspection CheckStyle
-            case 2:
-                playerTwoHand.getChildren().clear();
-                for (Tile tile : hand) {
-                    playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-                }
-                break;
-            //noinspection CheckStyle
-            case 3:
-                playerThreeHand.getChildren().clear();
-                for (Tile tile : hand) {
-                    playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-                }
-                break;
-            //noinspection CheckStyle
-            case 4:
-                playerFourHand.getChildren().clear();
-                for (Tile tile : hand) {
-                    playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-                }
-                break;
-            default:
-                break;
-        }
-    }
+//    /**
+//     * Redraws the player's hand with the tiles provided.
+//     * @param player which position the players are at the table,
+//     *               starting with 1 at the top going clockwise
+//     * @param hand the hand of the corresponding player
+//     */
+//    public static void updatePlayerHand(int player, ArrayList<Tile> hand) {
+//        switch (player) {
+//            case 1:
+//                playerOneHand.getChildren().clear();
+//                for (Tile tile : hand) {
+//                    playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+//                }
+//                break;
+//            case 2:
+//                playerTwoHand.getChildren().clear();
+//                for (Tile tile : hand) {
+//                    playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+//                }
+//                break;
+//            case 3:
+//                playerThreeHand.getChildren().clear();
+//                for (Tile tile : hand) {
+//                    playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+//                }
+//                break;
+//            case 4:
+//                playerFourHand.getChildren().clear();
+//                for (Tile tile : hand) {
+//                    playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+//                }
+//                break;
+//            default:
+//                break;
+//        }
+//    }
 }

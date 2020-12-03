@@ -2,7 +2,6 @@ package com.group31.tile_manager;
 
 import javafx.scene.image.Image;
 import java.util.HashMap;
-import java.util.UUID;
 
 
 /**
@@ -24,14 +23,18 @@ public class Tile {
      */
     private boolean actionTile;
     /**
-     * Image of the tile
+     * Image of the tile.
      */
     private Image currentImage;
 
 
+    /**
+     * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
+     * (floor tiles) as well as a goal tile.
+     * @param actionTile Is the tile an action tile?
+     * @param currentImage Tile's image.
+     */
     public Tile(boolean actionTile, Image currentImage) {
-        // TODO: add a method that checks if the instance of a tile is an action tile or if it's a floor
-        // TODO: tile then return true or false depending on if it's an action tile or not.
         this.actionTile = actionTile;
         this.currentImage = currentImage;
     }

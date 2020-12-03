@@ -10,12 +10,9 @@ import com.group31.controller.Controller;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
-import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
-
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -26,6 +23,15 @@ public class Main {
     // Either 'dev' for development or 'prod' for production.
     // Behaviour changes when set to 'dev': settings regenerated.
     private static final String ENV = "dev";
+
+    /**
+     * Rows in a gameboard. (TESTING).
+     */
+    private static final int BOARD_ROWS = 5;
+    /**
+     * Columns in a gameboard. (TESTING).
+     */
+    private static final int BOARD_COLS = 5;
 
     /**
      * Initialises the components and runs the app.
@@ -68,18 +74,18 @@ public class Main {
      */
     private static HashMap<String, String> initSettings() {
         // Allow the file manager to create the requested directory.
-        final boolean ALLOW_FILE_CREATION = true;
+        boolean allowFileCreation = true;
 
         // Requested directory.
-        final String SETTINGS_DIRECTORY = "data/settings/";
-        final String SETTINGS_FILE_NAME = "settings.txt";
+        String settingsDirectory = "data/settings/";
+        String settingsFileName = "settings.txt";
         try {
-            FileManager.setDirectory(SETTINGS_DIRECTORY, ALLOW_FILE_CREATION);
-            if (!FileManager.fileExists(SETTINGS_FILE_NAME)) {
-                FileManager.write(DefaultSettings.getDefaultSettingsArray(), SETTINGS_FILE_NAME);
+            FileManager.setDirectory(settingsDirectory, allowFileCreation);
+            if (!FileManager.fileExists(settingsFileName)) {
+                FileManager.write(DefaultSettings.getDefaultSettingsArray(), settingsFileName);
                 return DefaultSettings.getDefaultSettings();
             } else {
-                return getSettingsFromArray(FileManager.read(SETTINGS_FILE_NAME));
+                return getSettingsFromArray(FileManager.read(settingsFileName));
             }
         } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
@@ -97,12 +103,12 @@ public class Main {
      */
     private static HashMap<String, String> getSettingsFromArray(String[] settingsArray) {
         HashMap<String, String> settings = new HashMap<>();
-        final int SETTING_KEY = 0;
-        final int SETTING_VALUE = 1;
-        final String DELIMITER = ";";
+        int settingKey = 0;
+        int settingValue = 1;
+        String delimiter = ";";
         for (String setting : settingsArray) {
-            String[] settingNameValue = setting.split(DELIMITER);
-            settings.put(settingNameValue[SETTING_KEY], settingNameValue[SETTING_VALUE]);
+            String[] settingNameValue = setting.split(delimiter);
+            settings.put(settingNameValue[settingKey], settingNameValue[settingValue]);
         }
         return settings;
     }
@@ -112,7 +118,6 @@ public class Main {
      * @return New instance of Leaderboard.
      */
     private static Leaderboard initLeaderBoard() {
-        // TODO: load stats, initialises, pass back
         return null; //new Leaderboard("");
     }
 
@@ -121,21 +126,16 @@ public class Main {
      * @return A new instance of SilkBag.
      */
     private static SilkBag initSilkBag() {
-        // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        final int MAX_TILES = Settings.getSettingAsInt("max_tiles");
-        return new SilkBag(MAX_TILES);
+        int maxTiles = Settings.getSettingAsInt("max_tiles");
+        return new SilkBag(maxTiles);
     }
 
     /**
-     * Initialises Gameboard.
-     * @return A new instance of Gameboard.
+     * Creates a new gameboard.
+     * @return New instance of gameboard.
      */
     private static Gameboard initGameboard() {
-        // TODO: loads size, saved state if any, initialises, pass back
-        // TODO: board_rows/cols should be based on either predefined board size or randomly generated board size
-        final int BOARD_ROWS = 5;
-        final int BOARD_COLS = 5;
-        return new Gameboard(BOARD_ROWS, BOARD_COLS);
+        return new Gameboard(this.boardRows, this.boardCols);
     }
 
     /**
@@ -143,12 +143,10 @@ public class Main {
      * @return New instance of player depending on how many players are in the game.
      */
     private static Player[] initPlayers() {
-        // TODO: loads players if any saved or creates new players (however many are asked for at runtime), pass back
-        // TODO: Set based on settings passed in before game starts.
-        final int NUMBER_OF_PLAYERS = 2;
-        Player[] players = new Player[NUMBER_OF_PLAYERS];
+        int numPlayers = 2;
+        Player[] players = new Player[numPlayers];
 
-        for (int i = 0; i <= NUMBER_OF_PLAYERS - 1; i++) {
+        for (int i = 0; i <= numPlayers - 1; i++) {
             players[i] = new Player(null, null, null, null);
         }
 
