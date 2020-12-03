@@ -1,5 +1,7 @@
 package com.group31.settings;
 
+
+import com.group31.logger.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,11 +23,11 @@ public class Settings {
 
     /**
      * Updates settings value if the key exists.
-     * @param args Settings to change.
+     * @param defaultSettings Settings to change.
      */
-    public static void updateSettings(final String[] args) {
-        for (String setting : args) {
-            String[] settingNameValue = setting.split(":");
+    public static void updateSettings(String[] defaultSettings) {
+        for (String setting : defaultSettings) {
+            String[] settingNameValue = setting.split(";");
             if (settings.containsKey(settingNameValue[SETTING_KEY])) {
                 settings.put(settingNameValue[SETTING_KEY],
                         settingNameValue[SETTING_VALUE]);
@@ -37,8 +39,7 @@ public class Settings {
      * Initialises settings.
      * @param allSettingsData All settings (keys and values).
      */
-    public static void setAllSettings(
-            final HashMap<String, String> allSettingsData) {
+    public static void setAllSettings(HashMap<String, String> allSettingsData) {
         settings = allSettingsData;
     }
 
@@ -50,4 +51,49 @@ public class Settings {
         return settings;
     }
 
+    /**
+     * Gets a setting.
+     * @param key Setting name.
+     * @return Setting value.
+     */
+    public static String get(String key) {
+        if (settings.containsKey(key)) {
+            return settings.get(key);
+        }
+        return null;
+    }
+
+    /**
+     * Gets a setting and parses it to a double.
+     * @param key Setting name.
+     * @return Setting value.
+     */
+    public static Double getSettingAsDouble(String key) {
+        if (settings.containsKey(key)) {
+            return Double.parseDouble(settings.get(key));
+        }
+        return 1.0;
+    }
+
+    /**
+     * Gets a setting and parses it to an integer.
+     * @param key Setting name.
+     * @return Setting value.
+     */
+    public static int getSettingAsInt(String key) {
+        if (settings.containsKey(key)) {
+            return Integer.parseInt(settings.get(key));
+        }
+        return 1;
+    }
+
+    /**
+     * Writes all the settings to the console.
+     * For debugging purposes only!
+     */
+    public static void dumpSettingsToConsole() {
+        for (String key : settings.keySet()) {
+            Logger.log(String.format("%s : %s", key, settings.get(key)), Logger.Level.VERBOSE);
+        }
+    }
 }
