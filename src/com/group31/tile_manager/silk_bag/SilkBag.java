@@ -99,6 +99,7 @@ public class SilkBag {
     /**
      * Generates a random floor tile.
      * @return the floor tile
+     * @throws FileNotFoundException If the image file cannot be found.
      */
     public FloorTile genFloorTile() throws FileNotFoundException {
         Random random = new Random();
