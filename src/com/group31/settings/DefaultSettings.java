@@ -68,6 +68,8 @@ public class DefaultSettings {
 
         defaultSettings.put("serialized_player_files", "data/serializing/serialized/Players/");
 
+        defaultSettings.put("tutorial_text", "TUTORIAL TEXT GOES HERE!");
+
         return defaultSettings;
     }
 

@@ -13,7 +13,6 @@ import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
 
