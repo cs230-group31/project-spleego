@@ -33,7 +33,7 @@ public class Game extends Application {
     /**
      * Space between tiles in pixels.
      */
-    private static final double TILE_SPACING = Settings.getDouble("tile_spacing");
+    private static final double TILE_SPACING = Settings.getSettingAsDouble("tile_spacing");
     /**
      * File Path for the table background image.
      */
