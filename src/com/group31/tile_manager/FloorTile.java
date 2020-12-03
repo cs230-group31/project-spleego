@@ -10,11 +10,6 @@ import java.util.UUID;
  */
 public class FloorTile extends Tile {
     /**
-     * to use when need use coords
-     */
-    public final static int X = 0;
-    public final static int Y = 1;
-    /**
      * Holds the routing of the tile.
      */
     private final String routing;
