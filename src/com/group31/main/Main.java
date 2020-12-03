@@ -135,7 +135,7 @@ public class Main {
      * @return New instance of gameboard.
      */
     private static Gameboard initGameboard() {
-        return new Gameboard(this.boardRows, this.boardCols);
+        return new Gameboard(BOARD_ROWS, BOARD_COLS);
     }
 
     /**
