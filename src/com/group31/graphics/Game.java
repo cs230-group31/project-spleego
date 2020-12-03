@@ -1,8 +1,10 @@
 package com.group31.graphics;
 
 import com.group31.controller.Controller;
+import com.group31.gameboard.Gameboard;
 import com.group31.logger.Logger;
 import com.group31.settings.Settings;
+import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -33,7 +35,7 @@ public class Game extends Application {
     /**
      * Space between tiles in pixels.
      */
-    private static final double TILE_SPACING = Settings.getDouble("tile_spacing");
+    private static final double TILE_SPACING = Settings.getSettingAsDouble("tile_spacing");
     /**
      * File Path for the table background image.
      */
@@ -111,10 +113,14 @@ public class Game extends Application {
         Controller controller = Controller.getInstance();
         int boardRows = controller.getGameboard().getBoardRows();
         int boardCols = controller.getGameboard().getBoardRows();
-        for (int r = 1; r <=  boardRows; r++) {
-            for (int c = 1; c <= boardCols; c++) {
-                Image tileImg  = controller.getGameboard().getBoardState()[r - 1][c - 1].getCurrentImage();
-                board.add(new StackPane(new ImageView(tileImg)), c, r);
+        for (int row = 1; row <=  boardRows; row++) {
+            for (int column = 1; column <= boardCols; column++) {
+                Gameboard gameboard = controller.getGameboard();
+                FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][column - 1];
+                Image tileImg  = boardStateAtCoords.getCurrentImage();
+                ImageView imageView = new ImageView(tileImg);
+                StackPane layout = new StackPane(imageView);
+                board.add(layout, row, column);
             }
         }
     }

@@ -2,6 +2,7 @@ package com.group31.tile_manager;
 
 import javafx.scene.image.Image;
 import com.group31.logger.Logger;
+import java.util.UUID;
 
 /**
  * This class is subclass of Tile (no action tile).
@@ -21,29 +22,23 @@ public class FloorTile extends Tile {
      */
     private boolean onIce;
 
-//    /**
-//     * <PLEASE ADD JAVADOC HERE>.
-//     * @param routing
-//     * @param id
-//     * @param coord
-//     * @param currentImage
-//     */
-//    public FloorTile(String routing, int id, int[] coord, Image currentImage) {
-//        super(id, false, currentImage);
-//        this.routing = routing;
-//        Logger.log("Floor tile created", Logger.Level.INFO);
-//    }
+    private final String uuid;
 
     /**
      *
      * @param routing routing (valid connections to other tiles) of the tile
-     * @param id unique id of the tile
      * @param currentImage the image the tile should display
      */
-    public FloorTile(String routing, int id, Image currentImage) {
-    super(id, false, currentImage);
-    this.routing = routing;
-    Logger.log(this.getId() + " tile created, routing: " + this.getRouting(), Logger.Level.INFO);
+    public FloorTile(String routing, Image currentImage) {
+        super(false, currentImage);
+        this.uuid = UUID.randomUUID().toString();
+        this.routing = routing;
+        Logger.log(String.format("Tile with ID %s created. Routing: %s", this.getUuid(), this.getRouting()),
+                Logger.Level.INFO);
+    }
+
+    public String getUuid() {
+        return this.uuid;
     }
 
     /**
