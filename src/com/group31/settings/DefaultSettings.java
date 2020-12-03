@@ -51,6 +51,7 @@ public class DefaultSettings {
         defaultSettings.put("tile_route_id_9", "cda");
         defaultSettings.put("tile_route_id_10", "dab");
         defaultSettings.put("num_tile_routes", "11");
+        defaultSettings.put("max_tiles", "10");
 
         defaultSettings.put("tile_spacing", "3");
         defaultSettings.put("table_image_url", "resources/images/table.png");
