@@ -46,6 +46,10 @@ public class Game extends Application {
      * File Path for the pressed `EXIT` button.
      */
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
+    /*
+     * Represents the board of tiles.
+     */
+    private static GridPane board;
     /**
      * Player one's hand of tiles.
      */
@@ -74,7 +78,7 @@ public class Game extends Application {
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
-        GridPane board = new GridPane();
+        board = new GridPane();
         try {
             Image tableImg = new Image(new FileInputStream(TABLE_IMAGE_URL));
             BackgroundImage bg = new BackgroundImage(tableImg,

@@ -15,5 +15,4 @@ public class GoalTile extends FloorTile {
     public GoalTile(String routing, Image currentImage) {
         super(0,routing, currentImage);
     }
-
 }

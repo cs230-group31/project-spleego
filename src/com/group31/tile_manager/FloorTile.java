@@ -3,9 +3,11 @@ package com.group31.tile_manager;
 import com.group31.settings.Settings;
 import javafx.scene.image.Image;
 import com.group31.logger.Logger;
-
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import javafx.scene.image.Image;
+import com.group31.logger.Logger;
+import java.util.UUID;
 
 /**
  * This class is subclass of Tile (no action tile).
@@ -93,7 +95,6 @@ public class FloorTile extends Tile {
     public void setOnIce(boolean onIce) {
         this.onIce = onIce;
     }
-
 
 //    /**
 //     * change the current tile position on the gameboard.

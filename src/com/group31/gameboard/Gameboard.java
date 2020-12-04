@@ -18,7 +18,6 @@ public class Gameboard {
     private final FloorTile[][] boardState;
     /**
      * 2D array to keep track of currently fixed tiles.
-     */
     private boolean[][] boardFixedTiles;
     /**
      * The amount of rows the board has.
@@ -44,6 +43,7 @@ public class Gameboard {
     /**
      * Fills the board with random floor tiles.
      * @param silkBag the silk bag for the game
+     * @throws FileNotFoundException If the image file cannot be found.
      */
     public void genBoard(SilkBag silkBag) throws FileNotFoundException {
         for (int r = 0; r <  boardRows; r++) {
