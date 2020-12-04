@@ -46,7 +46,7 @@ public class Game extends Application {
      * File Path for the pressed `EXIT` button.
      */
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
-    /*
+    /**
      * Represents the board of tiles.
      */
     private static GridPane board;

@@ -18,6 +18,7 @@ public class Gameboard {
     private final FloorTile[][] boardState;
     /**
      * 2D array to keep track of currently fixed tiles.
+     */
     private boolean[][] boardFixedTiles;
     /**
      * The amount of rows the board has.

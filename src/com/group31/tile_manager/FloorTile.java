@@ -5,9 +5,6 @@ import javafx.scene.image.Image;
 import com.group31.logger.Logger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import javafx.scene.image.Image;
-import com.group31.logger.Logger;
-import java.util.UUID;
 
 /**
  * This class is subclass of Tile (no action tile).
@@ -50,7 +47,8 @@ public class FloorTile extends Tile {
         Image tileImage = null;
         try {
             tileImage = new Image(new FileInputStream("resources/images/tiles/" + getId() + ".png"),
-                    64, 64, true, false);
+                    Settings.getSettingAsDouble("tile_width"), Settings.getSettingAsDouble("tile_height"),
+                    true, false);
         } catch (FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }

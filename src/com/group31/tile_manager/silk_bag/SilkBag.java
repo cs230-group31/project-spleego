@@ -120,7 +120,7 @@ public class SilkBag {
         }
         return floorTiles;
     }
-  
+
     private HashMap<Integer, String> initRouting() {
         HashMap<Integer, String> routings = new HashMap<>();
         int numRoutes = Settings.getSettingAsInt("num_tile_routes");
@@ -148,7 +148,7 @@ public class SilkBag {
      * @return the floor tile
      * @throws FileNotFoundException If the image file cannot be found.
      */
-    public FloorTile genFloorTile() throws FileNotFoundException {
+    public FloorTile genRandomFloorTile() throws FileNotFoundException {
         Random random = new Random();
 
         // Tiles routing size could be 11, but nextInt() takes 11 and produces range 0 to 10, which is what

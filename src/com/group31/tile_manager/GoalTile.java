@@ -13,6 +13,6 @@ public class GoalTile extends FloorTile {
      * @param currentImage The tile's image.
      */
     public GoalTile(String routing, Image currentImage) {
-        super(0,routing, currentImage);
+        super(0, routing, currentImage);
     }
 }

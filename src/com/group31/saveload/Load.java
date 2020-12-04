@@ -17,6 +17,23 @@ public class Load {
      */
     private static final String LEVEL_FILES_LOCATION = "data/level_files";
     /**
+     * Line the tiles in bag info is located.
+     */
+    private static final int TILES_IN_BAG_LINE = 0;
+    /**
+     * Line the board size info is located.
+     */
+    private static final int BOARD_SIZE_LINE = 1;
+    /**
+     * Line the number of fixed tiles info is located.
+     */
+    private static final int NUM_FIXED_TILES_LINE = 2;
+    /**
+     * Line the fixed tiles info is located.
+     */
+    private static final int FIXED_TILES_LINE = 3;
+
+    /**
      * Default constructor.
      */
     public Load() {
@@ -30,19 +47,19 @@ public class Load {
     public HashMap<String, Object> loadNewGameFromFile(String filename) throws FileNotFoundException, NoSuchDirectory {
         HashMap<String, Object> objects = new HashMap<>();
         String[] allLines = FileManager.read(filename);
-        String[] tilesInBag = allLines[0].split(",");
+        String[] tilesInBag = allLines[TILES_IN_BAG_LINE].split(",");
         int[] tilesToAdd = new int[tilesInBag.length];
         for (int i = 0; i < tilesInBag.length; i++) {
             tilesToAdd[i] = Integer.parseInt(tilesInBag[i]);
         }
         SilkBag silkBag = new SilkBag(tilesToAdd, tilesToAdd.length);
 
-        String[] boardSize = allLines[1].split(",");
+        String[] boardSize = allLines[BOARD_SIZE_LINE].split(",");
         int boardWidth = Integer.parseInt(boardSize[0]);
         int boardHeight = Integer.parseInt(boardSize[1]);
-        int numFixedTiles = Integer.parseInt(allLines[2]);
+        int numFixedTiles = Integer.parseInt(allLines[NUM_FIXED_TILES_LINE]);
         Gameboard gameboard = new Gameboard(boardWidth, boardHeight);
-        String[] fixedTilesSplit = allLines[3].split("/");
+        String[] fixedTilesSplit = allLines[FIXED_TILES_LINE].split("/");
         for (int i = 0; i < numFixedTiles; i++) {
             String[] tileInfo = fixedTilesSplit[i].split(",");
             int tileID = Integer.parseInt(tileInfo[0]);
