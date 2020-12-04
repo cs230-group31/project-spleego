@@ -31,7 +31,6 @@ public class Tile {
      */
     private Image currentImage;
 
-
     /**
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
      * (floor tiles) as well as a goal tile.

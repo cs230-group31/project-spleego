@@ -24,10 +24,6 @@ public class FloorTile extends Tile {
      * Stores whether the tile is on ice or not.
      */
     private boolean onIce;
-    /**
-     *
-     */
-    private int id;
 
     /**
      *
@@ -48,10 +44,10 @@ public class FloorTile extends Tile {
      */
     public FloorTile(int id) {
         super(id);
-        this.routing = Settings.get(String.format("tile_route_id_%s", this.id));
+        this.routing = Settings.get(String.format("tile_route_id_%s", getId()));
         Image tileImage = null;
         try {
-            tileImage = new Image(new FileInputStream("resources/images/tiles/" + this.id + ".png"),
+            tileImage = new Image(new FileInputStream("resources/images/tiles/" + getId() + ".png"),
                     64, 64, true, false);
         } catch (FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
@@ -66,24 +62,6 @@ public class FloorTile extends Tile {
      */
     public String getRouting() {
         return routing;
-    }
-
-    /**
-     * Returns the ID of the tile, representative of which
-     * tile it actually is.
-     * @return the ID of the tile
-     */
-    public int getId() {
-        return super.getId();
-    }
-
-
-    /**
-     * Returns the current Image of the Tile.
-     * @return image of the tile
-     */
-    public Image getCurrentImage() {
-        return super.getCurrentImage();
     }
 
     /**
