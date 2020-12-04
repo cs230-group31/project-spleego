@@ -163,7 +163,7 @@ public class MainMenu extends Application {
         ImageButton howToPlay = new ImageButton(HOW_TO_PLAY_UNPRESSED_URL, HOW_TO_PLAY_PRESSED_URL);
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
-      
+
         exit.setOnMouseClicked(e -> this.saveAndExit());
         start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
