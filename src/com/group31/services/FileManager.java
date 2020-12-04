@@ -3,6 +3,7 @@ package com.group31.services;
 import com.group31.exceptions.NoFilesInDir;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.logger.Logger;
+import javafx.scene.image.Image;
 import java.io.FileNotFoundException;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -179,6 +180,30 @@ public class FileManager {
             throw new FileNotFoundException(String.format(
                     "Failed to delete %s from %s. File does not exist", fileName, directory));
         }
+    }
+
+    /**
+     * Reads an image from a file.
+     * @param imageFileName image's file name
+     * @param imageFileExtension image's file extension (without '.'. For example: 'png')
+     * @param properties image's properties. Index 0 being the width, index 1 being the height
+     * @param preserveRatio preserves the image's ratio. (Recommended: true)
+     * @return image from a file
+     * @throws NoSuchDirectory if the directory has not been set
+     * @throws IOException if the image file cannot be found
+     */
+    public static Image readImage(String imageFileName, String imageFileExtension, double[] properties,
+                                  boolean preserveRatio) throws NoSuchDirectory, IOException {
+        checkDirectorySet();
+
+        int tileWidthIndex = 0;
+        int tileHeightIndex = 1;
+        String imageFileLocation = String.format("%s%s.%s", directory, imageFileName, imageFileExtension);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image image = new Image(imageFile, properties[tileWidthIndex],
+                properties[tileHeightIndex], preserveRatio, false);
+        imageFile.close();
+        return image;
     }
 
     /**

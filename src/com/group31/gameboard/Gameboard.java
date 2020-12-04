@@ -36,6 +36,7 @@ public class Gameboard {
     /**
      * Fills the board with random floor tiles.
      * @param silkBag the silk bag for the game
+     * @throws FileNotFoundException If the image file cannot be found.
      */
     public void genBoard(SilkBag silkBag) throws FileNotFoundException {
         for (int r = 0; r <  boardRows; r++) {

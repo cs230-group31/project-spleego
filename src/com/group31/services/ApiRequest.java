@@ -54,6 +54,7 @@ public class ApiRequest {
     /**
      * Gets the response from the server.
      * @return The response as a string.
+     * @throws IOException If the response cannot be read.
      */
     public String getResponse() throws IOException {
         URL url = this.token == null ? buildUrl() : buildUrlWithToken();
