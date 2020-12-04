@@ -2,8 +2,6 @@ package com.group31.graphics;
 
 import com.group31.leaderboard.Leaderboard;
 import com.group31.player.Player;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -19,6 +17,21 @@ import javafx.stage.Stage;
 
 public class LeaderboardScreen {
 
+    /**
+     * Inset sizes for the bottom and right offsets.
+     */
+    private final int bottomAndRightInset = 0;
+
+    /**
+     * Inset sizes for the top and left offsets.
+     */
+    private final int topAndLeftInset = 10;
+
+    /**
+     * Starts the scene.
+     * @param stage instance of the stage (window)
+     * @param mainMenu instance of the Main Menu scene
+     */
     private void start(Stage stage, Scene mainMenu) {
 
         Scene scene = new Scene(new Group());
@@ -26,6 +39,7 @@ public class LeaderboardScreen {
 
         TableView table = new TableView();
 
+        // Create columns and associate them with the fields from Player.
         TableColumn nameCol = new TableColumn("Player Name");
         nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         TableColumn winsCol = new TableColumn("Wins");
@@ -38,8 +52,8 @@ public class LeaderboardScreen {
         Label title = new Label("Leaderboard");
 
         final VBox leaderboardBox = new VBox();
-        leaderboardBox.setSpacing(10);
-        leaderboardBox.setPadding(new Insets(10, 0, 0, 10));
+        leaderboardBox.setPadding(new Insets(
+                this.topAndLeftInset, this.bottomAndRightInset, this.bottomAndRightInset, this.topAndLeftInset));
         leaderboardBox.getChildren().addAll(title, table);
 
         ObservableList<Player> playerData = Leaderboard.getLeaderboardData();
@@ -57,6 +71,11 @@ public class LeaderboardScreen {
 
     }
 
+    /**
+     * Launches a new Leaderboard scene.
+     * @param stage instance of the stage (window)
+     * @param mainMenu instance of the Main Menu scene
+     */
     public static void launch(Stage stage, Scene mainMenu) {
         LeaderboardScreen leaderboard = new LeaderboardScreen();
         leaderboard.start(stage, mainMenu);

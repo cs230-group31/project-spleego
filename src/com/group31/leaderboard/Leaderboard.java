@@ -1,6 +1,5 @@
 package com.group31.leaderboard;
 
-import com.group31.exceptions.NoFilesInDir;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;

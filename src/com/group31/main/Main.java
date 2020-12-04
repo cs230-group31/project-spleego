@@ -68,7 +68,6 @@ public class Main {
 
     /**
      * Initialises settings.
-     * @return HashMap containing all settings.
      */
     private static void initSettings() {
         // Allow the file manager to create the requested directory.

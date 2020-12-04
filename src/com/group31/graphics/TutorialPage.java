@@ -10,6 +10,12 @@ import javafx.stage.Stage;
 
 
 public class TutorialPage {
+
+    /**
+     * Starts the scene.
+     * @param stage instance of the stage (window)
+     * @param mainMenu instance of the Main Menu scene
+     */
     private void start(Stage stage, Scene mainMenu) {
 
         Scene scene = new Scene(new Group());
@@ -27,6 +33,11 @@ public class TutorialPage {
 
     }
 
+    /**
+     * Launches a new Tutorial page scene.
+     * @param stage instance of the stage (windows)
+     * @param mainMenu instance of the Main Menu scene
+     */
     public static void launch(Stage stage, Scene mainMenu) {
         TutorialPage tutorialPage = new TutorialPage();
         tutorialPage.start(stage, mainMenu);
