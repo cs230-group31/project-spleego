@@ -38,6 +38,10 @@ public class LeaderboardScreen {
         BorderPane root = new BorderPane();
 
         TableView table = new TableView();
+        Label title = new Label("Leaderboard");
+        ObservableList<Player> playerData = Leaderboard.getLeaderboardData();
+        Button button = new Button("Return");
+        final VBox leaderboardBox = new VBox();
 
         // Create columns and associate them with the fields from Player.
         TableColumn nameCol = new TableColumn("Player Name");
@@ -49,23 +53,16 @@ public class LeaderboardScreen {
         TableColumn gamesPlayedCol = new TableColumn("Games Played");
         gamesPlayedCol.setCellValueFactory(new PropertyValueFactory<>("gamesPlayed"));
 
-        Label title = new Label("Leaderboard");
 
-        final VBox leaderboardBox = new VBox();
         leaderboardBox.setPadding(new Insets(
                 this.topAndLeftInset, this.bottomAndRightInset, this.bottomAndRightInset, this.topAndLeftInset));
         leaderboardBox.getChildren().addAll(title, table);
-
-        ObservableList<Player> playerData = Leaderboard.getLeaderboardData();
         table.setItems(playerData);
         table.getColumns().addAll(nameCol, winsCol, lossesCol, gamesPlayedCol);
-
-        Button button = new Button("Return");
         button.setOnMouseClicked(e -> stage.setScene(mainMenu));
 
         root.setBottom(button);
         root.setCenter(leaderboardBox);
-
         scene.setRoot(root);
         stage.setScene(scene);
 

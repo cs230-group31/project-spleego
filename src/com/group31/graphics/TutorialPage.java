@@ -23,11 +23,11 @@ public class TutorialPage {
         String tutorialText = Settings.get("tutorial_text");
         Text tutorial = new Text(tutorialText);
         Button button = new Button("Return");
+
         button.setOnMouseClicked(e -> stage.setScene(mainMenu));
 
         root.setCenter(tutorial);
         root.setBottom(button);
-
         scene.setRoot(root);
         stage.setScene(scene);
 
