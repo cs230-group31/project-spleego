@@ -147,12 +147,16 @@ public class Game extends Application {
                 ImageButton arrowDownButton = new ImageButton("resources/images/tiles/arrow down.png");
                 // temporary final variable otherwise lambda complains
                 int finalCol = col;
+
+                // bottom button clicked (this doesn't work)
                 arrowUpButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol);
+                    gameboard.addTileToCol(finalCol, "down");
                     drawGameBoard(board);
                 });
+
+                // top button clicked (works fine)
                 arrowDownButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol);
+                    gameboard.addTileToCol(finalCol, "up");
                     drawGameBoard(board);
                 });
 
@@ -167,12 +171,16 @@ public class Game extends Application {
                 ImageButton arrowRightButton = new ImageButton("resources/images/tiles/arrow right.png");
                 ImageButton arrowLeftButton = new ImageButton("resources/images/tiles/arrow left.png");
                 int finalRow = row;
+
+                // right button clicked (doesn't work)
                 arrowLeftButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow);
+                    gameboard.addTileToRow(finalRow, "right");
                     drawGameBoard(board);
                 });
+
+                // left button clicked (works fine)
                 arrowRightButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow);
+                    gameboard.addTileToRow(finalRow, "left");
                     drawGameBoard(board);
                 });
 

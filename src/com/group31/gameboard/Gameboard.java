@@ -1,6 +1,7 @@
 package com.group31.gameboard;
 
 import com.group31.controller.Controller;
+import com.group31.logger.Logger;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
@@ -127,16 +128,37 @@ public class Gameboard {
      * shifting the needed tiles across one and placing
      * the removed tile back into the bag.
      * @param col the column that identifies the row
+     * @param direction the direction to send the tile
      */
-    public void addTileToRow(int col) {
+    // Left and right buttons
+    public void addTileToRow(int col, String direction) {
         Controller controller = Controller.getInstance();
         SilkBag silkBag = controller.getSilkbag();
         FloorTile tile = controller.getCurrentFloorTile();
-        silkBag.addTile(boardState[boardRows - 1][col]);
-        for (int r = boardRows - 1; r > 0; r--) {
-            boardState[r][col] = boardState[r - 1][col];
+        Tile ejectedTile = null;
+        switch (direction) {
+            case "left":
+                ejectedTile = boardState[boardRows - 1][col];
+                silkBag.addTile(ejectedTile);
+                for (int r = boardRows - 1; r > 0; r--) {
+                    boardState[r][col] = boardState[r - 1][col];
+                }
+                boardState[0][col] = tile;
+                break;
+            case "right":
+                ejectedTile = boardState[0][col];
+                silkBag.addTile(ejectedTile);
+                for (int r = 0; r < boardRows - 1; r++) {
+                    boardState[r][col] = boardState[r + 1][col];
+                }
+                boardState[boardRows - 1][col] = tile;
+                break;
+            default:
+                Logger.log("Left/right arrow pressed but tile was not moved.", Logger.Level.WARNING);
+                break;
         }
-        boardState[0][col] = tile;
+        int ejectedTileId = ejectedTile.getId();
+        Logger.log(String.format("Tile with ID: %s was ejected from the board.", ejectedTileId), Logger.Level.INFO);
     }
 
     /**
@@ -144,16 +166,37 @@ public class Gameboard {
      * shifting the needed tiles across one and placing
      * the removed tile back into the bag.
      * @param row the row that identifies the column
+     * @param direction the direction to send the tile
      */
-    public void addTileToCol(int row) {
+    // Up and Down buttons
+    public void addTileToCol(int row, String direction) {
         Controller controller = Controller.getInstance();
         SilkBag silkBag = controller.getSilkbag();
         FloorTile tile = controller.getCurrentFloorTile();
-        silkBag.addTile(boardState[row][boardColumns - 1]);
-        for (int c = boardColumns - 1; c > 0; c--) {
-            boardState[row][c] = boardState[row][c - 1];
+        Tile ejectedTile = null;
+        switch (direction) {
+            case "up":
+                ejectedTile = boardState[row][boardColumns - 1];
+                silkBag.addTile(ejectedTile);
+                for (int c = boardColumns - 1; c > 0; c--) {
+                    boardState[row][c] = boardState[row][c - 1];
+                }
+                boardState[row][0] = tile;
+                break;
+            case "down":
+                ejectedTile = boardState[row][0];
+                silkBag.addTile(ejectedTile);
+                for (int c = 0; c < boardColumns - 1; c++) {
+                    boardState[row][c] = boardState[row][c + 1];
+                }
+                boardState[row][boardColumns - 1] = tile;
+                break;
+            default:
+                Logger.log("Up/down arrow pressed but tile was not moved.", Logger.Level.WARNING);
+                break;
         }
-        boardState[row][0] = tile;
+        int ejectedTileId = ejectedTile.getId();
+        Logger.log(String.format("Tile with ID: %s was ejected from the board.", ejectedTileId), Logger.Level.INFO);
     }
 
     /**
