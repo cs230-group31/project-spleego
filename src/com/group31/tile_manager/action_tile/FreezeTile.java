@@ -6,10 +6,11 @@ public class FreezeTile extends ActionTile {
 
     /**
      * Tile that freezes a player in place.
-     * @param currentImage Tile's image.
+     * @param currentImage the Tile's image
+     * @param id id of the tile
      */
-    public FreezeTile(Image currentImage) {
-        super(currentImage);
+    public FreezeTile(int id, Image currentImage) {
+        super(id,  currentImage);
     }
 
 }
