@@ -163,6 +163,7 @@ public class MainMenu extends Application {
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
         exit.setOnMouseClicked(e -> Platform.exit());
         start.setOnMouseClicked(e -> Game.launch(stage));
+        leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
 
         VBox buttonBox = new VBox();

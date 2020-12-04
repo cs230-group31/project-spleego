@@ -7,6 +7,8 @@ import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -46,8 +48,8 @@ public class Leaderboard {
      * Gets the leaderboard data.
      * @return Leaderboard data.
      */
-    public static Player[] getLeaderboardData() {
-        return players.toArray(new Player[0]);
+    public static ObservableList<Player> getLeaderboardData() {
+        return FXCollections.observableArrayList(players);
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.group31.player;
 
 import com.group31.tile_manager.Tile;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import java.io.Serializable;
@@ -12,7 +14,7 @@ public class Player implements Serializable {
     /**
      * Player's name.
      */
-    private final String name;
+    private final SimpleStringProperty name;
 
     /**
      * Player's sprite.
@@ -53,6 +55,12 @@ public class Player implements Serializable {
      */
     private int[] lastLastTurn;
 
+    private SimpleIntegerProperty wins;
+
+    private SimpleIntegerProperty losses;
+
+    private final SimpleIntegerProperty gamesPlayed;
+
     /**
      * Class for a player who has or is playing the game.
      * @param name Player's name.
@@ -61,11 +69,15 @@ public class Player implements Serializable {
      * @param startingLocation Player's location.
      */
     public Player(String name, Image sprite, Color colour, int[] startingLocation) {
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
         this.sprite = sprite;
         this.colour = colour;
         this.startingLocation = startingLocation;
+
         this.instanceUuid = UUID.randomUUID().toString();
+        this.wins = new SimpleIntegerProperty(0);
+        this.losses = new SimpleIntegerProperty(0);
+        this.gamesPlayed = new SimpleIntegerProperty(0);
     }
 
     /**
@@ -73,7 +85,33 @@ public class Player implements Serializable {
      * @return player name
      */
     public String getName() {
-        return this.name;
+        return this.name.get();
+    }
+
+    public int getWins() {
+        return this.wins.get();
+    }
+
+    public int getLosses() {
+        return this.losses.get();
+    }
+
+    public int getGamesPlayed() {
+        return this.gamesPlayed.get();
+    }
+
+    public void incrementWins() {
+        this.wins.set(this.wins.get() + 1);
+        setGamesPlayed();
+    }
+
+    public void incrementLosses() {
+        this.losses.set(this.losses.get() + 1);
+        setGamesPlayed();
+    }
+
+    private void setGamesPlayed() {
+        this.gamesPlayed.set(this.losses.get() + this.wins.get());
     }
 
     /**
