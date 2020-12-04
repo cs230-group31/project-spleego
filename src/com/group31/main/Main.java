@@ -27,11 +27,11 @@ public class Main {
     /**
      * Rows in a gameboard. (TESTING).
      */
-    private static final int BOARD_ROWS = 5;
+    private static final int BOARD_ROWS = 7;
     /**
      * Columns in a gameboard. (TESTING).
      */
-    private static final int BOARD_COLS = 5;
+    private static final int BOARD_COLS = 7;
 
     /**
      * Initialises the components and runs the app.
@@ -105,8 +105,9 @@ public class Main {
      * @return A new instance of SilkBag.
      */
     private static SilkBag initSilkBag() {
-        int maxTiles = Settings.getSettingAsInt("max_tiles");
-        return new SilkBag(maxTiles);
+//        int maxTiles = Settings.getSettingAsInt("max_tiles");
+//        return new SilkBag(maxTiles);
+        return new SilkBag(2);
     }
 
     /**

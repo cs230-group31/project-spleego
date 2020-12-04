@@ -7,8 +7,9 @@ public class DoubleMoveTile extends ActionTile {
     /**
      * Tile that allows a user to make another move.
      * @param currentImage Tile's image.
+     * @param id id of the tile
      */
-    public DoubleMoveTile(Image currentImage) {
-        super(currentImage);
+    public DoubleMoveTile(int id, Image currentImage) {
+        super(id,  currentImage);
     }
 }
