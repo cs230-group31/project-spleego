@@ -1,6 +1,8 @@
 package com.group31.player;
 
 import com.group31.tile_manager.Tile;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import java.io.Serializable;
@@ -12,7 +14,7 @@ public class Player implements Serializable {
     /**
      * Player's name.
      */
-    private final String name;
+    private final SimpleStringProperty name;
 
     /**
      * Player's sprite.
@@ -54,39 +56,105 @@ public class Player implements Serializable {
     private int[] lastLastTurn;
 
     /**
+     * Number of wins the Player has.
+     */
+    private SimpleIntegerProperty wins;
+
+    /**
+     * Number of losses the Player has.
+     */
+    private SimpleIntegerProperty losses;
+
+    /**
+     * Number of games the player has played.
+     */
+    private final SimpleIntegerProperty gamesPlayed;
+
+    /**
      * Class for a player who has or is playing the game.
-     * @param name Player's name.
-     * @param sprite Player's sprite.
-     * @param colour Player's colour.
-     * @param startingLocation Player's location.
+     * @param name human name of the player
+     * @param sprite player's picture
+     * @param colour player's colour
+     * @param startingLocation player's starting location on the gameboard
      */
     public Player(String name, Image sprite, Color colour, int[] startingLocation) {
-        this.name = name;
+        this.name = new SimpleStringProperty(name);
         this.sprite = sprite;
         this.colour = colour;
         this.startingLocation = startingLocation;
+
         this.instanceUuid = UUID.randomUUID().toString();
+        this.wins = new SimpleIntegerProperty(0);
+        this.losses = new SimpleIntegerProperty(0);
+        this.gamesPlayed = new SimpleIntegerProperty(0);
     }
 
     /**
-     * Gets the player name.
-     * @return player name
+     * Returns the player's name.
+     * @return the player's name
      */
     public String getName() {
-        return this.name;
+        return this.name.get();
     }
 
     /**
-     * Gets the player sprite.
-     * @return Player sprite.
+     * Returns the player's wins.
+     * @return the player's wins
+     */
+    public int getWins() {
+        return this.wins.get();
+    }
+
+    /**
+     * Return the player's losses.
+     * @return the player's losses
+     */
+    public int getLosses() {
+        return this.losses.get();
+    }
+
+    /**
+     * Returns the number of games a player has participated in.
+     * @return the number of games a player has participated in
+     */
+    public int getGamesPlayed() {
+        return this.gamesPlayed.get();
+    }
+
+    /**
+     * Increment the number of wins a player has.
+     */
+    public void incrementWins() {
+        this.wins.set(this.wins.get() + 1);
+        setGamesPlayed();
+    }
+
+    /**
+     * Increment the number of wins a player has.
+     */
+    public void incrementLosses() {
+        this.losses.set(this.losses.get() + 1);
+        setGamesPlayed();
+    }
+
+    /**
+     * Sets the number of games played by a player.
+     */
+    private void setGamesPlayed() {
+        this.gamesPlayed.set(this.losses.get() + this.wins.get());
+    }
+
+    /**
+     * Returns the player's sprite.
+     * @return the player's sprite
      */
     public Image getSprite() {
         return this.sprite;
     }
 
     /**
-     * Gets the player colour.
-     * @return Player colour.
+     * Returns the player colour.
+     * @return the player's colour
      */
     public Color getColour() {
 
@@ -94,8 +162,8 @@ public class Player implements Serializable {
     }
 
     /**
-     * Gets the player location.
-     * @return player location.
+     * Returns the player location.
+     * @return the player location
      */
     public int[] getCurrentLocation() {
         return this.location;
@@ -103,8 +171,8 @@ public class Player implements Serializable {
 
     /**
      * Moves the player to the location x,y in the gameboard.
-     * @param x x coordinate of the destination.
-     * @param y y coordinate of the destination.
+     * @param x x coordinate of the destination
+     * @param y y coordinate of the destination
      */
     public void setLocation(int x, int y) {
         this.location = new int[]{x, y};
@@ -112,32 +180,34 @@ public class Player implements Serializable {
 
     /**
      * Puts a tile on the gameboard.
-     * @param tile Tile we are adding to the gameboard.
-     * @param insertX X coordinate of the place we will add the tile.
-     * @param insertY Y coordinate of the place we will add the tile.
+     * @param tile tile we are adding to the gameboard
+     * @param insertX x coordinate of the place we will add the tile
+     * @param insertY y coordinate of the place we will add the tile
      */
     public void playTile(Tile tile, int insertX, int insertY) {
     }
 
     /**
-     * Gets this instance's UUID.
-     * @return This instance's UUID.
+     * Returns an instance's UUID.
+     * @return an instance's UUID
      */
     public String getUuid() {
         return this.instanceUuid;
     }
 
     /**
-     * @return where the player was 1 turn ago.
+     * Returns the co-ordinates of the player 1 turn ago.
+     * @return the co-ordinates of the player 1 turn ago
      */
     public int[] getLastTurn() {
         return lastTurn;
     }
 
     /**
-     * @return where the player was 2 turns ago.
+     * Returns the co-ordinates of the player 2 turns ago.
+     * @return the co-ordinates of the player 2 turns ago
      */
-    public int[] getLastLastTurn() {
+    public int[] getLastTwoTurns() {
         return lastLastTurn;
     }
 

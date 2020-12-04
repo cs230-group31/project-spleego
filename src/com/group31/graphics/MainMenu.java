@@ -1,5 +1,6 @@
 package com.group31.graphics;
 
+import com.group31.graphics.start_game_screens.PlayerSelection;
 import com.group31.logger.Logger;
 import com.group31.saveload.Save;
 import com.group31.services.ApiRequest;
@@ -162,8 +163,12 @@ public class MainMenu extends Application {
         ImageButton howToPlay = new ImageButton(HOW_TO_PLAY_UNPRESSED_URL, HOW_TO_PLAY_PRESSED_URL);
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
+      
         exit.setOnMouseClicked(e -> this.saveAndExit());
-        start.setOnMouseClicked(e -> Game.launch(stage, scene));
+        start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
+        leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
+        howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
+        settings.setOnMouseClicked(e -> SettingsPage.launch(stage, scene));
 
         VBox buttonBox = new VBox();
         buttonBox.getChildren().add(start);

@@ -13,7 +13,6 @@ import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.HashMap;
 
 public class Main {
 
@@ -21,7 +20,8 @@ public class Main {
      * Specifies which environment the app is running in.
      */
     // Either 'dev' for development or 'prod' for production.
-    // Behaviour changes when set to 'dev': settings regenerated.
+    // Behaviour changes when set to 'dev':
+    // - settings regenerated from DefaultSettings,
     private static final String ENV = "dev";
 
     /**
@@ -39,8 +39,7 @@ public class Main {
      */
     public static void main(String[] args) {
         // Initialise settings.
-        HashMap<String, String> settings = initSettings();
-        Settings.setAllSettings(settings);
+        initSettings();
 
         if (ENV.equals("dev")) {
             Settings.setAllSettings(DefaultSettings.getDefaultSettings());
@@ -50,7 +49,7 @@ public class Main {
         Settings.dumpSettingsToConsole();
 
         // Initialise components.
-        Leaderboard leaderboard = initLeaderBoard();
+        initLeaderBoard();
         SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
         try {
@@ -70,9 +69,8 @@ public class Main {
 
     /**
      * Initialises settings.
-     * @return HashMap containing all settings.
      */
-    private static HashMap<String, String> initSettings() {
+    private static void initSettings() {
         // Allow the file manager to create the requested directory.
         boolean allowFileCreation = true;
 
@@ -83,42 +81,23 @@ public class Main {
             FileManager.setDirectory(settingsDirectory, allowFileCreation);
             if (!FileManager.fileExists(settingsFileName)) {
                 FileManager.write(DefaultSettings.getDefaultSettingsArray(), settingsFileName);
-                return DefaultSettings.getDefaultSettings();
+                Settings.setAllSettings(DefaultSettings.getDefaultSettings());
             } else {
-                return getSettingsFromArray(FileManager.read(settingsFileName));
+                Settings.setAllSettings(FileManager.read(settingsFileName));
             }
         } catch (NoSuchDirectory | IOException e) {
-            Logger.log(e.getMessage(), Logger.Level.ERROR);
+            // If no settings can be loaded from a file, use the default settings.
+            Settings.setAllSettings(DefaultSettings.getDefaultSettings());
+            Logger.log("Failed to save settings to a file, using default settings.", Logger.Level.WARNING);
         }
-        Logger.log("Failed to save settings to a file, using default settings.", Logger.Level.WARNING);
-
-        // If no settings can be loaded from a file, use the default settings.
-        return DefaultSettings.getDefaultSettings();
-    }
-
-    /**
-     * Builds Hashmap of settings from array.
-     * @param settingsArray Array of settings.
-     * @return Hashmap of settings.
-     */
-    private static HashMap<String, String> getSettingsFromArray(String[] settingsArray) {
-        HashMap<String, String> settings = new HashMap<>();
-        int settingKey = 0;
-        int settingValue = 1;
-        String delimiter = ";";
-        for (String setting : settingsArray) {
-            String[] settingNameValue = setting.split(delimiter);
-            settings.put(settingNameValue[settingKey], settingNameValue[settingValue]);
-        }
-        return settings;
     }
 
     /**
      * Initialises the Leaderboard.
-     * @return New instance of Leaderboard.
      */
-    private static Leaderboard initLeaderBoard() {
-        return null; //new Leaderboard("");
+    private static void initLeaderBoard() {
+        String directory = Settings.get("serialized_player_files");
+        Leaderboard.initialise(directory);
     }
 
     /**

@@ -109,13 +109,13 @@ public class Controller {
      */
     public void backtrackPlayer(Player player) {
         if (!gameboard.getBoardState()
-                [player.getLastLastTurn()[0]]
-                [player.getLastLastTurn()[1]].isOnFire()) {
+                [player.getLastTwoTurns()[0]]
+                [player.getLastTwoTurns()[1]].isOnFire()) {
             if (!gameboard.getBoardState()
                     [player.getLastTurn()[0]]
                     [player.getLastTurn()[1]].isOnFire()) {
-                player.setLocation(player.getLastLastTurn()[0],
-                        player.getLastLastTurn()[1]);
+                player.setLocation(player.getLastTwoTurns()[0],
+                        player.getLastTwoTurns()[1]);
             }
         } else if (!gameboard.getBoardState()
                 [player.getLastTurn()[0]]
