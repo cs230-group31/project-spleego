@@ -20,7 +20,8 @@ public class Main {
      * Specifies which environment the app is running in.
      */
     // Either 'dev' for development or 'prod' for production.
-    // Behaviour changes when set to 'dev': settings regenerated.
+    // Behaviour changes when set to 'dev':
+    // - settings regenerated from DefaultSettings,
     private static final String ENV = "dev";
 
     /**

@@ -165,6 +165,7 @@ public class MainMenu extends Application {
         start.setOnMouseClicked(e -> Game.launch(stage));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
+        settings.setOnMouseClicked(e -> SettingsPage.launch(stage, scene));
 
         VBox buttonBox = new VBox();
         buttonBox.getChildren().add(start);
