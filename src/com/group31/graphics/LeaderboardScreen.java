@@ -41,7 +41,7 @@ public class LeaderboardScreen {
         Label title = new Label("Leaderboard");
         ObservableList<Player> playerData = Leaderboard.getLeaderboardData();
         Button button = new Button("Return");
-        final VBox leaderboardBox = new VBox();
+        VBox leaderboardBox = new VBox();
 
         // Create columns and associate them with the fields from Player.
         TableColumn nameCol = new TableColumn("Player Name");

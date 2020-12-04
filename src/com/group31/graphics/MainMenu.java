@@ -1,5 +1,6 @@
 package com.group31.graphics;
 
+import com.group31.graphics.start_game_screens.PlayerSelection;
 import com.group31.logger.Logger;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
@@ -162,7 +163,7 @@ public class MainMenu extends Application {
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
         exit.setOnMouseClicked(e -> Platform.exit());
-        start.setOnMouseClicked(e -> Game.launch(stage));
+        start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
         settings.setOnMouseClicked(e -> SettingsPage.launch(stage, scene));
