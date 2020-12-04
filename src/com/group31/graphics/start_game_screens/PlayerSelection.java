@@ -1,6 +1,5 @@
 package com.group31.graphics.start_game_screens;
 
-import com.group31.settings.Settings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
