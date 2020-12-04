@@ -31,27 +31,8 @@ public class FireTile extends ActionTile {
         this.weight = weight;
     }
 
-    /**
-     * BOOLEAN
-     */
-    static class BoolFire {
-        public static void main(String args[]) {
-            boolean a;
 
-            a = false;
-            Logger.log("a"+ a, Logger.Level.INFO);
-            a = true;
-            Logger.log("a"+ a, Logger.Level.INFO);
 
-            if(a) Logger.log("YES", Logger.Level.INFO);
-            a =false;
-            if(a) Logger.log("NO", Logger.Level.INFO);
-
-            Logger.log("FIRE IS", Logger.Level.INFO);
-            
-        }
-
-    }
 
 //    /**
 //     * @param id Sets the id.

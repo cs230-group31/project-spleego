@@ -1,4 +1,5 @@
 package com.group31.tile_manager;
+import com.group31.logger.Logger;
 import javafx.scene.image.Image;
 import java.util.HashMap;
 
@@ -147,4 +148,27 @@ public class Tile {
     public boolean isActionTile() {
         return actionTile;
     }
+}
+
+
+  /**
+ * BOOLEAN
+ */
+    class BoolFire {
+    public static void main(String args[]) {
+        boolean a;
+
+        a = false;
+        Logger.log("a"+ a, Logger.Level.INFO);
+        a = true;
+        Logger.log("a"+ a, Logger.Level.INFO);
+
+        if(a) Logger.log("YES", Logger.Level.INFO);
+        a =false;
+        if(a) Logger.log("NO", Logger.Level.INFO);
+
+        Logger.log("FIRE IS", Logger.Level.INFO);
+
+    }
+
 }
