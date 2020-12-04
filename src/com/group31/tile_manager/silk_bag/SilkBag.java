@@ -66,6 +66,7 @@ public class SilkBag {
      */
     public SilkBag(int maxTiles) {
         this.maxTiles = maxTiles;
+        tiles = new ArrayList<>();
 
         this.tileRoutings = initRouting();
         this.weights = initWeights();
@@ -80,6 +81,7 @@ public class SilkBag {
      * @param maxTiles total amount of tiles
      */
     public SilkBag(int[] givenTiles, int maxTiles) {
+        tiles = new ArrayList<>();
         this.maxTiles = maxTiles;
         for (int tileID : givenTiles) {
             tiles.add(new Tile(tileID));
