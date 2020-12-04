@@ -1,7 +1,6 @@
 package com.group31.graphics.start_game_screens;
 
 import com.group31.graphics.Game;
-import com.group31.settings.Settings;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -52,5 +51,4 @@ public class LevelSelection {
         LevelSelection levelSelection = new LevelSelection();
         levelSelection.start(stage, mainMenu, playerSelection);
     }
-
 }
