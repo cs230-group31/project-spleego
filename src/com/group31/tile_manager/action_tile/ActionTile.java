@@ -8,9 +8,10 @@ public class ActionTile extends Tile {
     /**
      * Class constructor.
      * @param currentImage image of the tile
+     * @param id id of the tile
      */
-    public ActionTile(Image currentImage) {
-        super(true, currentImage);
+    public ActionTile(int id, Image currentImage) {
+        super(id, true, currentImage);
         Logger.log("Action tile created", Logger.Level.INFO);
     }
 }
