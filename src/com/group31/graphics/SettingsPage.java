@@ -33,7 +33,7 @@ public class SettingsPage {
     }
 
     /**
-     * Launches a new Tutorial page scene.
+     * Launches a new Settings page scene.
      * @param stage instance of the stage (windows)
      * @param mainMenu instance of the Main Menu scene
      */

@@ -39,7 +39,7 @@ public class PlayerSelection {
     }
 
     /**
-     * Launches a new Tutorial page scene.
+     * Launches a new Player selection page scene.
      * @param stage instance of the stage (windows)
      * @param mainMenu instance of the Main Menu scene
      */

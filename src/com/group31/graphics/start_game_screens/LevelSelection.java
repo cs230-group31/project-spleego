@@ -43,7 +43,7 @@ public class LevelSelection {
     }
 
     /**
-     * Launches a new Tutorial page scene.
+     * Launches a new Level selection page scene.
      * @param stage instance of the stage (windows)
      * @param mainMenu instance of the Main Menu scene
      * @param playerSelection instance of the Player Selection scene
