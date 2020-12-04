@@ -23,6 +23,7 @@ public class ImageButton extends Parent {
 
     /**
      * Represents a JavaFX button that presents as an image.
+     * Has two separate images for pressed and unpressed.
      * @param unpressed File Path of the unpressed button image.
      * @param pressed File Path of the pressed button image.
      */
@@ -50,5 +51,21 @@ public class ImageButton extends Parent {
         imageView.setOnMouseReleased(event ->
             imageView.setImage(finalUnpressedImage)
         );
+    }
+
+    /**
+     * Represents a JavaFX button that presents as an image.
+     * Has only one image.
+     * @param imageUrl the image url for the button
+     */
+    public ImageButton(final String imageUrl) {
+        Image buttonImage = null;
+        try {
+            buttonImage = new Image(new FileInputStream(imageUrl), BUTTON_WIDTH, BUTTON_HEIGHT, true, false);
+        } catch (FileNotFoundException e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        ImageView imageView = new ImageView(buttonImage);
+        this.getChildren().add(imageView);
     }
 }

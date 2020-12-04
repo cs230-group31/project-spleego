@@ -1,8 +1,10 @@
 package com.group31.tile_manager;
 
+import com.group31.settings.Settings;
 import javafx.scene.image.Image;
 import com.group31.logger.Logger;
-import java.util.UUID;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  * This class is subclass of Tile (no action tile).
@@ -23,47 +25,47 @@ public class FloorTile extends Tile {
     private boolean onIce;
 
     /**
-     * Instance's UUID.
-     */
-    private final String uuid;
-
-    /**
      *
+     * @param id the Tile's ID
      * @param routing routing (valid connections to other tiles) of the tile
      * @param currentImage the image the tile should display
      */
-    public FloorTile(String routing, Image currentImage) {
-        super(false, currentImage);
-        this.uuid = UUID.randomUUID().toString();
+    public FloorTile(int id, String routing, Image currentImage) {
+        super(id, false, currentImage);
         this.routing = routing;
-        Logger.log(String.format("Tile with ID %s created. Routing: %s", this.getUuid(), this.getRouting()),
+        Logger.log(String.format("Tile with ID %s created. Routing: %s", this.getId(), this.getRouting()),
                 Logger.Level.INFO);
     }
 
     /**
-     * Gets the instance's UUID.
-     * @return Instance's UUID.
+     * FloorTile constructor using just an ID to grab all the needed information.
+     * @param id
      */
-    public String getUuid() {
-        return this.uuid;
+    public FloorTile(int id) {
+        super(id);
+        this.routing = Settings.get(String.format("tile_route_id_%s", getId()));
+        Image tileImage = null;
+        try {
+            tileImage = new Image(new FileInputStream("resources/images/tiles/" + getId() + ".png"),
+                    Settings.getSettingAsDouble("tile_width"), Settings.getSettingAsDouble("tile_height"),
+                    true, false);
+        } catch (FileNotFoundException e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        this.setCurrentImage(tileImage);
+        Logger.log(String.format("Tile with ID %s created. Routing: %s", this.getId(), this.getRouting()),
+                Logger.Level.INFO);
     }
-
     /**
      * @return the routing of this tile, representing the sides you can
-     * travel to from this tile.
+     * travel to from this tile
      */
     public String getRouting() {
         return routing;
     }
 
     /**
-     * @return image of the tile.
-     */
-    public Image getCurrentImage() {
-        return super.getCurrentImage();
-    }
-
-    /**
+     * Returns whether the Tile is currently on fire.
      * @return True if the tile is on fire, false otherwise.
      */
     public boolean isOnFire() {
@@ -78,6 +80,7 @@ public class FloorTile extends Tile {
     }
 
     /**
+     * Returns whether the Tile is currently on ice.
      * @return True if the tile is on ice, false otherwise.
      */
     public boolean isOnIce() {
