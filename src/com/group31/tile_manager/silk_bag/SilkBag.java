@@ -9,10 +9,10 @@ import java.io.FileNotFoundException;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
-import com.group31.tile_manager.action_tile.FireTile;
-import com.group31.tile_manager.action_tile.FreezeTile;
-import com.group31.tile_manager.action_tile.DoubleMoveTile;
-import com.group31.tile_manager.action_tile.BackTrackTile;
+//import com.group31.tile_manager.action_tile.FireTile;
+//import com.group31.tile_manager.action_tile.FreezeTile;
+//import com.group31.tile_manager.action_tile.DoubleMoveTile;
+//import com.group31.tile_manager.action_tile.BackTrackTile;
 
 /**
  * Generates tiles for players/game to use.
@@ -74,6 +74,51 @@ public class SilkBag {
         this.tileWidth = Settings.getSettingAsDouble("tile_width");
     }
 
+    /**
+     * SilkBag contains all the tiles that can be played on the board.
+     * @param givenTiles all tiles within the SilkBag
+     * @param maxTiles total amount of tiles
+     */
+    public SilkBag(int[] givenTiles, int maxTiles) {
+        this.maxTiles = maxTiles;
+        for (int tileID : givenTiles) {
+            tiles.add(new Tile(tileID));
+        }
+
+        this.tileRoutings = initRouting();
+        this.weights = initWeights();
+        this.tileImagesUrl = Settings.get("tile_images_url");
+        this.tileHeight = Settings.getSettingAsDouble("tile_height");
+        this.tileWidth = Settings.getSettingAsDouble("tile_width");
+    }
+
+    /**
+     * Takes a tile and places it in the SilkBag.
+     * @param tile the tile to add
+     */
+    public void addTile(Tile tile) {
+        tiles.add(tile);
+    }
+
+    /**
+     * Returns an array of FloorTiles from the SilkBag.
+     * @param numOfTiles the amount of Tiles to generate
+     * @return an array of the drawn Tiles
+     */
+    public ArrayList<FloorTile> drawFloorTiles(int numOfTiles) {
+        ArrayList<FloorTile> floorTiles = new ArrayList<>();
+        Random random = new Random();
+        for (int i = 0; i < numOfTiles; i++) {
+            int ranInt = random.nextInt(tiles.size());
+            while (tiles.get(ranInt).isActionTile()) {
+                ranInt = random.nextInt(tiles.size());
+            }
+            floorTiles.add((FloorTile) tiles.get(ranInt));
+            tiles.remove(ranInt);
+        }
+        return floorTiles;
+    }
+
     private HashMap<Integer, String> initRouting() {
         HashMap<Integer, String> routings = new HashMap<>();
         int numRoutes = Settings.getSettingAsInt("num_tile_routes");
@@ -100,44 +145,50 @@ public class SilkBag {
      * Generates a random floor tile.
      * @return the floor tile
      */
-    public FloorTile genFloorTile() throws FileNotFoundException {
+    public FloorTile genRandomFloorTile() throws FileNotFoundException {
         Random random = new Random();
 
         // Tiles routing size could be 11, but nextInt() takes 11 and produces range 0 to 10, which is what
         // we want as the tiles are named from 0 to 10.
-        int randomKey = random.nextInt(tileRoutings.size());
+        int ranInt = random.nextInt(tileRoutings.size());
 
-        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, ranInt);
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
-        String routing = tileRoutings.get(randomKey);
-        return new FloorTile(routing, tileImage);
+        String routing = tileRoutings.get(ranInt);
+        return new FloorTile(ranInt, routing, tileImage);
     }
 
     /**
-     * Takes a tile and places it in the SilkBag.
-     * @param tile the tile to add
+     * Takes in a FloorTile ID and returns the fully created FloorTile.
+     * @param id the ID of the tile to be created
+     * @return the generated FloorTile
      */
-    public void addTile(Tile tile) {
-        tiles.add(tile);
+    public FloorTile genFloorTile(int id) throws FileNotFoundException {
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, id);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+
+        String routing = tileRoutings.get(id);
+        return new FloorTile(id, routing, tileImage);
     }
 
-    private FireTile genFireTile() {
-        return new FireTile(null);
-    }
-
-    private FreezeTile getFreezeTile() {
-        return new FreezeTile(null);
-    }
-
-    private BackTrackTile getBackTrackTile() {
-        return new BackTrackTile(null);
-    }
-
-    private DoubleMoveTile genDoubleMoveTile() {
-        return new DoubleMoveTile(null);
-    }
+//    private FireTile genFireTile() {
+//        return new FireTile(null);
+//    }
+//
+//    private FreezeTile getFreezeTile() {
+//        return new FreezeTile(null);
+//    }
+//
+//    private BackTrackTile getBackTrackTile() {
+//        return new BackTrackTile(null);
+//    }
+//
+//    private DoubleMoveTile genDoubleMoveTile() {
+//        return new DoubleMoveTile(null);
+//    }
 
     /**
      * Generates the tiles of the bag randomly, each type of tile has a different odd to appear
