@@ -1,8 +1,15 @@
 package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
+import com.group31.tile_manager.Tile;
+import java.awt.Graphics;
+
+import java.util.Scanner;
+
+
 
 public class FireTile extends ActionTile {
+
     /**
      * Identifies the tile.
      */
@@ -22,6 +29,28 @@ public class FireTile extends ActionTile {
         super(id, weight);
         this.id = id;
         this.weight = weight;
+    }
+
+    /**
+     * BOOLEAN
+     */
+    static class BoolFire {
+        public static void main(String args[]) {
+            boolean a;
+
+            a = false;
+            Logger.log("a"+ a, Logger.Level.INFO);
+            a = true;
+            Logger.log("a"+ a, Logger.Level.INFO);
+
+            if(a) Logger.log("YES", Logger.Level.INFO);
+            a =false;
+            if(a) Logger.log("NO", Logger.Level.INFO);
+
+            Logger.log("FIRE IS", Logger.Level.INFO);
+            
+        }
+
     }
 
 //    /**
@@ -49,3 +78,5 @@ public class FireTile extends ActionTile {
     }
 
 }
+
+
