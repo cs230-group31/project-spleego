@@ -1,6 +1,7 @@
 package com.group31.graphics;
 
 import com.group31.logger.Logger;
+import com.group31.saveload.Save;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
 import com.group31.settings.Settings;
@@ -161,7 +162,7 @@ public class MainMenu extends Application {
         ImageButton howToPlay = new ImageButton(HOW_TO_PLAY_UNPRESSED_URL, HOW_TO_PLAY_PRESSED_URL);
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
-        exit.setOnMouseClicked(e -> Platform.exit());
+        exit.setOnMouseClicked(e -> this.saveAndExit());
         start.setOnMouseClicked(e -> Game.launch(stage, scene));
 
         VBox buttonBox = new VBox();
@@ -210,6 +211,11 @@ public class MainMenu extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
+    }
+
+    private void saveAndExit() {
+        Save.saveAll();
+        Platform.exit();
     }
 
     /**
