@@ -49,16 +49,13 @@ public class Tile {
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
      * (floor tiles) as well as a goal tile.
      * @param id the Tile's ID
-     * @param actionTile Is the tile an action tile?
-     * @param currentImage the Tile's image
      */
     public Tile(int id) {
         this.id = id;
-        this.actionTile = actionTile;
-        this.currentImage = currentImage;
     }
+
     /**
-     * @return how the tile currently looks.
+     * @return how the tile currently looks
      */
     public Image getCurrentImage() {
         return currentImage;
