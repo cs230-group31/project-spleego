@@ -1,9 +1,11 @@
 package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
-import javafx.scene.image.Image;
+import com.group31.tile_manager.FloorTile;
+//import javafx.scene.image.Image;
 
 public class FireTile extends ActionTile {
+
 
     /**
      * Fire tile ensures no player can step on a tile that is on fire, because it's on fire.
@@ -30,11 +32,25 @@ public class FireTile extends ActionTile {
     //}
 
     /**
-     * method to activate action effect.
+     * When activated sends message to that the fire effect has been activated
+     * and sets surrounding tiles on fire.
+     * @param floorTile a reference of the gamestate
+     * @param coordX coordinate X of chosen area
+     * @param coordY coordinate Y of chosen area
      */
-    public void fireEffect() {
+    public void fireEffect(FloorTile[][] floorTile, int coordX, int coordY) {
         Logger.log("fire effect activated", Logger.Level.INFO);
-        // TODO: functionality
+
+        //bellow sets surrounding FloorTiles on fire
+        floorTile[coordX + 1][coordY + 1].setOnFire(true);
+        floorTile[coordX + 1][coordY - 1].setOnFire(true);
+        floorTile[coordX - 1][coordY + 1].setOnFire(true);
+        floorTile[coordX - 1][coordY - 1].setOnFire(true);
+        floorTile[coordX + 1][coordY].setOnFire(true);
+        floorTile[coordX - 1][coordY].setOnFire(true);
+        floorTile[coordX][coordY + 1].setOnFire(true);
+        floorTile[coordX][coordY - 1].setOnFire(true);
+
     }
 
 }
