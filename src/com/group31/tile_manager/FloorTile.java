@@ -41,9 +41,9 @@ public class FloorTile extends Tile {
      * @param currentImage the image the tile should display
      */
     public FloorTile(String routing, int id, Image currentImage) {
-        super(id, false, currentImage);
-        this.routing = routing;
-        Logger.log(this.getId() + " tile created, routing: " + this.getRouting(), Logger.Level.INFO);
+    super(id, false, currentImage);
+    this.routing = routing;
+    Logger.log(this.getId() + " tile created, routing: " + this.getRouting(), Logger.Level.INFO);
     }
 
     /**
