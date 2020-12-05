@@ -2,12 +2,28 @@ package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
+import com.group31.graphics.Game;
+import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
 public class Controller {
+    public enum TilePlaced {
+        /**
+         * Tile has been placed.
+         */
+        PLACED,
+        /**
+         * Tile needs to be placed.
+         */
+        REQUIRED,
+        /**
+         * Tile does not need to be placed.
+         */
+        NOT_REQUIRED
+    }
     /**
      * Instance of the controller.
      */
@@ -28,11 +44,20 @@ public class Controller {
     /**
      * The FloorTile waiting to be placed by the player.
      */
-    private FloorTile currentFloortile;
+    private FloorTile currentFloorTile;
+    /**
+     * Keeps track of if a floor tile has been placed yet.
+     * Use The Enum.
+     */
+    private TilePlaced floorTilePlaced;
     /**
      *  Tracks if the game has been won.
      */
     private boolean gameWon;
+    /**
+     * Which player's turn it is.
+     */
+    private int playerTurn;
 
     /**
      * Controller deals with game logic, loading and saving.
@@ -41,19 +66,57 @@ public class Controller {
         gameWon = false;
     }
 
+    //TODO: THIS IS SHIT AND WRONG AND WE NEED TO CHANGE IT
+    //TODO: MODIFY BY PUTTING LOTS OF THESE THINGS IN GAME
+    //TODO: AND REFERENCING THE CONTROLLER'S VARIABLES IN GAME
     /**
-     * Uses a while loop to execute until a player moves onto the goal tile.
+     * Plays the game by looping until a player has won.
      */
     public void playGame() {
+        Player winner = null;
+        while (!gameWon) {
+            Player currentPlayer = players[playerTurn];
+            Tile drawnTile = silkBag.drawTile();
+            drawnTile.updateDrawnThisTurn(true);
+            if (drawnTile.isActionTile()) {
+                currentPlayer.recieveTile(drawnTile);
+                Game.updatePlayerHand(playerTurn, currentPlayer.getHand());
+            } else {
+                currentFloorTile = (FloorTile) drawnTile;
+                floorTilePlaced = TilePlaced.REQUIRED;
+            }
 
+            drawnTile.updateDrawnThisTurn(false);
+            winner = hasWon();
+            playerTurn++;
+        }
+        assert winner != null;
+        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+    }
+
+    /**
+     * Starts a new game by making the playerTurn 0.
+     */
+    public void startGame() {
+        playerTurn = 0;
+        floorTilePlaced = TilePlaced.NOT_REQUIRED;
+        playGame();
     }
 
     /**
      * Checks every player's location and compares if they are in the same place as a goal tile.
      * @return True if a player is on top of a goal tile, false otherwise.
      */
-    private boolean hasWon() {
-        return false;
+    private Player hasWon() {
+        for (Player player : players) {
+            int playerX = player.getCurrentLocation()[0];
+            int playerY = player.getCurrentLocation()[1];
+            if (gameboard.getTile(playerX, playerY).getId() == 0) {
+                gameWon = true;
+                return player;
+            }
+        }
+        return null;
     }
 
     /**
@@ -151,11 +214,12 @@ public class Controller {
      * @return the FloorTile the player just drew
      */
     public FloorTile getCurrentFloorTile() {
-        return currentFloortile;
+        return currentFloorTile;
     }
 
     /**
-     * This instance of Controller.
+     * Creates a new instance of Controller if one does not exist,
+     * then returns the current instance of Controller.
      * @return the current Controller instance
      */
     public static Controller getInstance() {
@@ -163,6 +227,14 @@ public class Controller {
             instance = new Controller();
         }
         return instance;
+    }
+
+    /**
+     * Sets the Controller to a given instance.
+     * @param controller the Controller for this class to become
+     */
+    public static void setInstance(Controller controller) {
+        instance = controller;
     }
 
     /**
@@ -174,6 +246,12 @@ public class Controller {
         this.players = players;
         this.gameboard = gameboard;
         this.silkBag = silkBag;
-        this.currentFloortile = new FloorTile(1);
+    }
+
+    /**
+     * Sets the floorTilePlaced to PLACED.
+     */
+    public void setFloorTilePlaced() {
+        this.floorTilePlaced = TilePlaced.PLACED;
     }
 }
