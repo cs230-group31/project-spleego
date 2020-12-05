@@ -2,7 +2,9 @@ package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
+import com.group31.logger.Logger;
 import com.group31.player.Player;
+import com.group31.tile_manager.action_tile.FireTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
@@ -74,9 +76,64 @@ public class Controller {
      * @param tile Tile to draw.
      * @param x X co-ordinate where we want to draw the tile.
      * @param y Y co-ordinate where we want to draw the tile.
+     * @return successfullyPlacedTile used to determine if placed so that we can remove the tile from player hand
      */
-    public void drawTileOnBoard(Tile tile, int x, int y) {
+    public boolean drawTileOnBoard(Tile tile, int x, int y) {
         // draw a tile on the gameboard
+        boolean succesfullyPlacedTile = false;
+
+        if (tile instanceof FireTile) {
+            boolean valid = firePlacementValidation(x, y);
+            if (valid) {
+                ((FireTile) tile).fireEffect(gameboard.getBoardState(), x, y);
+                // TODO: placing the fire tile on gameboard
+                succesfullyPlacedTile = true;
+            } else {
+                Logger.log("Can't activate Fire effect here!", Logger.Level.INFO);
+                succesfullyPlacedTile = false;
+            }
+
+            // } else {
+            // TODO: placement of floorTile from playerhand
+            //}
+        }
+
+        return succesfullyPlacedTile;
+    }
+
+    /**
+     * checks weather the fire tile has been placed in the right area.
+     * @param x X co-ordinate where we want to draw the tile.
+     * @param y X co-ordinate where we want to draw the tile.
+     * @return boolean valid to determine if it is a valid placement or not
+     */
+    public boolean firePlacementValidation(int x, int y) {
+
+        boolean valid = true; // this is used to determine whether coordinates are place in valid area
+
+        int elemX = 0;
+        int elemY = 1; // use to determine what element the x and y coordinates are on
+
+        for (int i = 0; i <= players.length - 1; i++) {
+            int[] coords = players[i].getCurrentLocation();
+            /* looks through coordinates by a 3X3 area around chosen coordinates for any players
+            nearby to ensure no players are around */
+            if (((coords[elemX] == x) && (coords[elemY] == y))
+                    || ((coords[elemX] == x + 1) && (coords[elemY] == y + 1))
+                    || ((coords[elemX] == x + 1) && (coords[elemY] == y - 1))
+                    || ((coords[elemX] == x - 1) && (coords[elemY] == y - 1))
+                    || ((coords[elemX] == x - 1) && (coords[elemY] == y + 1))
+                    || ((coords[elemX] == x + 1) && (coords[elemY] == y))
+                    || ((coords[elemX] == x - 1) && (coords[elemY] == y))
+                    || ((coords[elemX] == x) && (coords[elemY] == y + 1))
+                    || ((coords[elemX] == x) && (coords[elemY] == y - 1))) {
+                valid = false;
+            } else {
+                valid = true;
+            }
+        }
+
+        return valid;
     }
 
     /**
