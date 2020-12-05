@@ -2,6 +2,7 @@ package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
+import com.group31.graphics.Game;
 import com.group31.player.Player;
 import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
@@ -19,6 +20,13 @@ public class Controller implements Serializable {
         return playerTurn;
     }
 
+    /**
+     * return the current player turn.
+     * @return the current player turn.
+     */
+    public Game.PlayerNumber getPlayerTurnEnum() {
+        return Game.PlayerNumber.values()[playerTurn];
+    }
     /**
      * Sets the current turn.
      * @param playerTurn the turn count

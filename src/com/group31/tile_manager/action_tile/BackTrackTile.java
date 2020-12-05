@@ -33,7 +33,7 @@ public class BackTrackTile extends ActionTile {
     public int[] backTrack(Player player, Gameboard board) {
         int[] newCoords;
         int[] lastTurn = player.getLastTurn();
-        int[] lastLastTurn = player.getLastLastTurn();
+        int[] lastLastTurn = player.getLastTwoTurns();
         FloorTile[][] gameboard = board.getBoardState();
         FloorTile lastTurnTile = gameboard[lastTurn[X]][lastTurn[Y]];
         FloorTile lastLastTurnTile = gameboard[lastLastTurn[X]][lastLastTurn[Y]];

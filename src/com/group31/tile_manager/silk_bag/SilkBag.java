@@ -188,11 +188,11 @@ public class SilkBag implements Serializable {
             randomKey = random.nextInt(maxTiles);
         }
 
-        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, tiles.get(randomKey).getId());
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
-        return new Tile(true, tileImage);
+        return new Tile(tiles.get(randomKey).getId(), true, tileImage);
     }
 
     /**

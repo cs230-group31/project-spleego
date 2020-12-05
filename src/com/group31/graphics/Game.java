@@ -196,7 +196,7 @@ public class Game extends Application {
         setCurrentDrawnTile(drawnTile);
         if (drawnTile.isActionTile()) {
             currentPlayer.recieveTile(drawnTile);
-            Game.updatePlayerHand(controller.getPlayerTurn(), currentPlayer.getHand());
+            Game.updatePlayerHand(controller.getPlayerTurnEnum(), currentPlayer.getHand());
         } else {
             controller.setCurrentFloorTile(new FloorTile(drawnTile));
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
