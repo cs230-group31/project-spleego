@@ -116,6 +116,26 @@ public class SilkBag {
     }
 
     /**
+     * Generates a random action tile.
+     * @return the action tile
+     */
+    public Tile genActionTile() throws FileNotFoundException{
+        Random random = new Random();
+
+        int randomKey = random.nextInt(maxTiles);
+
+        while (!tiles.get(randomKey).isActionTile()) {
+            randomKey = random.nextInt(maxTiles);
+        }
+
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+
+        return new Tile(true,tileImage);
+    }
+
+    /**
      * Takes a tile and places it in the SilkBag.
      * @param tile the tile to add
      */
