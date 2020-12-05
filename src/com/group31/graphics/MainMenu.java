@@ -1,7 +1,9 @@
 package com.group31.graphics;
 
+import com.group31.controller.Controller;
 import com.group31.graphics.start_game_screens.PlayerSelection;
 import com.group31.logger.Logger;
+import com.group31.main.Main;
 import com.group31.saveload.Save;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
@@ -144,6 +146,8 @@ public class MainMenu extends Application {
         stage.setMaxHeight(WINDOW_HEIGHT);
         stage.setMaxWidth(WINDOW_WIDTH);
         stage.setTitle("Spooky Spleego");
+
+        Main.initController();
 
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();

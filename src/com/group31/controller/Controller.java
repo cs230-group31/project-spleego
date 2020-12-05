@@ -5,12 +5,14 @@ import com.group31.gameboard.Gameboard;
 import com.group31.graphics.Game;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
+import com.group31.main.Main;
 import com.group31.player.Player;
 import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Controller implements Serializable {
@@ -35,7 +37,7 @@ public class Controller implements Serializable {
     /**
      * Array of players that are playing the game.
      */
-    private Player[] players;
+    private ArrayList<Player> players;
     /**
      * Instance of the gameboard.
      */
@@ -76,6 +78,23 @@ public class Controller implements Serializable {
         this.uuid = UUID.randomUUID().toString();
     }
 
+    /**
+     * @param gameboard The game board for a game.
+     * @param silkBag The silk bag for a game.
+     */
+    public void init(Gameboard gameboard, SilkBag silkBag) {
+        this.gameboard = gameboard;
+        this.silkBag = silkBag;
+    }
+
+    /**
+     * Adds players to the controller.
+     * @param players players to add
+     */
+    public void addPlayers(ArrayList<Player> players) {
+        this.players = players;
+    }
+
     //TODO: THIS IS SHIT AND WRONG AND WE NEED TO CHANGE IT
     //TODO: MODIFY BY PUTTING LOTS OF THESE THINGS IN GAME
     //TODO: AND REFERENCING THE CONTROLLER'S VARIABLES IN GAME
@@ -85,7 +104,7 @@ public class Controller implements Serializable {
     public void playGame() {
         Player winner = null;
         while (!gameWon) {
-            Player currentPlayer = players[playerTurn];
+            Player currentPlayer = players.get(playerTurn);
             Tile drawnTile = silkBag.drawTile();
             drawnTile.updateDrawnThisTurn(true);
             if (drawnTile.isActionTile()) {
@@ -245,17 +264,6 @@ public class Controller implements Serializable {
      */
     public static void setInstance(Controller controller) {
         instance = controller;
-    }
-
-    /**
-     * @param players Array of players playing the game.
-     * @param gameboard The game board for a game.
-     * @param silkBag The silk bag for a game.
-     */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
-        this.players = players;
-        this.gameboard = gameboard;
-        this.silkBag = silkBag;
     }
 
     /**

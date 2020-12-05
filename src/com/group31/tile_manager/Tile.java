@@ -1,6 +1,8 @@
 package com.group31.tile_manager;
 
 import javafx.scene.image.Image;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -9,7 +11,7 @@ import java.util.HashMap;
  * game board.
  * @author Alvaro
  */
-public class Tile {
+public class Tile implements Serializable {
     /**
      * Holds record of all tile image variations.
      */
@@ -29,7 +31,7 @@ public class Tile {
     /**
      * Image of the tile.
      */
-    private Image currentImage;
+    private transient Image currentImage;
     /**
      * Stores if the tile was drawn this turn.
      */

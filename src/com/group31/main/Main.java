@@ -5,7 +5,6 @@ import com.group31.gameboard.Gameboard;
 import com.group31.graphics.MainMenu;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
-import com.group31.player.Player;
 import com.group31.controller.Controller;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
@@ -50,17 +49,9 @@ public class Main {
 
         // Initialise components.
         initLeaderBoard();
-        SilkBag silkbag = initSilkBag();
-        Gameboard gameboard = initGameboard();
-        try {
-            gameboard.genBoard(silkbag);
-        } catch (FileNotFoundException e) {
-            Logger.log(e.getMessage(), Logger.Level.ERROR);
-        }
-        Player[] players = initPlayers();
 
-        // Initialise controller.
-        initController(players, gameboard, silkbag);
+        // Initialise controller, gameboard and silkbag.
+        initController();
 
         // Start GUI.
         String[] launchArgs = {};
@@ -119,33 +110,21 @@ public class Main {
     }
 
     /**
-     * Initialises players.
-     * @return New instance of player depending on how many players are in the game.
-     */
-    private static Player[] initPlayers() {
-        int numPlayers = 2;
-        Player[] players = new Player[numPlayers];
-
-        for (int i = 0; i <= numPlayers - 1; i++) {
-            players[i] = new Player(null, null, null, null);
-        }
-
-        return players;
-    }
-
-    /**
      * Initialises controller.
-     * @param players Array of players that are playing (2-4).
-     * @param gameboard Instance of the Gameboard.
-     * @param silkbag Instance of the SilkBag
      */
-    private static void initController(Player[] players,
-                                       Gameboard gameboard,
-                                       SilkBag silkbag) {
+    public static void initController() {
 
+        SilkBag silkbag = null;
+        Gameboard gameboard = initGameboard();
+        try {
+            silkbag = initSilkBag();
+            gameboard.genBoard(silkbag);
+        } catch (FileNotFoundException e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
         // Get instance of controller as Controller is a singleton.
         Controller controller = Controller.getInstance();
         // Initialise controller.
-        controller.init(players, gameboard, silkbag);
+        controller.init(gameboard, silkbag);
     }
 }

@@ -3,7 +3,6 @@ package com.group31.graphics.view_controllers;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
-
 import java.io.File;
 import java.util.ArrayList;
 
@@ -20,7 +19,6 @@ public class LevelSelectionController {
             gameNames.add(rawFileName);
         }
         return gameNames;
-
     }
 
 }

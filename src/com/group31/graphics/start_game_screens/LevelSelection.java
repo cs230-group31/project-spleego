@@ -13,6 +13,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+
 
 public class LevelSelection {
 
@@ -27,11 +29,11 @@ public class LevelSelection {
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text title = new Text("Level Selection");
-        Button start = new Button("Start");
+        Button start = new Button("Start New Game");
         Button returnMainMenu = new Button("Main Menu");
         Button backToPlayerProfile = new Button("Back");
+        VBox gameSaveButtons = new VBox();
         VBox buttonBox = new VBox();
-        VBox gameButtons = new VBox();
         VBox allButtons = new VBox();
 
         start.setOnMouseClicked(e -> {
@@ -45,13 +47,14 @@ public class LevelSelection {
 
         try {
             for (String name : LevelSelectionController.getSavedGamesName()) {
-                gameButtons.getChildren().add(new Button(name));
+                Button gameSave = new Button(name);
+                gameSaveButtons.getChildren().add(gameSave);
             }
         } catch (NoSuchDirectory e) {
             Logger.log("Getting game save names threw an error.", Logger.Level.ERROR);
         }
 
-        allButtons.getChildren().addAll(gameButtons, buttonBox);
+        allButtons.getChildren().addAll(gameSaveButtons, buttonBox);
 
         root.setTop(title);
         root.setCenter(allButtons);
@@ -70,4 +73,5 @@ public class LevelSelection {
         LevelSelection levelSelection = new LevelSelection();
         levelSelection.start(stage, mainMenu, playerSelection);
     }
+
 }

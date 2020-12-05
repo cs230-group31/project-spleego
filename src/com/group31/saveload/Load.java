@@ -94,7 +94,7 @@ public class Load {
     public void loadController(String identifer) throws ObjectNeverSerialized {
         String object = "controller";
         Controller loadedInstance = (Controller) Serializer.deserialize(identifer, object);
-        //Controller.setInstance(loadedInstance);
+        Controller.setInstance(loadedInstance);
     }
 
 }

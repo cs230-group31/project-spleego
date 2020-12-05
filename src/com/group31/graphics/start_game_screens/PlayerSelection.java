@@ -1,5 +1,7 @@
 package com.group31.graphics.start_game_screens;
 
+import com.group31.controller.Controller;
+import com.group31.player.Player;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -7,6 +9,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 
 public class PlayerSelection {
@@ -24,6 +28,12 @@ public class PlayerSelection {
         Button selectLevel = new Button("Select Level");
         Button returnMainMenu = new Button("Main Menu");
         VBox buttonBox = new VBox();
+
+        Controller controller = Controller.getInstance();
+        ArrayList<Player> players = new ArrayList<>();
+        players.add(new Player("Name1", null, null, null));
+        players.add(new Player("Name2", null, null, null));
+        controller.addPlayers(players);
 
         selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
