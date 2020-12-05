@@ -3,7 +3,6 @@ package com.group31.services.serializer;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
-import com.group31.player.Player;
 import com.group31.services.FileManager;
 
 import java.io.FileNotFoundException;

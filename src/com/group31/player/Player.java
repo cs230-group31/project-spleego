@@ -1,8 +1,6 @@
 package com.group31.player;
 
 import com.group31.tile_manager.Tile;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import java.io.Serializable;

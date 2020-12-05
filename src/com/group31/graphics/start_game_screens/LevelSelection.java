@@ -34,7 +34,6 @@ public class LevelSelection {
         VBox gameSaveButtons = new VBox();
         VBox buttonBox = new VBox();
         VBox allButtons = new VBox();
-
         start.setOnMouseClicked(e -> {
             Game.launch(stage, mainMenu);
             Controller.getInstance().startGame();

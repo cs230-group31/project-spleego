@@ -34,7 +34,7 @@ public class PlayerSelection {
         ArrayList<Player> players = new ArrayList<>();
         players.add(new Player("Name1", null, null, location));
         players.add(new Player("Name2", null, null, location));
-        controller.addPlayers(players);
+        controller.setPlayers(players.toArray(new Player[0]));
 
         selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));

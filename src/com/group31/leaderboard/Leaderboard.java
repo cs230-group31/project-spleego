@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Leaderboard {
 
@@ -31,7 +32,7 @@ public class Leaderboard {
             for (File controller : FileManager.getAllFilesInDir()) {
                 String rawFileName = controller.getName().replaceFirst("[.][^.]+$", "");
                 Controller controllerFromFile = (Controller) Serializer.deserialize(rawFileName, object);
-                players.addAll(controllerFromFile.getPlayers());
+                players.addAll(Arrays.asList(controllerFromFile.getPlayers()));
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
