@@ -3,6 +3,7 @@ package com.group31.services;
 import com.group31.exceptions.NoFilesInDir;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.logger.Logger;
+import com.group31.settings.Settings;
 import javafx.scene.image.Image;
 import java.io.FileNotFoundException;
 import java.io.BufferedWriter;
@@ -184,22 +185,20 @@ public class FileManager {
      * Reads an image from a file.
      * @param imageFileName image's file name
      * @param imageFileExtension image's file extension (without '.'. For example: 'png')
-     * @param properties image's properties. Index 0 being the width, index 1 being the height
-     * @param preserveRatio preserves the image's ratio. (Recommended: true)
      * @return image from a file
      * @throws NoSuchDirectory if the directory has not been set
      * @throws IOException if the image file cannot be found
      */
-    public static Image readImage(String imageFileName, String imageFileExtension, double[] properties,
-                                  boolean preserveRatio) throws NoSuchDirectory, IOException {
+    public static Image readImage(String imageFileName, String imageFileExtension)
+            throws NoSuchDirectory, IOException {
         checkDirectorySet();
 
-        int tileWidthIndex = 0;
-        int tileHeightIndex = 1;
+        double tileHeight = Settings.getSettingAsDouble("tile_height");
+        double tileWidth = Settings.getSettingAsDouble("tile_width");
         String imageFileLocation = String.format("%s%s.%s", directory, imageFileName, imageFileExtension);
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
-        Image image = new Image(imageFile, properties[tileWidthIndex],
-                properties[tileHeightIndex], preserveRatio, false);
+        Image image = new Image(imageFile, tileWidth,
+                tileHeight, true, false);
         imageFile.close();
         return image;
     }
