@@ -7,12 +7,15 @@ import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.controller.Controller;
+import com.group31.saveload.Load;
 import com.group31.services.FileManager;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Main {
 
@@ -37,7 +40,7 @@ public class Main {
      * Initialises the components and runs the app.
      * @param args Args passed in at runtime.
      */
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, NoSuchDirectory {
         // Initialise settings.
         initSettings();
 
@@ -50,17 +53,18 @@ public class Main {
 
         // Initialise components.
         initLeaderBoard();
-        SilkBag silkbag = initSilkBag();
-        Gameboard gameboard = initGameboard();
-        try {
-            gameboard.genBoard(silkbag);
-        } catch (FileNotFoundException e) {
-            Logger.log(e.getMessage(), Logger.Level.ERROR);
-        }
-        Player[] players = initPlayers();
-
+//        SilkBag silkbag = initSilkBag();
+//        Gameboard gameboard = initGameboard();
+//        try {
+//            gameboard.genBoard(silkbag);
+//        } catch (FileNotFoundException e) {
+//            Logger.log(e.getMessage(), Logger.Level.ERROR);
+//        }
+//        Player[] players = initPlayers();
+        HashMap<String, Object> components = Load.loadNewGameFromFile("default level.txt");
         // Initialise controller.
-        initController(players, gameboard, silkbag);
+        Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
+        initController(players, (Gameboard) components.get("Gameboard"), (SilkBag) components.get("SilkBag"));
 
         // Start GUI.
         String[] launchArgs = {};
@@ -105,9 +109,8 @@ public class Main {
      * @return A new instance of SilkBag.
      */
     private static SilkBag initSilkBag() throws FileNotFoundException {
-//        int maxTiles = Settings.getSettingAsInt("max_tiles");
-//        return new SilkBag(maxTiles);
-        return new SilkBag(80);
+        int maxTiles = Settings.getSettingAsInt("max_tiles");
+        return new SilkBag(maxTiles);
     }
 
     /**
@@ -120,14 +123,17 @@ public class Main {
 
     /**
      * Initialises players.
+     * @param numPlayers the number of players in the game.
+     * @param playerLocation arraylist containing all player locations.
      * @return New instance of player depending on how many players are in the game.
      */
-    private static Player[] initPlayers() {
-        int numPlayers = 2;
+    private static Player[] initPlayers(int numPlayers, ArrayList<String> playerLocation) {
         Player[] players = new Player[numPlayers];
-
         for (int i = 0; i <= numPlayers - 1; i++) {
-            players[i] = new Player(null, null, null, null);
+            String currentPlayerLocation = playerLocation.get(i);
+            String[] splitLocations = currentPlayerLocation.split(",");
+            int[] location = {Integer.parseInt(splitLocations[0]), Integer.parseInt(splitLocations[1])};
+            players[i] = new Player(null, null, null, location);
         }
 
         return players;
