@@ -163,8 +163,8 @@ public class MainMenu extends Application {
         ImageButton howToPlay = new ImageButton(HOW_TO_PLAY_UNPRESSED_URL, HOW_TO_PLAY_PRESSED_URL);
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
-
-        exit.setOnMouseClicked(e -> this.saveAndExit());
+      
+        exit.setOnMouseClicked(e -> Platform.exit());
         start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
@@ -196,7 +196,7 @@ public class MainMenu extends Application {
         Text motd = new Text(String.format("Fetching response from %s.", MOTD_URL_BASE));
         try {
             String res = request.getResponse();
-            String puzzle = PuzzleSolver.solvePuzzle(res);
+            String puzzle = PuzzleSolver.solvePuzzle(request.getResponse());
             motd = new Text(new ApiRequest(MOTD_URL_BASE, MESSAGE_ROUTE, puzzle, TOKEN_IDENTIFIER).getResponse());
         } catch (IOException e) {
             Logger.log(String.format("No response from %s.", MOTD_URL_BASE), Logger.Level.ERROR);

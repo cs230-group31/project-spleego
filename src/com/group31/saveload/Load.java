@@ -1,8 +1,11 @@
 package com.group31.saveload;
 
+import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
+import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.gameboard.Gameboard;
 import com.group31.services.FileManager;
+import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
@@ -10,7 +13,6 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-@SuppressWarnings("CheckStyle")
 public class Load {
     /**
      * Location of the directory in which we store level files.
@@ -83,4 +85,16 @@ public class Load {
         objects.put("Gameboard", gameboard);
         return objects;
     }
+
+    /**
+     * Loads a controller from a file.
+     * @param identifer firname of the controller to load
+     * @throws ObjectNeverSerialized if the controller object being loaded has never been serialized.
+     */
+    public void loadController(String identifer) throws ObjectNeverSerialized {
+        String object = "controller";
+        Controller loadedInstance = (Controller) Serializer.deserialize(identifer, object);
+        //Controller.setInstance(loadedInstance);
+    }
+
 }

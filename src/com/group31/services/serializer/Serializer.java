@@ -37,42 +37,41 @@ public class Serializer {
      * Serializes an object.
      * @param object Object to serialize.
      * @param identifier Filename (excluding extension).
-     * @param folder folder where the files will be stored (no '/'). For example: 'Players'.
+     * @param objectName folder where the files will be stored (no '/'). For example: 'Players'.
      */
-    public static void serialize(Object object, String identifier, String folder) {
+    public static void serialize(Object object, String identifier, String objectName) {
         try {
-            String directory = String.format("%s%s/", SERIALIZED_OBJECTS_FOLDER, folder);
+            String directory = String.format("%s%s/", SERIALIZED_OBJECTS_FOLDER, objectName);
             FileManager.setDirectory(directory, true);
             if (!identifiers.contains(identifier)) {
                 FileManager.serializeWrite(object, identifier);
                 identifiers.add(identifier);
                 saveIdentifiers();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (NoSuchDirectory e) {
-            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        } catch (NoSuchDirectory | IOException e) {
+            Logger.log("Error while trying to serialize object: " + e.getMessage(), Logger.Level.ERROR);
         }
     }
 
     /**
      * Deserializes a file into an instance of Player.
      * @param identifier File name (excluding extension).
+     * @param object the object to deserialize
      * @return Instance of player.
      */
-    public static Player deserializePlayer(String identifier) throws ObjectNeverSerialized {
+    public static Object deserialize(String identifier, String object) throws ObjectNeverSerialized {
         readIdentifiers();
             try {
                 if (identifiers.contains(identifier)) {
                     String fileName = String.format("%s.%s", identifier, FILE_EXTENSION);
-                    String serializedPlayersFolder = String.format("%sPlayers/", SERIALIZED_OBJECTS_FOLDER);
-                    FileManager.setDirectory(serializedPlayersFolder, false);
+                    String serializedObjectsDir = String.format("%s%s/", SERIALIZED_OBJECTS_FOLDER, object);
+                    FileManager.setDirectory(serializedObjectsDir, false);
                     if (FileManager.fileExists(fileName)) {
                         identifiers.remove(identifier);
-                        Player playerToReturn = (Player) FileManager.deserializeRead(identifier);
+                        Object deserializedFile = FileManager.deserializeRead(identifier);
                         FileManager.deleteFile(String.format("%s.ser", identifier));
                         saveIdentifiers();
-                        return playerToReturn;
+                        return deserializedFile;
                     } else {
                         throw new FileNotFoundException("File to deserialize was not found.");
                     }

@@ -78,3 +78,6 @@ public class LeaderboardScreen {
         leaderboard.start(stage, mainMenu);
     }
 }
+
+// TODO: FIX THIS
+// 2 BAD

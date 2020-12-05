@@ -7,11 +7,12 @@ import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * @author aaron
  */
-public class Gameboard {
+public class Gameboard implements Serializable {
     /**
      * 2D array of the tiles on the board.
      */

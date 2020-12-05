@@ -5,12 +5,13 @@ import javafx.scene.image.Image;
 import com.group31.logger.Logger;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * This class is subclass of Tile (no action tile).
  * @author aaron
  */
-public class FloorTile extends Tile {
+public class FloorTile extends Tile implements Serializable {
     /**
      * Holds the routing of the tile.
      */

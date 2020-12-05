@@ -3,10 +3,12 @@ package com.group31.graphics;
 import com.group31.controller.Controller;
 import com.group31.gameboard.Gameboard;
 import com.group31.logger.Logger;
+import com.group31.saveload.Save;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -119,7 +121,7 @@ public class Game extends Application {
         StackPane topThing = new StackPane();
         topThing.getChildren().add(playerOneHand);
         ImageButton close = new ImageButton(CLOSE_UNPRESSED_URL, CLOSE_PRESSED_URL);
-        close.setOnMouseClicked(e -> stage.setScene(mainScene));
+        close.setOnMouseClicked(e -> saveAndExit(stage));
         topThing.getChildren().add(close);
         topThing.setAlignment(close, Pos.TOP_RIGHT);
         topThing.setPickOnBounds(false);
@@ -132,6 +134,11 @@ public class Game extends Application {
         drawGameBoard(board);
         scene.setRoot(root);
         stage.setScene(scene);
+    }
+
+    private void saveAndExit(Stage stage) {
+        Save.saveAll();
+        stage.setScene(mainScene);
     }
 
     /**

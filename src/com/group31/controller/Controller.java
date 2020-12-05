@@ -5,9 +5,12 @@ import com.group31.gameboard.Gameboard;
 import com.group31.graphics.Game;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
+import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
+import java.io.Serializable;
+import java.util.UUID;
 
 public class Controller {
     public enum TilePlaced {
@@ -60,10 +63,16 @@ public class Controller {
     private int playerTurn;
 
     /**
+     * UUID of an instance of the controller.
+     */
+    private final String uuid;
+
+    /**
      * Controller deals with game logic, loading and saving.
      */
     private Controller() {
         gameWon = false;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     //TODO: THIS IS SHIT AND WRONG AND WE NEED TO CHANGE IT
@@ -254,4 +263,26 @@ public class Controller {
     public void setFloorTilePlaced() {
         this.floorTilePlaced = TilePlaced.PLACED;
     }
+
+    /**
+     * Adds every player to the leaderboard.
+     */
+    // All players should be added when the game starts, if the players aren't loaded in.
+    public void addPlayersToLeaderboard() {
+        for (Player player : this.players) {
+            Leaderboard.addPlayer(player);
+        }
+    }
+
+    /**
+     * Save the controller to a file.
+     */
+    public void save() {
+
+        String object = "controller";
+        String name = String.format("Game_%s", this.uuid);
+        Serializer.serialize(this, name, object);
+
+    }
+
 }
