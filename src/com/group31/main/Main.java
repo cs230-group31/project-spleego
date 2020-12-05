@@ -37,7 +37,7 @@ public class Main {
      * Initialises the components and runs the app.
      * @param args Args passed in at runtime.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws FileNotFoundException {
         // Initialise settings.
         initSettings();
 
@@ -104,10 +104,10 @@ public class Main {
      * Initialises SilkBag.
      * @return A new instance of SilkBag.
      */
-    private static SilkBag initSilkBag() {
+    private static SilkBag initSilkBag() throws FileNotFoundException {
 //        int maxTiles = Settings.getSettingAsInt("max_tiles");
 //        return new SilkBag(maxTiles);
-        return new SilkBag(2);
+        return new SilkBag(80);
     }
 
     /**
