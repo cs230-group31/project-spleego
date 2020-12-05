@@ -2,10 +2,12 @@ package com.group31.tile_manager.silk_bag;
 
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
+import com.group31.tile_manager.GoalTile;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +20,7 @@ import java.util.HashMap;
  * Generates tiles for players/game to use.
  * @author Alvaro, Liam, Moe, Aaron
  */
-public class SilkBag {
+public class SilkBag implements Serializable {
 
     /**
      * Amount of tiles to be generated.
@@ -64,15 +66,18 @@ public class SilkBag {
      * SilkBag contains all the tiles that can be played on the board.
      * @param maxTiles Total amount of tiles.
      */
-    public SilkBag(int maxTiles) {
+    public SilkBag(int maxTiles) throws FileNotFoundException {
         this.maxTiles = maxTiles;
-        tiles = new ArrayList<>();
-
         this.tileRoutings = initRouting();
         this.weights = initWeights();
         this.tileImagesUrl = Settings.get("tile_images_url");
         this.tileHeight = Settings.getSettingAsDouble("tile_height");
         this.tileWidth = Settings.getSettingAsDouble("tile_width");
+
+        tiles = new ArrayList<>();
+        for (int i = 0; i < maxTiles; i++) {
+            tiles.add(genRandomFloorTile());
+        }
     }
 
     /**
@@ -103,6 +108,18 @@ public class SilkBag {
     }
 
     /**
+     * Takes a random Tile from the SilkBag and removes it.
+     * @return the drawn tile
+     */
+    public Tile drawTile() {
+        Random random = new Random();
+        int ranInt = random.nextInt(tiles.size());
+        Tile drawnTile = tiles.get(ranInt);
+        tiles.remove(ranInt);
+        return drawnTile;
+    }
+
+    /**
      * Returns an array of FloorTiles from the SilkBag.
      * @param numOfTiles the amount of Tiles to generate
      * @return an array of the drawn Tiles
@@ -115,7 +132,7 @@ public class SilkBag {
             while (tiles.get(ranInt).isActionTile()) {
                 ranInt = random.nextInt(tiles.size());
             }
-            floorTiles.add((FloorTile) tiles.get(ranInt));
+            floorTiles.add(new FloorTile(tiles.get(ranInt)));
             tiles.remove(ranInt);
         }
         return floorTiles;
@@ -155,12 +172,7 @@ public class SilkBag {
         // we want as the tiles are named from 0 to 10.
         int ranInt = random.nextInt(tileRoutings.size());
 
-        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, ranInt);
-        FileInputStream imageFile = new FileInputStream(imageFileLocation);
-        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
-
-        String routing = tileRoutings.get(ranInt);
-        return new FloorTile(ranInt, routing, tileImage);
+        return getFloorTile(ranInt);
     }
 
     /**
@@ -169,12 +181,28 @@ public class SilkBag {
      * @return the generated FloorTile
      */
     public FloorTile genFloorTile(int id) throws FileNotFoundException {
+        return getFloorTile(id);
+    }
+
+    private FloorTile getFloorTile(int id) throws FileNotFoundException {
         String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, id);
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
         String routing = tileRoutings.get(id);
         return new FloorTile(id, routing, tileImage);
+    }
+
+    /**
+     * Makes a goal tile and returns it.
+     * @return a goal tile
+     * @throws FileNotFoundException if the requested image doesnt exist
+     */
+    public FloorTile genGoalTile() throws FileNotFoundException {
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, 0);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+        return new GoalTile(tileImage);
     }
 
 //    private FireTile genFireTile() {

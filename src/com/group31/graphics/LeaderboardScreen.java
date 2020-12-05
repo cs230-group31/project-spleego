@@ -73,8 +73,10 @@ public class LeaderboardScreen {
      * @param stage instance of the stage (window)
      * @param mainMenu instance of the Main Menu scene
      */
+    // this needs fixing
     public static void launch(Stage stage, Scene mainMenu) {
         LeaderboardScreen leaderboard = new LeaderboardScreen();
         leaderboard.start(stage, mainMenu);
     }
 }
+

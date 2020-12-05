@@ -3,11 +3,44 @@ package com.group31.controller;
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
+import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
+import java.io.Serializable;
+import java.util.UUID;
 
-public class Controller {
+public class Controller implements Serializable {
+    /**
+     * Returns the current player turn.
+     * @return the player turn
+     */
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    /**
+     * Sets the current turn.
+     * @param playerTurn the turn count
+     */
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
+    public enum TilePlaced {
+        /**
+         * Tile has been placed.
+         */
+        PLACED,
+        /**
+         * Tile needs to be placed.
+         */
+        REQUIRED,
+        /**
+         * Tile does not need to be placed.
+         */
+        NOT_REQUIRED
+    }
     /**
      * Instance of the controller.
      */
@@ -28,32 +61,95 @@ public class Controller {
     /**
      * The FloorTile waiting to be placed by the player.
      */
-    private FloorTile currentFloortile;
+    private FloorTile currentFloorTile;
+    /**
+     * Keeps track of if a floor tile has been placed yet.
+     * Use The Enum.
+     */
+    private TilePlaced floorTilePlaced;
     /**
      *  Tracks if the game has been won.
      */
     private boolean gameWon;
+    /**
+     * Which player's turn it is.
+     */
+    private int playerTurn;
+
+    /**
+     * UUID of an instance of the controller.
+     */
+    private final String uuid;
 
     /**
      * Controller deals with game logic, loading and saving.
      */
     private Controller() {
         gameWon = false;
+        this.uuid = UUID.randomUUID().toString();
     }
 
     /**
-     * Uses a while loop to execute until a player moves onto the goal tile.
+     * Plays the game by looping until a player has won.
      */
     public void playGame() {
+    }
 
+    /**
+     * Starts a new game by making the playerTurn 0.
+     */
+    public void startGame() {
+        playerTurn = 0;
+        floorTilePlaced = TilePlaced.NOT_REQUIRED;
+        playGame();
     }
 
     /**
      * Checks every player's location and compares if they are in the same place as a goal tile.
      * @return True if a player is on top of a goal tile, false otherwise.
      */
-    private boolean hasWon() {
-        return false;
+    public Player hasWon() {
+        for (Player player : players) {
+            int playerX = player.getCurrentLocation()[0];
+            int playerY = player.getCurrentLocation()[1];
+            if (gameboard.getTile(playerX, playerY).getId() == 0) {
+                gameWon = true;
+                return player;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Returns if the game is won.
+     * @return the value of gameWon
+     */
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    /**
+     * Returns the players in the game.
+     * @return the players in the game
+     */
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    /**
+     * Sets the players in Controller.
+     * @param players new array of players
+     */
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    /**
+     * Takes a tile and makes it the current floor tile.
+     * @param drawnTile tile to set as the current tile
+     */
+    public void setCurrentFloorTile(FloorTile drawnTile) {
+        currentFloorTile = drawnTile;
     }
 
     /**
@@ -151,11 +247,12 @@ public class Controller {
      * @return the FloorTile the player just drew
      */
     public FloorTile getCurrentFloorTile() {
-        return currentFloortile;
+        return currentFloorTile;
     }
 
     /**
-     * This instance of Controller.
+     * Creates a new instance of Controller if one does not exist,
+     * then returns the current instance of Controller.
      * @return the current Controller instance
      */
     public static Controller getInstance() {
@@ -163,6 +260,21 @@ public class Controller {
             instance = new Controller();
         }
         return instance;
+    }
+
+    /**
+     * Resets the controller's instance to a fresh controller.
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+
+    /**
+     * Sets the Controller to a given instance.
+     * @param controller the Controller for this class to become
+     */
+    public static void setInstance(Controller controller) {
+        instance = controller;
     }
 
     /**
@@ -174,6 +286,25 @@ public class Controller {
         this.players = players;
         this.gameboard = gameboard;
         this.silkBag = silkBag;
-        this.currentFloortile = new FloorTile(1);
     }
+
+    /**
+     * Sets the floorTilePlaced to PLACED.
+     * @param tilePlaced ENUM of the state of the floorTile.
+     */
+    public void setFloorTilePlaced(TilePlaced tilePlaced) {
+        this.floorTilePlaced = tilePlaced;
+    }
+
+    /**
+     * Save the controller to a file.
+     */
+    public void save() {
+
+        String object = "controller";
+        String name = String.format("Game_%s", this.uuid);
+        Serializer.serialize(this, name, object);
+
+    }
+
 }

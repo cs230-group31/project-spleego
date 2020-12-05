@@ -2,7 +2,6 @@ package com.group31.graphics;
 
 import com.group31.graphics.start_game_screens.PlayerSelection;
 import com.group31.logger.Logger;
-import com.group31.saveload.Save;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
 import com.group31.settings.Settings;
@@ -164,7 +163,7 @@ public class MainMenu extends Application {
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
 
-        exit.setOnMouseClicked(e -> this.saveAndExit());
+        exit.setOnMouseClicked(e -> Platform.exit());
         start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
@@ -181,8 +180,8 @@ public class MainMenu extends Application {
 
         Image titleImg = null;
         try {
-           titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), TITLE_IMAGE_WIDTH,
-                   TITLE_IMAGE_HEIGHT, true, false);
+            titleImg = new Image(new FileInputStream(TITLE_IMAGE_URL), TITLE_IMAGE_WIDTH,
+                    TITLE_IMAGE_HEIGHT, true, false);
         } catch (FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
@@ -216,11 +215,6 @@ public class MainMenu extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    private void saveAndExit() {
-        Save.saveAll();
-        Platform.exit();
     }
 
     /**

@@ -1,6 +1,8 @@
 package com.group31.tile_manager;
 
 import javafx.scene.image.Image;
+
+import java.io.Serializable;
 import java.util.HashMap;
 
 
@@ -9,7 +11,7 @@ import java.util.HashMap;
  * game board.
  * @author Alvaro
  */
-public class Tile {
+public class Tile implements Serializable {
     /**
      * Holds record of all tile image variations.
      */
@@ -29,7 +31,11 @@ public class Tile {
     /**
      * Image of the tile.
      */
-    private Image currentImage;
+    private transient Image currentImage;
+    /**
+     * Stores if the tile was drawn this turn.
+     */
+    private boolean drawnThisTurn;
 
     /**
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
@@ -80,6 +86,22 @@ public class Tile {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Returns true if the tile was drawn this turn.
+     * @return true if this tile was drawn this turn
+     */
+    public boolean isDrawnThisTurn() {
+        return drawnThisTurn;
+    }
+
+    /**
+     * Updates the drawnThisTurn variable.
+     * @param bool whether this tile was drawn on this turn or not
+     */
+    public void updateDrawnThisTurn(boolean bool) {
+        this.drawnThisTurn = bool;
     }
 }
 

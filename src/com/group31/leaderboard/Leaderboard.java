@@ -1,5 +1,6 @@
 package com.group31.leaderboard;
 
+import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
@@ -11,6 +12,7 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Leaderboard {
 
@@ -21,26 +23,20 @@ public class Leaderboard {
 
     /**
      * Initialises the leaderboard.
-     * @param playersDirectory The directory where the players file's are kept.
+     * @param directory The directory where the players file's are kept.
      */
-    public static void initialise(String playersDirectory) {
+    public static void initialise(String directory) {
+        String object = "controller";
         try {
-            FileManager.setDirectory(playersDirectory, true);
-            for (File player : FileManager.getAllFilesInDir()) {
-                String rawFileName = player.getName().replaceFirst("[.][^.]+$", "");
-                players.add(Serializer.deserializePlayer(rawFileName));
+            FileManager.setDirectory(directory, true);
+            for (File controller : FileManager.getAllFilesInDir()) {
+                String rawFileName = controller.getName().replaceFirst("[.][^.]+$", "");
+                Controller controllerFromFile = (Controller) Serializer.deserialize(rawFileName, object);
+                players.addAll(Arrays.asList(controllerFromFile.getPlayers()));
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-    }
-
-    /**
-     * Adds a player to the list of players.
-     * @param player Player to add.
-     */
-    public static void addPlayer(Player player) {
-        players.add(player);
     }
 
     /**
@@ -49,16 +45,5 @@ public class Leaderboard {
      */
     public static ObservableList<Player> getLeaderboardData() {
         return FXCollections.observableArrayList(players);
-    }
-
-    /**
-     * Saves all the players on the leaderboard to the file system.
-     */
-    public static void saveLeaderboard() {
-        for (Player player : players) {
-            String identifier = String.format("Player_%s", player.getUuid());
-            String folder = "Players";
-            Serializer.serialize(player, identifier, folder);
-        }
     }
 }

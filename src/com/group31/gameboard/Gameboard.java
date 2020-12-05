@@ -7,11 +7,12 @@ import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 
 /**
  * @author aaron
  */
-public class Gameboard {
+public class Gameboard implements Serializable {
     /**
      * 2D array of the tiles on the board.
      */
@@ -105,13 +106,25 @@ public class Gameboard {
     }
 
     /**
-     * Insert tile into the Gameboard at the given position.
+     * Insert tile into the Gameboard at the next empty position.
      * @param tile the Tile to be inserted
-     * @param row the row coordinate of the target position
-     * @param col the column coordinate of the target position
      */
-    public void putTile(FloorTile tile, int row, int col) {
-        boardState[row][col] = tile;
+    public void putTile(FloorTile tile) {
+        int rowToInsert = 0;
+        int colToInsert = 0;
+        boolean addedTile = false;
+        for (int row = 0; row <  boardRows; row++) {
+            for (int col = 0; col < boardColumns; col++) {
+                if (boardState[row][col] == null) {
+                    if (!addedTile) {
+                        rowToInsert = row;
+                        colToInsert = col;
+                        addedTile = true;
+                    }
+                }
+            }
+        }
+        boardState[rowToInsert][colToInsert] = tile;
     }
 
     /**
@@ -122,6 +135,16 @@ public class Gameboard {
      */
     public FloorTile getTile(int row, int col) {
         return boardState[row][col];
+    }
+
+    /**
+     * Sets the tile at the given coordinates to the tile provided.
+     * @param floorTile tile to add to the gameboard
+     * @param tileRow the row to set the tile
+     * @param tileCol the col to set the tile
+     */
+    public void setTile(FloorTile floorTile, int tileRow, int tileCol) {
+        boardState[tileRow][tileCol] = floorTile;
     }
 
     /**
