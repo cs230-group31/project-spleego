@@ -1,5 +1,6 @@
 package com.group31.graphics.start_game_screens;
 
+import com.group31.controller.Controller;
 import com.group31.graphics.Game;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -19,7 +20,7 @@ public class LevelSelection {
      * @param playerSelection instance of the Player Selection scene
      */
     private void start(Stage stage, Scene mainMenu, Scene playerSelection) {
-
+        Controller controller = Controller.getInstance();
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text tutorial = new Text("Level Selection");
@@ -28,7 +29,10 @@ public class LevelSelection {
         Button backToPlayerProfile = new Button("Back");
         VBox buttonBox = new VBox();
 
-        start.setOnMouseClicked(e -> Game.launch(stage));
+        start.setOnMouseClicked(e -> {
+            Game.launch(stage, mainMenu);
+            controller.startGame();
+        });
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
         backToPlayerProfile.setOnMouseClicked(e -> stage.setScene(playerSelection));
 
