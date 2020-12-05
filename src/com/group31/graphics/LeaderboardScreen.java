@@ -77,7 +77,7 @@ public class LeaderboardScreen {
         LeaderboardScreen leaderboard = new LeaderboardScreen();
         leaderboard.start(stage, mainMenu);
     }
+    // TODO: FIX THIS
+    // 2 BAD
 }
 
-// TODO: FIX THIS
-// 2 BAD
