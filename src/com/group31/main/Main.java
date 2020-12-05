@@ -96,8 +96,8 @@ public class Main {
      * Initialises the Leaderboard.
      */
     private static void initLeaderBoard() {
-        String directory = Settings.get("serialized_player_files");
-        Leaderboard.initialise(directory);
+        String directory = Settings.get("serialized_objects_folder");
+        Leaderboard.initialise(directory + "player/");
     }
 
     /**
