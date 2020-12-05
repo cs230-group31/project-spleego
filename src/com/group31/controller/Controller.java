@@ -3,6 +3,7 @@ package com.group31.controller;
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.player.Player;
+import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 
@@ -20,9 +21,14 @@ public class Controller {
      */
     private Gameboard gameboard;
     /**
-     * Instance of the silkbag.
+     * Instance of the silkBag.
      */
-    private SilkBag silkbag;
+    private SilkBag silkBag;
+
+    /**
+     * The FloorTile waiting to be placed by the player.
+     */
+    private FloorTile currentFloortile;
     /**
      *  Tracks if the game has been won.
      */
@@ -56,7 +62,7 @@ public class Controller {
      * @return A Tile for the player.
      */
     public Tile takeTile(Player player) {
-        // give tile to player from silkbag
+        // give tile to player from silkBag
         return null;
     }
 
@@ -103,13 +109,13 @@ public class Controller {
      */
     public void backtrackPlayer(Player player) {
         if (!gameboard.getBoardState()
-                [player.getLastLastTurn()[0]]
-                [player.getLastLastTurn()[1]].isOnFire()) {
+                [player.getLastTwoTurns()[0]]
+                [player.getLastTwoTurns()[1]].isOnFire()) {
             if (!gameboard.getBoardState()
                     [player.getLastTurn()[0]]
                     [player.getLastTurn()[1]].isOnFire()) {
-                player.setLocation(player.getLastLastTurn()[0],
-                        player.getLastLastTurn()[1]);
+                player.setLocation(player.getLastTwoTurns()[0],
+                        player.getLastTwoTurns()[1]);
             }
         } else if (!gameboard.getBoardState()
                 [player.getLastTurn()[0]]
@@ -133,6 +139,22 @@ public class Controller {
     }
 
     /**
+     * Returns the SilkBag.
+     * @return the SilkBag
+     */
+    public SilkBag getSilkbag() {
+        return silkBag;
+    }
+
+    /**
+     * Returns the FloorTile that the player just drew.
+     * @return the FloorTile the player just drew
+     */
+    public FloorTile getCurrentFloorTile() {
+        return currentFloortile;
+    }
+
+    /**
      * This instance of Controller.
      * @return the current Controller instance
      */
@@ -146,11 +168,12 @@ public class Controller {
     /**
      * @param players Array of players playing the game.
      * @param gameboard The game board for a game.
-     * @param silkbag The silk bag for a game.
+     * @param silkBag The silk bag for a game.
      */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkbag) {
+    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
         this.players = players;
         this.gameboard = gameboard;
-        this.silkbag = silkbag;
+        this.silkBag = silkBag;
+        this.currentFloortile = new FloorTile(1);
     }
 }

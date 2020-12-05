@@ -18,6 +18,10 @@ public class Tile {
      * Location of tile images in directory.
      */
     private static final String TILES_LOCATION = "resources/images/tiles";
+    /** The ID of this tile, corresponding to the type
+     * and rotation of the tile.
+     */
+    private final int id;
     /**
      * true if action file, false if not.
      */
@@ -27,19 +31,30 @@ public class Tile {
      */
     private Image currentImage;
 
+    /**
+     * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
+     * (floor tiles) as well as a goal tile.
+     * @param id the Tile's ID
+     * @param actionTile Is the tile an action tile?
+     * @param currentImage the Tile's image
+     */
+    public Tile(int id, boolean actionTile, Image currentImage) {
+        this.id = id;
+        this.actionTile = actionTile;
+        this.currentImage = currentImage;
+    }
 
     /**
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
      * (floor tiles) as well as a goal tile.
-     * @param actionTile Is the tile an action tile?
-     * @param currentImage Tile's image.
+     * @param id the Tile's ID
      */
-    public Tile(boolean actionTile, Image currentImage) {
-        this.actionTile = actionTile;
-        this.currentImage = currentImage;
+    public Tile(int id) {
+        this.id = id;
     }
+
     /**
-     * @return how the tile currently looks.
+     * @return how the tile currently looks
      */
     public Image getCurrentImage() {
         return currentImage;
@@ -57,6 +72,14 @@ public class Tile {
      */
     public boolean isActionTile() {
         return actionTile;
+    }
+
+    /**
+     * Returns the Tile's ID.
+     * @return the ID of the Tile
+     */
+    public int getId() {
+        return id;
     }
 }
 

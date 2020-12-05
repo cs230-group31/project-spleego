@@ -41,6 +41,14 @@ public class Game extends Application {
      */
     private static final String TABLE_IMAGE_URL = Settings.get("table_image_url");
     /**
+     * File Path for the unpressed `EXIT` button.
+     */
+    private static final String CLOSE_UNPRESSED_URL = "resources/images/close unpressed.png";
+    /**
+     * File Path for the pressed `EXIT` button.
+     */
+    private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
+    /**
      * Represents the board of tiles.
      */
     private static GridPane board;
@@ -63,7 +71,7 @@ public class Game extends Application {
     /**
      * Player numbers enum.
      */
-    public enum Player {
+    public enum PlayerNumber {
         /**
          * Player one.
          */
@@ -81,10 +89,14 @@ public class Game extends Application {
          */
         FOUR
     }
+    /**
+     * Scene for the main menu.
+     */
+    private static Scene mainScene;
 
     /**
      * Creates the board.
-     * @param stage JavaFX Stage of the main window.
+     * @param stage JavaFX Stage of the main window
      */
     public void start(Stage stage) {
         Scene scene = new Scene(new Group());
@@ -108,12 +120,21 @@ public class Game extends Application {
         playerTwoHand = new VBox();
         playerThreeHand = new HBox();
         playerFourHand = new VBox();
-        root.setTop(playerOneHand);
+
+        StackPane topThing = new StackPane();
+        topThing.getChildren().add(playerOneHand);
+        ImageButton close = new ImageButton(CLOSE_UNPRESSED_URL, CLOSE_PRESSED_URL);
+        close.setOnMouseClicked(e -> stage.setScene(mainScene));
+        topThing.getChildren().add(close);
+        topThing.setAlignment(close, Pos.TOP_RIGHT);
+        topThing.setPickOnBounds(false);
+        root.setTop(topThing);
         root.setRight(playerTwoHand);
         root.setBottom(playerThreeHand);
         root.setLeft(playerFourHand);
         root.setCenter(board);
-        drawGameBoard();
+        drawTileArrows(board);
+        drawGameBoard(board);
         scene.setRoot(root);
         stage.setScene(scene);
     }
@@ -121,27 +142,101 @@ public class Game extends Application {
     /**
      * Creates an instance of Game and starts it.
      * @param stage JavaFX Stage of the main window.
+     * @param mainScene JavaFX Scene of the main menu.
      */
-    public static void launch(Stage stage) {
+    public static void launch(Stage stage, Scene mainScene) {
         Game game = new Game();
+        init(mainScene);
         game.start(stage);
     }
 
     /**
-     * Retrieves the Controller as a static reference and then operates on the gameboard within.
+     * Initialises the main menu scene into this Game instance so it can be referenced.
+     * @param mainMenuScene JavaFX Scene of the main menu.
      */
-    public static void drawGameBoard() {
+    private static void init(Scene mainMenuScene) {
+        mainScene = mainMenuScene;
+    }
+
+    /**
+     * Renders the arrows where players are allowed to insert tiles.
+     * This is achieved by checking every row and column for fixed tiles.
+     * @param board represents the grid of tiles
+     */
+    public static void drawTileArrows(GridPane board) {
         Controller controller = Controller.getInstance();
         int boardRows = controller.getGameboard().getBoardRows();
         int boardCols = controller.getGameboard().getBoardRows();
+        Gameboard gameboard = controller.getGameboard();
+        for (int col = 0; col < boardRows; col++) {
+            if (!gameboard.rowHasFixedTile(col)) {
+                ImageButton arrowUpButton = new ImageButton("resources/images/tiles/arrow up.png");
+                ImageButton arrowDownButton = new ImageButton("resources/images/tiles/arrow down.png");
+                // temporary final variable otherwise lambda complains
+                int finalCol = col;
+
+                // bottom button clicked (this doesn't work)
+                arrowUpButton.setOnMouseClicked(e -> {
+                    gameboard.addTileToCol(finalCol, "down");
+                    drawGameBoard(board);
+                });
+
+                // top button clicked (works fine)
+                arrowDownButton.setOnMouseClicked(e -> {
+                    gameboard.addTileToCol(finalCol, "up");
+                    drawGameBoard(board);
+                });
+
+                StackPane tileStackOne = new StackPane(arrowDownButton);
+                StackPane tileStackTwo = new StackPane(arrowUpButton);
+                board.add(tileStackOne, col + 1, 0);
+                board.add(tileStackTwo, col + 1, boardRows + 1);
+            }
+        }
+        for (int row = 0; row < boardCols; row++) {
+            if (!gameboard.colHasFixedTile(row)) {
+                ImageButton arrowRightButton = new ImageButton("resources/images/tiles/arrow right.png");
+                ImageButton arrowLeftButton = new ImageButton("resources/images/tiles/arrow left.png");
+                int finalRow = row;
+
+                // right button clicked (doesn't work)
+                arrowLeftButton.setOnMouseClicked(e -> {
+                    gameboard.addTileToRow(finalRow, "right");
+                    drawGameBoard(board);
+                });
+
+                // left button clicked (works fine)
+                arrowRightButton.setOnMouseClicked(e -> {
+                    gameboard.addTileToRow(finalRow, "left");
+                    drawGameBoard(board);
+                });
+
+                StackPane tileStackOne = new StackPane(arrowRightButton);
+                StackPane tileStackTwo = new StackPane(arrowLeftButton);
+                board.add(tileStackOne, 0, row + 1);
+                board.add(tileStackTwo, boardCols + 1, row + 1);
+            }
+        }
+    }
+
+    /**
+     * Renders the game board by iterating through the amount of rows and columns
+     * starting from 1 to make room for the arrows denoting valid place points.
+     * @param board represents the grid of tiles
+     */
+    public static void drawGameBoard(GridPane board) {
+        Controller controller = Controller.getInstance();
+        int boardRows = controller.getGameboard().getBoardRows();
+        int boardCols = controller.getGameboard().getBoardRows();
+        Gameboard gameboard = controller.getGameboard();
         for (int row = 1; row <=  boardRows; row++) {
-            for (int column = 1; column <= boardCols; column++) {
-                Gameboard gameboard = controller.getGameboard();
-                FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][column - 1];
-                Image tileImg  = boardStateAtCoords.getCurrentImage();
+            for (int col = 1; col <= boardCols; col++) {
+                FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][col - 1];
+                Image tileImg = boardStateAtCoords.getCurrentImage();
                 ImageView imageView = new ImageView(tileImg);
-                StackPane layout = new StackPane(imageView);
-                board.add(layout, row, column);
+                StackPane tileStack = new StackPane(imageView);
+                tileStack.setPickOnBounds(false);
+                board.add(tileStack, row, col);
             }
         }
     }
@@ -152,7 +247,7 @@ public class Game extends Application {
      *               starting with 1 at the top going clockwise
      * @param hand the hand of the corresponding player
      */
-    public static void updatePlayerHand(Player player, ArrayList<Tile> hand) {
+    public static void updatePlayerHand(PlayerNumber player, ArrayList<Tile> hand) {
         switch (player) {
             case ONE:
                 playerOneHand.getChildren().clear();

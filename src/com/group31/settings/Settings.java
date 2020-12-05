@@ -44,6 +44,22 @@ public class Settings {
     }
 
     /**
+     * Builds Hashmap of settings from array.
+     * @param settingsArray Array of settings.
+     */
+    public static void setAllSettings(String[] settingsArray) {
+        HashMap<String, String> settingsFromArray = new HashMap<>();
+        int settingKey = 0;
+        int settingValue = 1;
+        String delimiter = ";";
+        for (String setting : settingsArray) {
+            String[] settingNameValue = setting.split(delimiter);
+            settingsFromArray.put(settingNameValue[settingKey], settingNameValue[settingValue]);
+        }
+        settings = settingsFromArray;
+    }
+
+    /**
      * Gets all the settings.
      * @return All settings.
      */

@@ -17,9 +17,10 @@ public class BackTrackTile extends ActionTile {
     /**
      * Tile that forces a user back two turns.
      * @param currentImage Tile's image.
+     * @param id id of the tile
      */
-    public BackTrackTile(Image currentImage) {
-        super(currentImage);
+     public BackTrackTile(int id, Image currentImage) {
+         super(id,  currentImage);
      }
     /**
      * this method implement the backTrack function, which moves back the player
