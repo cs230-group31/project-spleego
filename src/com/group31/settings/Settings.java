@@ -23,11 +23,11 @@ public class Settings {
 
     /**
      * Updates settings value if the key exists.
-     * @param args Settings to change.
+     * @param defaultSettings Settings to change.
      */
-    public static void updateSettings(String[] args) {
-        for (String setting : args) {
-            String[] settingNameValue = setting.split(":");
+    public static void updateSettings(String[] defaultSettings) {
+        for (String setting : defaultSettings) {
+            String[] settingNameValue = setting.split(";");
             if (settings.containsKey(settingNameValue[SETTING_KEY])) {
                 settings.put(settingNameValue[SETTING_KEY],
                         settingNameValue[SETTING_VALUE]);
@@ -50,6 +50,7 @@ public class Settings {
     public static Map<String, String> getAllSettings() {
         return settings;
     }
+
     /**
      * Gets a setting.
      * @param key Setting name.
@@ -68,12 +69,20 @@ public class Settings {
      * @param key Setting name.
      * @return Setting value.
      */
-    public static Double getDouble(String key) {
+    public static Double getSettingAsDouble(String key) {
         if (settings.containsKey(key)) {
             return Double.parseDouble(settings.get(key));
         }
         // TODO: find a better way to handle this.
         return 1.0;
+    }
+
+    public static int getSettingAsInt(String key) {
+        if (settings.containsKey(key)) {
+            return Integer.parseInt(settings.get(key));
+        }
+        // TODO: find a better way to handle this.
+        return 1;
     }
 
     /**

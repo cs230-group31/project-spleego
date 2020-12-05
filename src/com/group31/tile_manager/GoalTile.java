@@ -16,8 +16,5 @@ public class GoalTile extends FloorTile {
     public GoalTile(String routing, int id, Image currentImage) {
         super(routing, id, currentImage);
     }
-//    public GoalTile(String routing, int id, int[] coord, Image currentImage) {
-//        super(routing, id, coord, currentImage);
-//    }
 
 }

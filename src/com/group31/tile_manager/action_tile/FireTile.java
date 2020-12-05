@@ -1,38 +1,19 @@
 package com.group31.tile_manager.action_tile;
 
 import com.group31.logger.Logger;
-import com.group31.tile_manager.Tile;
-import java.awt.Graphics;
-
-import java.util.Scanner;
-
-
+import com.group31.tile_manager.FloorTile;
+//import javafx.scene.image.Image;
 
 public class FireTile extends ActionTile {
 
-    /**
-     * Identifies the tile.
-     */
-    private final int id;
-
-    /**
-     * holds weight of the tile.
-     */
-    private final int weight;
 
     /**
      * Fire tile ensures no player can step on a tile that is on fire, because it's on fire.
-     * @param id ID of the tile.
-     * @param weight Weight of the tile (likeliness to be pulled from the silkbag).
      */
-    public FireTile(int id, int weight) {
-        super(id, weight);
-        this.id = id;
-        this.weight = weight;
+    public FireTile() {
+        //Image image = new Image();
+        super(ActionTile.FIRETILE/*, image*/);
     }
-
-
-
 
 //    /**
 //     * @param id Sets the id.
@@ -51,13 +32,25 @@ public class FireTile extends ActionTile {
     //}
 
     /**
-     * method to activate action effect.
+     * When activated sends message to that the fire effect has been activated
+     * and sets surrounding tiles on fire.
+     * @param floorTile a reference of the gamestate
+     * @param coordX coordinate X of chosen area
+     * @param coordY coordinate Y of chosen area
      */
-    public void fireEffect() {
+    public void fireEffect(FloorTile[][] floorTile, int coordX, int coordY) {
         Logger.log("fire effect activated", Logger.Level.INFO);
-        // TODO: functionality
+
+        //bellow sets surrounding FloorTiles on fire
+        floorTile[coordX + 1][coordY + 1].setOnFire(true);
+        floorTile[coordX + 1][coordY - 1].setOnFire(true);
+        floorTile[coordX - 1][coordY + 1].setOnFire(true);
+        floorTile[coordX - 1][coordY - 1].setOnFire(true);
+        floorTile[coordX + 1][coordY].setOnFire(true);
+        floorTile[coordX - 1][coordY].setOnFire(true);
+        floorTile[coordX][coordY + 1].setOnFire(true);
+        floorTile[coordX][coordY - 1].setOnFire(true);
+
     }
 
 }
-
-
