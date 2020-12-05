@@ -30,6 +30,10 @@ public class Tile {
      * Image of the tile.
      */
     private Image currentImage;
+    /**
+     * Stores if the tile was drawn this turn.
+     */
+    private boolean drawnThisTurn;
 
     /**
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
@@ -80,6 +84,22 @@ public class Tile {
      */
     public int getId() {
         return id;
+    }
+
+    /**
+     * Returns true if the tile was drawn this turn.
+     * @return true if this tile was drawn this turn
+     */
+    public boolean isDrawnThisTurn() {
+        return drawnThisTurn;
+    }
+
+    /**
+     * Updates the drawnThisTurn variable.
+     * @param bool whether this tile was drawn on this turn or not
+     */
+    public void updateDrawnThisTurn(boolean bool) {
+        this.drawnThisTurn = bool;
     }
 }
 

@@ -6,6 +6,7 @@ import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * Generates tiles for players/game to use.
  * @author Alvaro, Liam, Moe, Aaron
  */
-public class SilkBag {
+public class SilkBag implements Serializable {
 
     /**
      * Amount of tiles to be generated.
@@ -64,15 +65,18 @@ public class SilkBag {
      * SilkBag contains all the tiles that can be played on the board.
      * @param maxTiles Total amount of tiles.
      */
-    public SilkBag(int maxTiles) {
+    public SilkBag(int maxTiles) throws FileNotFoundException {
         this.maxTiles = maxTiles;
-        tiles = new ArrayList<>();
-
         this.tileRoutings = initRouting();
         this.weights = initWeights();
         this.tileImagesUrl = Settings.get("tile_images_url");
         this.tileHeight = Settings.getSettingAsDouble("tile_height");
         this.tileWidth = Settings.getSettingAsDouble("tile_width");
+
+        tiles = new ArrayList<>();
+        for (int i = 0; i < maxTiles; i++) {
+            tiles.add(genRandomFloorTile());
+        }
     }
 
     /**
@@ -100,6 +104,18 @@ public class SilkBag {
      */
     public void addTile(Tile tile) {
         tiles.add(tile);
+    }
+
+    /**
+     * Takes a random Tile from the SilkBag and removes it.
+     * @return the drawn tile
+     */
+    public Tile drawTile() {
+        Random random = new Random();
+        int ranInt = random.nextInt(tiles.size());
+        Tile drawnTile = tiles.get(ranInt);
+        tiles.remove(ranInt);
+        return drawnTile;
     }
 
     /**

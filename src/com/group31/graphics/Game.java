@@ -3,9 +3,12 @@ package com.group31.graphics;
 import com.group31.controller.Controller;
 import com.group31.gameboard.Gameboard;
 import com.group31.logger.Logger;
+import com.group31.saveload.Save;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
+import com.group31.tile_manager.Tile;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -24,6 +27,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 /**
  * @author Emily
@@ -50,6 +54,22 @@ public class Game extends Application {
      * Represents the board of tiles.
      */
     private static GridPane board;
+    /**
+     * Number of player one.
+     */
+    private static final int PLAYER_ONE = 1;
+    /**
+     * Number of player two.
+     */
+    private static final int PLAYER_TWO = 2;
+    /**
+     * Number of player three.
+     */
+    private static final int PLAYER_THREE = 3;
+    /**
+     * Number of player four.
+     */
+    private static final int PLAYER_FOUR = 4;
     /**
      * Player one's hand of tiles.
      */
@@ -101,7 +121,7 @@ public class Game extends Application {
         StackPane topThing = new StackPane();
         topThing.getChildren().add(playerOneHand);
         ImageButton close = new ImageButton(CLOSE_UNPRESSED_URL, CLOSE_PRESSED_URL);
-        close.setOnMouseClicked(e -> stage.setScene(mainScene));
+        close.setOnMouseClicked(e -> saveAndExit(stage));
         topThing.getChildren().add(close);
         topThing.setAlignment(close, Pos.TOP_RIGHT);
         topThing.setPickOnBounds(false);
@@ -114,6 +134,11 @@ public class Game extends Application {
         drawGameBoard(board);
         scene.setRoot(root);
         stage.setScene(scene);
+    }
+
+    private void saveAndExit(Stage stage) {
+        Save.saveAll();
+        stage.setScene(mainScene);
     }
 
     /**
@@ -152,16 +177,16 @@ public class Game extends Application {
                 // temporary final variable otherwise lambda complains
                 int finalCol = col;
 
-                // bottom button clicked (this doesn't work)
                 arrowUpButton.setOnMouseClicked(e -> {
                     gameboard.addTileToCol(finalCol, "down");
                     drawGameBoard(board);
+                    controller.setFloorTilePlaced();
                 });
 
-                // top button clicked (works fine)
                 arrowDownButton.setOnMouseClicked(e -> {
                     gameboard.addTileToCol(finalCol, "up");
                     drawGameBoard(board);
+                    controller.setFloorTilePlaced();
                 });
 
                 StackPane tileStackOne = new StackPane(arrowDownButton);
@@ -176,16 +201,16 @@ public class Game extends Application {
                 ImageButton arrowLeftButton = new ImageButton("resources/images/tiles/arrow left.png");
                 int finalRow = row;
 
-                // right button clicked (doesn't work)
                 arrowLeftButton.setOnMouseClicked(e -> {
                     gameboard.addTileToRow(finalRow, "right");
                     drawGameBoard(board);
+                    controller.setFloorTilePlaced();
                 });
 
-                // left button clicked (works fine)
                 arrowRightButton.setOnMouseClicked(e -> {
                     gameboard.addTileToRow(finalRow, "left");
                     drawGameBoard(board);
+                    controller.setFloorTilePlaced();
                 });
 
                 StackPane tileStackOne = new StackPane(arrowRightButton);
@@ -218,40 +243,40 @@ public class Game extends Application {
         }
     }
 
-//    /**
-//     * Redraws the player's hand with the tiles provided.
-//     * @param player which position the players are at the table,
-//     *               starting with 1 at the top going clockwise
-//     * @param hand the hand of the corresponding player
-//     */
-//    public static void updatePlayerHand(int player, ArrayList<Tile> hand) {
-//        switch (player) {
-//            case 1:
-//                playerOneHand.getChildren().clear();
-//                for (Tile tile : hand) {
-//                    playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-//                }
-//                break;
-//            case 2:
-//                playerTwoHand.getChildren().clear();
-//                for (Tile tile : hand) {
-//                    playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-//                }
-//                break;
-//            case 3:
-//                playerThreeHand.getChildren().clear();
-//                for (Tile tile : hand) {
-//                    playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-//                }
-//                break;
-//            case 4:
-//                playerFourHand.getChildren().clear();
-//                for (Tile tile : hand) {
-//                    playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));
-//                }
-//                break;
-//            default:
-//                break;
-//        }
-//    }
+    /**
+     * Redraws the player's hand with the tiles provided.
+     * @param player which position the players are at the table,
+     *               starting with 1 at the top going clockwise
+     * @param hand the hand of the corresponding player
+     */
+    public static void updatePlayerHand(int player, ArrayList<Tile> hand) {
+        switch (player) {
+            case PLAYER_ONE:
+                playerOneHand.getChildren().clear();
+                for (Tile tile : hand) {
+                    playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+                }
+                break;
+            case PLAYER_TWO:
+                playerTwoHand.getChildren().clear();
+                for (Tile tile : hand) {
+                    playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+                }
+                break;
+            case PLAYER_THREE:
+                playerThreeHand.getChildren().clear();
+                for (Tile tile : hand) {
+                    playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+                }
+                break;
+            case PLAYER_FOUR:
+                playerFourHand.getChildren().clear();
+                for (Tile tile : hand) {
+                    playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));
+                }
+                break;
+            default:
+                break;
+        }
+    }
 }
