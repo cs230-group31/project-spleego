@@ -1,5 +1,7 @@
 package com.group31.tile_manager.action_tile;
 
+import javafx.scene.image.Image;
+
 public class DoubleMoveTile extends ActionTile {
 
     /**
@@ -15,12 +17,10 @@ public class DoubleMoveTile extends ActionTile {
     /**
      * Allows a player to make 2 moves at once.
      * @param id ID of the tile.
-     * @param weight Weight of the tile (likeliness to be pulled from silkbag).
+     * @param currentImage The tile's image.
      */
-    public DoubleMoveTile(int id, int weight) {
-        super(id, weight);
-        this.id = id;
-        this.weight = weight;
+    public DoubleMoveTile(int id, Image currentImage) {
+        super(id, currentImage);
     }
 
 //    /**
