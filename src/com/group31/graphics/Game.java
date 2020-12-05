@@ -3,6 +3,7 @@ package com.group31.graphics;
 import com.group31.controller.Controller;
 import com.group31.gameboard.Gameboard;
 import com.group31.logger.Logger;
+import com.group31.main.Main;
 import com.group31.saveload.Save;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
@@ -138,6 +139,8 @@ public class Game extends Application {
 
     private void saveAndExit(Stage stage) {
         Save.saveAll();
+        Controller.resetInstance();
+        Main.initController();
         stage.setScene(mainScene);
     }
 

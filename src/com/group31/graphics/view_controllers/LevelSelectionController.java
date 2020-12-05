@@ -21,4 +21,8 @@ public class LevelSelectionController {
         return gameNames;
     }
 
+    public static void loadGame() {
+
+    }
+
 }

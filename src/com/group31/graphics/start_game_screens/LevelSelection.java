@@ -48,6 +48,9 @@ public class LevelSelection {
         try {
             for (String name : LevelSelectionController.getSavedGamesName()) {
                 Button gameSave = new Button(name);
+                gameSave.setOnMouseClicked(e -> {
+                    LevelSelectionController.loadGame();
+                });
                 gameSaveButtons.getChildren().add(gameSave);
             }
         } catch (NoSuchDirectory e) {

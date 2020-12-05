@@ -85,6 +85,7 @@ public class Controller implements Serializable {
     public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
+
     }
 
     /**
@@ -259,6 +260,13 @@ public class Controller implements Serializable {
     }
 
     /**
+     * Resets the controller's instance to a fresh controller.
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+
+    /**
      * Sets the Controller to a given instance.
      * @param controller the Controller for this class to become
      */
@@ -274,13 +282,11 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Adds every player to the leaderboard.
+     * Returns all players.
+     * @returns all players
      */
-    // All players should be added when the game starts, if the players aren't loaded in.
-    public void addPlayersToLeaderboard() {
-        for (Player player : this.players) {
-            Leaderboard.addPlayer(player);
-        }
+    public ArrayList<Player> getPlayers() {
+        return this.players;
     }
 
     /**

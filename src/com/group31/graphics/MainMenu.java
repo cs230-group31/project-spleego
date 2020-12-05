@@ -147,8 +147,6 @@ public class MainMenu extends Application {
         stage.setMaxWidth(WINDOW_WIDTH);
         stage.setTitle("Spooky Spleego");
 
-        Main.initController();
-
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
 
@@ -220,11 +218,6 @@ public class MainMenu extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    private void saveAndExit() {
-        Save.saveAll();
-        Platform.exit();
     }
 
     /**

@@ -13,7 +13,5 @@ public class Save {
     public static void saveAll() {
 
         Controller.getInstance().save();
-        Controller.getInstance().addPlayersToLeaderboard();
-        Leaderboard.save();
     }
 }

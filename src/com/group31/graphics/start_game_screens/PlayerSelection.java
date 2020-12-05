@@ -29,10 +29,11 @@ public class PlayerSelection {
         Button returnMainMenu = new Button("Main Menu");
         VBox buttonBox = new VBox();
 
+        int[] location = new int[]{5,5};
         Controller controller = Controller.getInstance();
         ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("Name1", null, null, null));
-        players.add(new Player("Name2", null, null, null));
+        players.add(new Player("Name1", null, null, location));
+        players.add(new Player("Name2", null, null, location));
         controller.addPlayers(players);
 
         selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));

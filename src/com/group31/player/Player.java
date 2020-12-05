@@ -32,11 +32,6 @@ public class Player implements Serializable {
     private int[] location;
 
     /**
-     * Starting location of the player.
-     */
-    private final int[] startingLocation;
-
-    /**
      * Stores the player's hand.
      */
     private final ArrayList<Tile> hand = new ArrayList<>();
@@ -75,13 +70,13 @@ public class Player implements Serializable {
      * @param name human name of the player
      * @param sprite player's picture
      * @param colour player's colour
-     * @param startingLocation player's starting location on the gameboard
+     * @param location player's starting location on the gameboard
      */
-    public Player(String name, Image sprite, Color colour, int[] startingLocation) {
+    public Player(String name, Image sprite, Color colour, int[] location) {
         this.name = name;
         this.sprite = sprite;
         this.colour = colour;
-        this.startingLocation = startingLocation;
+        this.location = location;
 
         this.instanceUuid = UUID.randomUUID().toString();
         this.wins = 0;
