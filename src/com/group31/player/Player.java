@@ -188,6 +188,22 @@ public class Player implements Serializable {
     }
 
     /**
+     * Recieves a Tile and adds it to this player's hand.
+     * @param tile the tile being added to the player's hand
+     */
+    public void recieveTile(Tile tile) {
+        hand.add(tile);
+    }
+
+    /**
+     * Returns the hand of the player.
+     * @return the player's hand
+     */
+    public ArrayList<Tile> getHand() {
+        return this.hand;
+    }
+
+    /**
      * Returns an instance's UUID.
      * @return an instance's UUID
      */
