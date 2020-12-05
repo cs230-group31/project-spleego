@@ -12,7 +12,6 @@ import com.group31.saveload.Save;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
-import com.group31.tile_manager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -34,7 +33,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+
 
 /**
  * @author Emily
@@ -122,7 +121,6 @@ public class Game extends Application {
          */
         FOUR
     }
-  
     /**
      * Scene for the main menu.
      */
