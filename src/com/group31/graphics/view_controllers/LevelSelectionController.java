@@ -1,6 +1,5 @@
 package com.group31.graphics.view_controllers;
 
-import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
@@ -14,7 +13,7 @@ public class LevelSelectionController {
 
         ArrayList<String> gameNames = new ArrayList<>();
         String directory = String.format("%scontroller", Settings.get("serialized_objects_folder"));
-        FileManager.setDirectory(directory, false);
+        FileManager.setDirectory(directory, true);
         File[] gameFiles = FileManager.getAllFilesInDir();
         for (File file : gameFiles) {
             String rawFileName = file.getName().replaceFirst("[.][^.]+$", "");
