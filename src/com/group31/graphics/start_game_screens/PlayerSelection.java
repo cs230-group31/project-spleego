@@ -16,6 +16,12 @@ import java.util.ArrayList;
 public class PlayerSelection {
 
     /**
+     * Player's starting locations.
+     */
+    // TESTING ONLY
+    private final int[] location = new int[] {5, 5};
+
+    /**
      * Starts the scene.
      * @param stage instance of the stage (window)
      * @param mainMenu instance of the Main Menu scene
@@ -29,11 +35,10 @@ public class PlayerSelection {
         Button returnMainMenu = new Button("Main Menu");
         VBox buttonBox = new VBox();
 
-        int[] location = new int[]{5,5};
         Controller controller = Controller.getInstance();
         ArrayList<Player> players = new ArrayList<>();
-        players.add(new Player("Name1", null, null, location));
-        players.add(new Player("Name2", null, null, location));
+        players.add(new Player("Name1", null, null, this.location));
+        players.add(new Player("Name2", null, null, this.location));
         controller.setPlayers(players.toArray(new Player[0]));
 
         selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));

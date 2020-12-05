@@ -1,7 +1,6 @@
 package com.group31.saveload;
 
 import com.group31.controller.Controller;
-import com.group31.leaderboard.Leaderboard;
 
 public class Save {
 

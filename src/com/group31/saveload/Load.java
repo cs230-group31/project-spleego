@@ -51,7 +51,8 @@ public class Load {
      * @param filename name of the file to load
      * @return the generated gameboard
      */
-    public static HashMap<String, Object> loadNewGameFromFile(String filename) throws NoSuchDirectory, FileNotFoundException {
+    public static HashMap<String, Object> loadNewGameFromFile(String filename)
+            throws NoSuchDirectory, FileNotFoundException {
         String fileToGet = LEVEL_FILES_LOCATION + filename;
         HashMap<String, Object> objects = new HashMap<>();
         FileManager.setDirectory(LEVEL_FILES_LOCATION, true);

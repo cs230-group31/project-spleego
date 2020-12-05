@@ -2,9 +2,6 @@ package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
-import com.group31.leaderboard.Leaderboard;
-import com.group31.logger.Logger;
-import com.group31.main.Main;
 import com.group31.player.Player;
 import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
@@ -139,6 +136,10 @@ public class Controller implements Serializable {
         return players;
     }
 
+    /**
+     * Sets the players in Controller.
+     * @param players new array of players
+     */
     public void setPlayers(Player[] players) {
         this.players = players;
     }

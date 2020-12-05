@@ -12,7 +12,6 @@ import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;

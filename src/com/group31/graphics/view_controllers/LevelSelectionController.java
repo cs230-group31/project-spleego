@@ -12,6 +12,11 @@ import java.util.ArrayList;
 
 public class LevelSelectionController {
 
+    /**
+     * Returns the name of the saved games in a directory.
+     * @return the name of the saved games in a directory
+     * @throws NoSuchDirectory if the directory does not exist
+     */
     public static ArrayList<String> getSavedGamesName() throws NoSuchDirectory {
 
         ArrayList<String> gameNames = new ArrayList<>();
