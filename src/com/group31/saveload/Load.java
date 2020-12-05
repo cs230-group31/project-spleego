@@ -87,14 +87,15 @@ public class Load {
     }
 
     /**
-     * Loads a controller from a file.
+     * Returns a controller loaded from a file.
      * @param identifer firname of the controller to load
      * @throws ObjectNeverSerialized if the controller object being loaded has never been serialized.
+     * @return a controller loaded from a file
      */
-    public void loadController(String identifer) throws ObjectNeverSerialized {
+    public static Controller loadController(String identifer) throws ObjectNeverSerialized {
         String object = "controller";
         Controller loadedInstance = (Controller) Serializer.deserialize(identifer, object);
-        Controller.setInstance(loadedInstance);
+        return loadedInstance;
     }
 
 }

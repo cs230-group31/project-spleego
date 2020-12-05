@@ -25,7 +25,6 @@ public class LevelSelection {
      * @param playerSelection instance of the Player Selection scene
      */
     private void start(Stage stage, Scene mainMenu, Scene playerSelection) {
-        Controller controller = Controller.getInstance();
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text title = new Text("Level Selection");
@@ -38,7 +37,7 @@ public class LevelSelection {
 
         start.setOnMouseClicked(e -> {
             Game.launch(stage, mainMenu);
-            controller.startGame();
+            Controller.getInstance().startGame();
         });
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
         backToPlayerProfile.setOnMouseClicked(e -> stage.setScene(playerSelection));
@@ -49,7 +48,9 @@ public class LevelSelection {
             for (String name : LevelSelectionController.getSavedGamesName()) {
                 Button gameSave = new Button(name);
                 gameSave.setOnMouseClicked(e -> {
-                    LevelSelectionController.loadGame();
+                    LevelSelectionController.loadGame(name);
+                    Game.launch(stage, mainMenu);
+                    Controller.getInstance().startGame();
                 });
                 gameSaveButtons.getChildren().add(gameSave);
             }

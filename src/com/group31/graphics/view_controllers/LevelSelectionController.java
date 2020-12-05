@@ -1,6 +1,10 @@
 package com.group31.graphics.view_controllers;
 
+import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
+import com.group31.exceptions.ObjectNeverSerialized;
+import com.group31.logger.Logger;
+import com.group31.saveload.Load;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
 import java.io.File;
@@ -21,8 +25,16 @@ public class LevelSelectionController {
         return gameNames;
     }
 
-    public static void loadGame() {
-
+    /**
+     * Loads a game.
+     * @param identifier Controller file name.
+     */
+    public static void loadGame(String identifier) {
+        try {
+            Controller.setInstance(Load.loadController(identifier));
+        } catch (ObjectNeverSerialized e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
     }
 
 }
