@@ -1,6 +1,5 @@
 package com.group31.player;
 
-import com.group31.controller.Controller;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
@@ -118,9 +117,7 @@ public class Player implements Serializable {
      * @param insertY Y coordinate of the place we will add the tile.
      */
     public void playTile(Tile tile, int insertX, int insertY) {
-
-        Controller.getInstance().drawTileOnBoard(tile, insertX, insertY);
-
+        // TODO: Put tile on gameboard.
     }
 
     /**
