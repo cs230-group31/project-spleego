@@ -6,6 +6,7 @@ import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,7 +19,7 @@ import java.util.HashMap;
  * Generates tiles for players/game to use.
  * @author Alvaro, Liam, Moe, Aaron
  */
-public class SilkBag {
+public class SilkBag implements Serializable {
 
     /**
      * Amount of tiles to be generated.

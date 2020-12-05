@@ -14,7 +14,7 @@ public class Player implements Serializable {
     /**
      * Player's name.
      */
-    private final SimpleStringProperty name;
+    private final String name;
 
     /**
      * Player's sprite.
@@ -58,17 +58,17 @@ public class Player implements Serializable {
     /**
      * Number of wins the Player has.
      */
-    private SimpleIntegerProperty wins;
+    private int wins;
 
     /**
      * Number of losses the Player has.
      */
-    private SimpleIntegerProperty losses;
+    private int losses;
 
     /**
      * Number of games the player has played.
      */
-    private final SimpleIntegerProperty gamesPlayed;
+    private int gamesPlayed;
 
     /**
      * Class for a player who has or is playing the game.
@@ -78,15 +78,15 @@ public class Player implements Serializable {
      * @param startingLocation player's starting location on the gameboard
      */
     public Player(String name, Image sprite, Color colour, int[] startingLocation) {
-        this.name = new SimpleStringProperty(name);
+        this.name = name;
         this.sprite = sprite;
         this.colour = colour;
         this.startingLocation = startingLocation;
 
         this.instanceUuid = UUID.randomUUID().toString();
-        this.wins = new SimpleIntegerProperty(0);
-        this.losses = new SimpleIntegerProperty(0);
-        this.gamesPlayed = new SimpleIntegerProperty(0);
+        this.wins = 0;
+        this.losses = 0;
+        this.gamesPlayed = 0;
     }
 
     /**
@@ -94,7 +94,7 @@ public class Player implements Serializable {
      * @return the player's name
      */
     public String getName() {
-        return this.name.get();
+        return this.name;
     }
 
     /**
@@ -102,7 +102,7 @@ public class Player implements Serializable {
      * @return the player's wins
      */
     public int getWins() {
-        return this.wins.get();
+        return this.wins;
     }
 
     /**
@@ -110,7 +110,7 @@ public class Player implements Serializable {
      * @return the player's losses
      */
     public int getLosses() {
-        return this.losses.get();
+        return this.losses;
     }
 
     /**
@@ -118,14 +118,14 @@ public class Player implements Serializable {
      * @return the number of games a player has participated in
      */
     public int getGamesPlayed() {
-        return this.gamesPlayed.get();
+        return this.gamesPlayed;
     }
 
     /**
      * Increment the number of wins a player has.
      */
     public void incrementWins() {
-        this.wins.set(this.wins.get() + 1);
+        this.wins++;
         setGamesPlayed();
     }
 
@@ -133,7 +133,7 @@ public class Player implements Serializable {
      * Increment the number of wins a player has.
      */
     public void incrementLosses() {
-        this.losses.set(this.losses.get() + 1);
+        this.losses++;
         setGamesPlayed();
     }
 
@@ -141,7 +141,7 @@ public class Player implements Serializable {
      * Sets the number of games played by a player.
      */
     private void setGamesPlayed() {
-        this.gamesPlayed.set(this.losses.get() + this.wins.get());
+        this.gamesPlayed = this.wins + this.losses;
     }
 
     /**
