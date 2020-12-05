@@ -164,7 +164,7 @@ public class MainMenu extends Application {
         ImageButton settings = new ImageButton(SETTINGS_UNPRESSED_URL, SETTINGS_PRESSED_URL);
         ImageButton exit = new ImageButton(EXIT_UNPRESSED_URL, EXIT_PRESSED_URL);
       
-        exit.setOnMouseClicked(e -> this.saveAndExit());
+        exit.setOnMouseClicked(e -> Platform.exit());
         start.setOnMouseClicked(e -> PlayerSelection.launch(stage, scene));
         leaderboard.setOnMouseClicked(e -> LeaderboardScreen.launch(stage, scene));
         howToPlay.setOnMouseClicked(e -> TutorialPage.launch(stage, scene));
@@ -216,11 +216,6 @@ public class MainMenu extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    private void saveAndExit() {
-        Save.saveAll();
-        Platform.exit();
     }
 
     /**
