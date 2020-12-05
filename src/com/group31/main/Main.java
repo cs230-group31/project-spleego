@@ -19,39 +19,32 @@ import java.util.HashMap;
 public class Main {
 
     /**
-     * Specifies which environment the app is running in.
-     */
-    // Either 'dev' for development or 'prod' for production.
-    // Behaviour changes when set to 'dev': settings regenerated.
-    private static final String ENV = "dev";
-
-    /**
      * Initialises the components and runs the app.
      * @param args Args passed in at runtime.
      */
     public static void main(String[] args) {
-        // Initialise settings.
+        //init settings
         HashMap<String, String> settings = initSettings();
         Settings.setAllSettings(settings);
 
-        if (ENV.equals("dev")) {
-            Settings.setAllSettings(DefaultSettings.getDefaultSettings());
+        if (args.length != 0) {
+            Settings.updateSettings(args);
         }
 
-        // Testing.
+        // testing
         Settings.dumpSettingsToConsole();
 
-        // Initialise components.
+        // init components
         Leaderboard leaderboard = initLeaderBoard();
         SilkBag silkbag = initSilkBag();
         Gameboard gameboard = initGameboard();
         gameboard.genBoard(silkbag);
         Player[] players = initPlayers();
 
-        // Initialise controller.
+        //init the controller
         initController(players, gameboard, silkbag);
 
-        // Start GUI.
+        // start GUI
         String[] launchArgs = {};
         MainMenu.run(launchArgs);
     }
@@ -61,26 +54,22 @@ public class Main {
      * @return HashMap containing all settings.
      */
     private static HashMap<String, String> initSettings() {
-        // Allow the file manager to create the requested directory.
-        final boolean ALLOW_FILE_CREATION = true;
-
-        // Requested directory.
-        final String SETTINGS_DIRECTORY = "data/settings/";
-        final String SETTINGS_FILE_NAME = "settings.txt";
+        boolean allowFileCreation = true;
+        String settingsDirectory = "settings/";
+        String settingsFile = "settings.txt";
+        String delimiter = ",";
         try {
-            FileManager.setDirectory(SETTINGS_DIRECTORY, ALLOW_FILE_CREATION);
-            if (!FileManager.fileExists(SETTINGS_FILE_NAME)) {
-                FileManager.write(DefaultSettings.getDefaultSettingsArray(), SETTINGS_FILE_NAME);
+            FileManager.setDirectory(settingsDirectory, allowFileCreation);
+            if (!FileManager.fileExists(settingsFile)) {
+                FileManager.write(DefaultSettings.getDefaultSettingsArray(), settingsFile);
                 return DefaultSettings.getDefaultSettings();
             } else {
-                return getSettingsFromArray(FileManager.read(SETTINGS_FILE_NAME));
+                return getSettingsFromArray(FileManager.read(settingsFile));
             }
         } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
         Logger.log("Failed to save settings to a file, using default settings.", Logger.Level.WARNING);
-
-        // If no settings can be loaded from a file, use the default settings.
         return DefaultSettings.getDefaultSettings();
     }
 
@@ -91,12 +80,11 @@ public class Main {
      */
     private static HashMap<String, String> getSettingsFromArray(String[] settingsArray) {
         HashMap<String, String> settings = new HashMap<>();
-        final int SETTING_KEY = 0;
-        final int SETTING_VALUE = 1;
-        final String DELIMITER = ";";
+        int settingKey = 0;
+        int settingValue = 1;
         for (String setting : settingsArray) {
-            String[] settingNameValue = setting.split(DELIMITER);
-            settings.put(settingNameValue[SETTING_KEY], settingNameValue[SETTING_VALUE]);
+            String[] settingNameValue = setting.split(";");
+            settings.put(settingNameValue[settingKey], settingNameValue[settingValue]);
         }
         return settings;
     }
@@ -116,8 +104,7 @@ public class Main {
      */
     private static SilkBag initSilkBag() {
         // TODO: loads max tiles, tiles inside if save game etc, initialises with tiles, creates new instance, pass back
-        final int MAX_TILES = Settings.getSettingAsInt("max_tiles");
-        return new SilkBag(new ArrayList<Tile>(), MAX_TILES);
+        return new SilkBag(new ArrayList<Tile>(), 10);
     }
 
     /**
@@ -126,10 +113,9 @@ public class Main {
      */
     private static Gameboard initGameboard() {
         // TODO: loads size, saved state if any, initialises, pass back
-        // TODO: board_rows/cols should be based on either predefined board size or randomly generated board size
-        final int BOARD_ROWS = 5;
-        final int BOARD_COLS = 5;
-        return new Gameboard(BOARD_ROWS, BOARD_COLS);
+        int boardRows = 5;
+        int boardCols = 5;
+        return new Gameboard(boardRows, boardCols);
     }
 
     /**
@@ -138,12 +124,14 @@ public class Main {
      */
     private static Player[] initPlayers() {
         // TODO: loads players if any saved or creates new players (however many are asked for at runtime), pass back
-        // TODO: Set based on settings passed in before game starts.
-        final int NUMBER_OF_PLAYERS = 2;
-        Player[] players = new Player[NUMBER_OF_PLAYERS];
 
-        for (int i = 0; i <= NUMBER_OF_PLAYERS - 1; i++) {
+        //set based on settings passed in before game starts.
+        int numberOfPlayers = 2;
+        Player[] players = new Player[numberOfPlayers];
+        for (int i = 0; i <= numberOfPlayers - 1; i++) {
+
             players[i] = new Player(null, null, null, null);
+
         }
 
         return players;
@@ -159,9 +147,8 @@ public class Main {
                                        Gameboard gameboard,
                                        SilkBag silkbag) {
 
-        // Get instance of controller as Controller is a singleton.
+        // start the game.
         Controller controller = Controller.getInstance();
-        // Initialise controller.
         controller.init(players, gameboard, silkbag);
     }
 }

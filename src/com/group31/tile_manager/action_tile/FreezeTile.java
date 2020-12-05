@@ -19,7 +19,7 @@ public class FreezeTile extends ActionTile {
      * @param weight Weight of the tile (likeliness to be pulled from SilkBag).
      */
     public FreezeTile(int id, int weight) {
-        super(id, null);
+        super(id, weight);
         this.id = id;
         this.weight = weight;
     }
