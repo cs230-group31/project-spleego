@@ -1,5 +1,7 @@
 package com.group31.graphics;
 
+import java.util.ArrayList;
+import com.group31.tile_manager.Tile;
 import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.gameboard.Gameboard;
@@ -99,6 +101,28 @@ public class Game extends Application {
      * FlowPane for the drawtile button and tile next to it.
      */
     private static FlowPane drawShowTile;
+    /*
+     * Player numbers enum.
+     */
+    public enum PlayerNumber {
+        /**
+         * Player one.
+         */
+        ONE,
+        /**
+         * Player two.
+         */
+        TWO,
+        /**
+         * Player three.
+         */
+        THREE,
+        /**
+         * Player four.
+         */
+        FOUR
+    }
+  
     /**
      * Scene for the main menu.
      */
@@ -320,27 +344,27 @@ public class Game extends Application {
      *               starting with 1 at the top going clockwise
      * @param hand the hand of the corresponding player
      */
-    public static void updatePlayerHand(int player, ArrayList<Tile> hand) {
+    public static void updatePlayerHand(PlayerNumber player, ArrayList<Tile> hand) {
         switch (player) {
-            case PLAYER_ONE:
+            case ONE:
                 playerOneHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
-            case PLAYER_TWO:
+            case TWO:
                 playerTwoHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
-            case PLAYER_THREE:
+            case THREE:
                 playerThreeHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
-            case PLAYER_FOUR:
+            case FOUR:
                 playerFourHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));

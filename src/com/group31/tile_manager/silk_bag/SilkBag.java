@@ -176,6 +176,26 @@ public class SilkBag implements Serializable {
     }
 
     /**
+     * Generates a random action tile.
+     * @return the action tile
+     */
+    public Tile genActionTile() throws FileNotFoundException {
+        Random random = new Random();
+
+        int randomKey = random.nextInt(maxTiles);
+
+        while (!tiles.get(randomKey).isActionTile()) {
+            randomKey = random.nextInt(maxTiles);
+        }
+
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, randomKey);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+
+        return new Tile(true, tileImage);
+    }
+
+    /**
      * Takes in a FloorTile ID and returns the fully created FloorTile.
      * @param id the ID of the tile to be created
      * @return the generated FloorTile
