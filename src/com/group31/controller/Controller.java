@@ -34,6 +34,12 @@ public class Controller implements Serializable {
     public void setPlayerTurn(int playerTurn) {
         this.playerTurn = playerTurn;
     }
+    /**
+     * Updates the playerTurn counter to the next term.
+     */
+    public void nextPlayerTurn() {
+        this.playerTurn++;
+    }
 
     /**
      * Returns the current state of FloorTilePlaced.
