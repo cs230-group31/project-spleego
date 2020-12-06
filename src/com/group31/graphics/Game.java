@@ -100,6 +100,11 @@ public class Game extends Application {
      * FlowPane for the drawtile button and tile next to it.
      */
     private static FlowPane drawShowTile;
+
+    /**
+     * Tile representative of the back of another tile.
+     */
+    private static final Tile FACE_DOWN_TILE = new Tile(-1);
     /*
      * Player numbers enum.
      */
@@ -242,7 +247,7 @@ public class Game extends Application {
     private static void init(Scene mainMenuScene) {
         mainScene = mainMenuScene;
         drawShowTile = new FlowPane();
-        setCurrentDrawnTile(new Tile(-1));
+        setCurrentDrawnTile(FACE_DOWN_TILE);
     }
 
     /**
@@ -263,15 +268,21 @@ public class Game extends Application {
                 int finalCol = col;
 
                 arrowUpButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol, "down");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToCol(finalCol, "down");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                    }
                 });
 
                 arrowDownButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol, "up");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToCol(finalCol, "up");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                    }
                 });
 
                 StackPane tileStackOne = new StackPane(arrowDownButton);
@@ -287,15 +298,21 @@ public class Game extends Application {
                 int finalRow = row;
 
                 arrowLeftButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow, "right");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToRow(finalRow, "right");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                    }
                 });
 
                 arrowRightButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow, "left");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToRow(finalRow, "left");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                    }
                 });
 
                 StackPane tileStackOne = new StackPane(arrowRightButton);
