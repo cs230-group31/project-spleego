@@ -17,6 +17,8 @@ import com.group31.graphics.Game;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
+
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javafx.scene.control.Label;
 
@@ -86,7 +88,11 @@ public class PlayerSelection {
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
-        ArrayList<String> playerNames = Load.getPlayerProfileNames();
+        ArrayList<PlayerProfile> players = Load.getPlayerProfiles();
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (PlayerProfile player : players) {
+            playerNames.add(player.getName());
+        }
         setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
                 mainPane, playerBox, playerNames));
 

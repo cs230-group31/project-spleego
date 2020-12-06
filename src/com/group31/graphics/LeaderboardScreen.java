@@ -80,4 +80,3 @@ public class LeaderboardScreen {
         leaderboard.start(stage, mainMenu);
     }
 }
-

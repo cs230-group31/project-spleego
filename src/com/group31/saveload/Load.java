@@ -111,22 +111,22 @@ public class Load {
      * Returns a list of player names from Player Profile files.
      * @return a list of player names from Player Profile files
      */
-    public static ArrayList<String> getPlayerProfileNames() {
+    public static ArrayList<PlayerProfile> getPlayerProfiles() {
         String playerProfileDir = "data/serializing/serialized/players";
         String object = "player";
-        ArrayList<String> playerNames = new ArrayList<>();
+        ArrayList<PlayerProfile> players = new ArrayList<>();
         try {
             FileManager.setDirectory(playerProfileDir, true);
             File[] filesInDir = FileManager.getAllFilesInDir();
             for (File file : filesInDir) {
                 String rawFileName = file.getName().replaceFirst("[.][^.]+$", "");
                 PlayerProfile player = (PlayerProfile) Serializer.deserialize(rawFileName, object);
-                playerNames.add(player.getName());
+                players.add(player);
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-        return playerNames;
+        return players;
     }
 
 }
