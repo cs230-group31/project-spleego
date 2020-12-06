@@ -1,6 +1,5 @@
 package com.group31.graphics.start_game_screens;
 
-import com.group31.controller.Controller;
 import com.group31.player.PlayerProfile;
 import com.group31.saveload.Load;
 import javafx.collections.FXCollections;
@@ -13,7 +12,6 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import com.group31.graphics.Game;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
@@ -24,23 +22,9 @@ import javafx.scene.control.Label;
 public class PlayerSelection {
 
     /**
-     * list of players.
+     * List of ComboBoxes to update.
      */
-    private ArrayList<PlayerProfile> players = new ArrayList<>();
-
-    /**
-     * test array.
-     */
-    private static ArrayList<String> playerTest = new ArrayList<>();
-
-    /**
-     * List of comboboxes to update.
-     */
-    private static ArrayList<ComboBox<String>> comboBoxes = new ArrayList<>();
-    /**
-     * One.
-     */
-    private static final int ONE = 1;
+    private static final ArrayList<ComboBox<String>> COMBO_BOXES = new ArrayList<>();
     /**
      * Two.
      */
@@ -89,46 +73,34 @@ public class PlayerSelection {
         setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
                 mainPane, playerBox));
 
-
-
-
-        Label chooseLabel = new Label("Choose number of players:");
-        Button play = new Button("Play");
-
-        playerTest.add("playerName1");
-        playerTest.add("playerName2");
-        playerTest.add("playerName3");
-        playerTest.add("playerName4");
-
-        HBox numPlayersBox = new HBox(numOfPlayers);
-        Controller controller = Controller.getInstance();
-
-        play.setOnMouseClicked(e -> {
-            Game.launch(stage, mainMenu);
-            controller.startGame();
-        });
-
         newPlayerName.setPromptText("Enter name:");
 
-        //selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));
+        selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene, getPlayerProfiles()));
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
 
-        //buttonBox.getChildren().addAll(selectLevel, returnMainMenu);
         mainPane.getChildren().addAll(returnMainMenu, playerNameBox, numOfPlayers, setPlayerCount);
-
+        HBox levelSelectBox = new HBox();
+        levelSelectBox.getChildren().add(selectLevel);
         root.setTop(tutorial);
         root.setCenter(mainPane);
+        root.setBottom(levelSelectBox);
         scene.setRoot(root);
         stage.setScene(scene);
 
     }
 
+    private static ArrayList<PlayerProfile> getPlayerProfiles() {
+        ArrayList<PlayerProfile> playersInGame = new ArrayList<>();
+        for (ComboBox<String> comboBox : COMBO_BOXES) {
+            playersInGame.add(new PlayerProfile(comboBox.getValue()));
+        }
+        return playersInGame;
+    }
     /**
      * Updates dropdown menus according to number of players.
      * @param numPlayers number of players
      * @param mainPane the main pane
      * @param playerBox the HBox for dropdown menus
-     * @param playerNames arraylist of player names
      */
     public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
         mainPane.getChildren().remove(playerBox);
@@ -142,7 +114,7 @@ public class PlayerSelection {
             Label playerLabel = new Label("Player " + (i + 1) + ":");
             playerBox.getChildren().add(playerLabel);
             ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerNames));
-            comboBoxes.add(nameDropDown);
+            COMBO_BOXES.add(nameDropDown);
             playerBox.getChildren().add(nameDropDown);
         }
         mainPane.getChildren().add(playerBox);

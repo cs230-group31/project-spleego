@@ -5,6 +5,7 @@ import com.group31.exceptions.NoSuchDirectory;
 import com.group31.graphics.Game;
 import com.group31.graphics.view_controllers.LevelSelectionController;
 import com.group31.logger.Logger;
+import com.group31.player.PlayerProfile;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +13,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 
 public class LevelSelection {
@@ -69,8 +72,9 @@ public class LevelSelection {
      * @param stage instance of the stage (windows)
      * @param mainMenu instance of the Main Menu scene
      * @param playerSelection instance of the Player Selection scene
+     * @param playerProfiles
      */
-    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection) {
+    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection, ArrayList<PlayerProfile> playerProfiles) {
         LevelSelection levelSelection = new LevelSelection();
         levelSelection.start(stage, mainMenu, playerSelection);
     }
