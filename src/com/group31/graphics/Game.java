@@ -213,6 +213,16 @@ public class Game extends Application {
         }
     }
 
+    private void startPlayerMove() {
+        Controller controller = Controller.getInstance();
+        Gameboard gameboard = controller.getGameboard();
+        Player[] players = controller.getPlayers();
+        Player currentPlayer = players[controller.getPlayerTurn() - 1];
+        int playerX = currentPlayer.getCurrentLocation()[0];
+        int playerY = currentPlayer.getCurrentLocation()[1];
+        FloorTile playerTile = gameboard.getBoardState()[playerX][playerY];
+    }
+
     private void saveAndExit(Stage stage) {
         Save.saveAll();
         Controller.resetInstance();
