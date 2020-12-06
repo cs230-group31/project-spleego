@@ -61,22 +61,6 @@ public class Game extends Application {
      */
     private static final String DRAW_TILE_URL = "resources/images/draw tile.png";
     /**
-     * Number of player one.
-     */
-    private static final int PLAYER_ONE = 1;
-    /**
-     * Number of player two.
-     */
-    private static final int PLAYER_TWO = 2;
-    /**
-     * Number of player three.
-     */
-    private static final int PLAYER_THREE = 3;
-    /**
-     * Number of player four.
-     */
-    private static final int PLAYER_FOUR = 4;
-    /**
      * Player one's hand of tiles.
      */
     private static HBox playerOneHand;
@@ -273,6 +257,7 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
+                        controller.nextPlayerTurn();
                     }
                 });
 
@@ -282,6 +267,7 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
+                        controller.nextPlayerTurn();
                     }
                 });
 
@@ -303,6 +289,7 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
+                        controller.nextPlayerTurn();
                     }
                 });
 
@@ -312,6 +299,7 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
+                        controller.nextPlayerTurn();
                     }
                 });
 
