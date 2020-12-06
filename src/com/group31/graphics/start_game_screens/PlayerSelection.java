@@ -1,37 +1,37 @@
 package com.group31.graphics.start_game_screens;
 
 import com.group31.controller.Controller;
-import com.group31.exceptions.NoSuchDirectory;
-import com.group31.logger.Logger;
-import com.group31.player.Player;
+import com.group31.player.PlayerProfile;
 import com.group31.saveload.Load;
-import com.group31.services.FileManager;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Orientation;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import com.group31.graphics.Game;
+import javafx.scene.control.TextField;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.HBox;
 import java.util.ArrayList;
-import java.util.HashMap;
+import javafx.scene.control.Label;
 
 
 public class PlayerSelection {
-    /**
-     * Where the sprites be.
-     */
-    private final String spritesUrl = "resources/images/sprites/";
 
     /**
-     * Player's starting locations.
+     * list of players.
      */
-    // TESTING ONLY
-    private final int[] location = new int[] {5, 5};
+    private ArrayList<PlayerProfile> players = new ArrayList<>();
+
+    /**
+     * test array.
+     */
+    private ArrayList<String> playerTest = new ArrayList<>();
 
     /**
      * Starts the scene.
@@ -43,61 +43,80 @@ public class PlayerSelection {
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text tutorial = new Text("Player Selection");
-        Button selectLevel = new Button("Select Level");
+        FlowPane mainPane = new FlowPane(Orientation.VERTICAL);
+        //Button selectLevel = new Button("Select Level");
         Button returnMainMenu = new Button("Main Menu");
-        VBox buttonBox = new VBox();
 
+        HBox playerNameBox = new HBox();
+        Label createPlayerLabel = new Label("Create a player");
+        Button createPlayer = new Button("Create player");
+        TextField newPlayerName = new TextField();
+        newPlayerName.setPromptText("Enter the name of the new player: ");
+        playerNameBox.getChildren().addAll(createPlayerLabel, newPlayerName, createPlayer);
+        createPlayer.setOnMouseClicked(e -> new PlayerProfile(newPlayerName.getText()).save());
+
+
+        ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
+        playerCountList.addAll(1, 2 , 3, 4);
+        Button setPlayerCount = new Button("Confirm count");
+        ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
+        numOfPlayers.setItems(playerCountList);
+        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(), mainPane));
+
+        ArrayList<String> playerNamesAsString = new ArrayList<>();
+        for (int i = 0; i < players.size(); i++) {
+            playerNamesAsString.add(players.get(i).getName());
+        }
+        ComboBox<String> playerNamesToSelect = new ComboBox<>(FXCollections.observableArrayList(playerNamesAsString));
+
+
+        Label chooseLabel = new Label("Choose number of players:");
+        Button play = new Button("Play");
+
+        playerTest.add("playerName1");
+        playerTest.add("playerName2");
+        playerTest.add("playerName3");
+        playerTest.add("playerName4");
+
+        HBox numPlayersBox = new HBox(numOfPlayers);
         Controller controller = Controller.getInstance();
-        Image sprite1 = null;
-        try {
-            FileManager.setDirectory(spritesUrl, false);
-            sprite1 = FileManager.readImage("blue", "png");
-        } catch (NoSuchDirectory noSuchDirectory) {
-            noSuchDirectory.printStackTrace();
-        } catch (IOException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
-        }
-        Image sprite2 = null;
-        try {
-            FileManager.setDirectory(spritesUrl, false);
-            sprite2 = FileManager.readImage("green", "png");
-        } catch (NoSuchDirectory noSuchDirectory) {
-            noSuchDirectory.printStackTrace();
-        } catch (IOException e) {
-            Logger.log(e.toString(), Logger.Level.ERROR);
-        }
-        HashMap<String, Object> components = null;
-        try {
-            components = Load.loadNewGameFromFile("default level.txt");
-        } catch (NoSuchDirectory noSuchDirectory) {
-            noSuchDirectory.printStackTrace();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        //TODO: make this better
-        ArrayList<String> playerLocations = (ArrayList<String>) components.get("playerLocations");
-        Player[] players = new Player[4];
-        for (int i = 0; i < playerLocations.size(); i++) {
-            String startingLocations = playerLocations.get(i);
-            String[] coordinates = startingLocations.split(",");
-            int playerX = Integer.parseInt(coordinates[0]) + 1;
-            int playerY = Integer.parseInt(coordinates[1]) + 1;
-            players[i] = new Player("Name" + i, sprite1, null, new int[]{playerX, playerY});
-        }
-        controller.setPlayers(players);
 
-        selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));
+        play.setOnMouseClicked(e -> {
+            Game.launch(stage, mainMenu);
+            controller.startGame();
+        });
+
+        newPlayerName.setPromptText("Enter name:");
+
+        //selectLevel.setOnMouseClicked(e -> LevelSelection.launch(stage, mainMenu, scene));
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
 
-        buttonBox.getChildren().addAll(selectLevel, returnMainMenu);
+        //buttonBox.getChildren().addAll(selectLevel, returnMainMenu);
+        mainPane.getChildren().addAll(returnMainMenu, playerNameBox, numOfPlayers, setPlayerCount);
 
         root.setTop(tutorial);
-        root.setCenter(buttonBox);
+        root.setCenter(mainPane);
         scene.setRoot(root);
         stage.setScene(scene);
 
     }
 
+    /**
+     *
+     * @param numPlayers
+     * @param mainPane
+     */
+    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane) {
+        ArrayList<String> playerNames = Load.getPlayerProfileNames();
+        for (int i = 0; i < numPlayers; i++) {
+            HBox playerBox = new HBox();
+            Label playerLabel = new Label("Player " + (i + 1) + ":");
+            playerBox.getChildren().add(playerLabel);
+            ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerNames));
+            playerBox.getChildren().add(nameDropDown);
+            mainPane.getChildren().add(playerBox);
+        }
+    }
     /**
      * Launches a new Player selection page scene.
      * @param stage instance of the stage (windows)
