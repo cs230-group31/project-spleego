@@ -112,7 +112,7 @@ public class Load {
      * @return a list of player names from Player Profile files
      */
     public static ArrayList<PlayerProfile> getPlayerProfiles() {
-        String playerProfileDir = "data/serializing/serialized/players";
+        String playerProfileDir = "data/serializing/serialized/player";
         String object = "player";
         ArrayList<PlayerProfile> players = new ArrayList<>();
         try {
