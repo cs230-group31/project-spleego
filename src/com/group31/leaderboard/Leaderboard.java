@@ -5,6 +5,7 @@ import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
 import com.group31.player.Player;
+import com.group31.player.PlayerProfile;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
 import javafx.collections.FXCollections;
@@ -19,20 +20,20 @@ public class Leaderboard {
     /**
      * List of players to display on the leaderboard.
      */
-    private static ArrayList<Player> players = new ArrayList<>();
+    private static ArrayList<PlayerProfile> players = new ArrayList<>();
 
     /**
      * Initialises the leaderboard.
      * @param directory The directory where the players file's are kept.
      */
     public static void initialise(String directory) {
-        String object = "controller";
+        String object = "player";
         try {
             FileManager.setDirectory(directory, true);
             for (File controller : FileManager.getAllFilesInDir()) {
                 String rawFileName = controller.getName().replaceFirst("[.][^.]+$", "");
-                Controller controllerFromFile = (Controller) Serializer.deserialize(rawFileName, object);
-                players.addAll(Arrays.asList(controllerFromFile.getPlayers()));
+                PlayerProfile playerProfile = (PlayerProfile) Serializer.deserialize(rawFileName, object);
+                players.add(playerProfile);
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
@@ -43,7 +44,7 @@ public class Leaderboard {
      * Gets the leaderboard data.
      * @return Leaderboard data.
      */
-    public static ObservableList<Player> getLeaderboardData() {
+    public static ObservableList<PlayerProfile> getLeaderboardData() {
         return FXCollections.observableArrayList(players);
     }
 }

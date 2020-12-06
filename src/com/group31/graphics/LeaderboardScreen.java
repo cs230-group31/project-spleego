@@ -2,6 +2,7 @@ package com.group31.graphics;
 
 import com.group31.leaderboard.Leaderboard;
 import com.group31.player.Player;
+import com.group31.player.PlayerProfile;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
@@ -39,7 +40,7 @@ public class LeaderboardScreen {
 
         TableView table = new TableView();
         Label title = new Label("Leaderboard");
-        ObservableList<Player> playerData = Leaderboard.getLeaderboardData();
+        ObservableList<PlayerProfile> playerData = Leaderboard.getLeaderboardData();
         Button button = new Button("Return");
         VBox leaderboardBox = new VBox();
 
