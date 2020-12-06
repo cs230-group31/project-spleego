@@ -4,12 +4,16 @@ import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.gameboard.Gameboard;
+import com.group31.logger.Logger;
+import com.group31.player.PlayerProfile;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -102,6 +106,23 @@ public class Load {
         String object = "controller";
         Controller loadedInstance = (Controller) Serializer.deserialize(identifer, object);
         return loadedInstance;
+    }
+
+    public static ArrayList<String> getPlayerProfileNames() {
+        String playerProfileDir = "data/serializing/serialized/players";
+        String object = "player";
+        ArrayList<String> playerNames = new ArrayList<>();
+        try {
+            FileManager.setDirectory(playerProfileDir, true);
+            File[] filesInDir = FileManager.getAllFilesInDir();
+            for (File file : filesInDir) {
+                PlayerProfile player = (PlayerProfile) Serializer.deserialize(file.getName(), object);
+                playerNames.add(player.getName());
+            }
+        } catch (NoSuchDirectory | ObjectNeverSerialized e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        return playerNames;
     }
 
 }

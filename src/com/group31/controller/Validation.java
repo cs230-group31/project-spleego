@@ -1,6 +1,18 @@
 package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
+import com.group31.exceptions.TileNotFound;
+import com.group31.gameboard.Gameboard;
+import com.group31.graphics.Game;
+import com.group31.logger.Logger;
+import com.group31.settings.Settings;
+import com.group31.tile_manager.FloorTile;
+import com.group31.tile_manager.Tile;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class Validation {
 
@@ -40,4 +52,46 @@ public class Validation {
                 throw new InvalidMoveDirection("Move not valid.");
         }
     }
+
+    public static boolean validRouting(int currentTileId, int neighbourTileId, String neighbourDirection) {
+        int[] tileAcceptsRouteBelow = new int[] {0, 2, 4, 5, 7, 8, 9};
+        int[] tileAcceptsRouteAbove = new int[] {0, 2, 3, 6, 7, 9, 10};
+        int[] tileAcceptsRouteLeft = new int[] {0, 1, 5, 6, 8, 9, 10};
+        int[] tileAcceptsRouteRight = new int[] {0, 1, 3, 4, 7, 8, 10};
+
+        List<int[]> tileAcceptsRouteBelowList = Arrays.asList(tileAcceptsRouteBelow);
+        List<int[]> tileAcceptsRouteAboveList = Arrays.asList(tileAcceptsRouteAbove);
+        List<int[]> tileAcceptsRouteLeftList = Arrays.asList(tileAcceptsRouteLeft);
+        List<int[]> tileAcceptsRouteRightList = Arrays.asList(tileAcceptsRouteRight);
+
+        if (neighbourDirection.equals("up") && tileAcceptsRouteAboveList.contains(currentTileId)) {
+            if (tileAcceptsRouteBelowList.contains(neighbourTileId)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (neighbourDirection.equals("down") && tileAcceptsRouteBelowList.contains(currentTileId)) {
+            if (tileAcceptsRouteAboveList.contains(neighbourTileId)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (neighbourDirection.equals("left") && tileAcceptsRouteLeftList.contains(currentTileId)) {
+            if (tileAcceptsRouteRightList.contains(neighbourTileId)) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (neighbourDirection.equals("right") && tileAcceptsRouteRightList.contains(currentTileId)) {
+            if (tileAcceptsRouteLeftList.contains(neighbourTileId)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return false;
+
+
+    }
+
 }

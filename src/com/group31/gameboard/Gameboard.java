@@ -1,6 +1,7 @@
 package com.group31.gameboard;
 
 import com.group31.controller.Controller;
+import com.group31.exceptions.TileNotFound;
 import com.group31.logger.Logger;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
@@ -243,4 +244,60 @@ public class Gameboard implements Serializable {
     public int getBoardCols() {
         return boardColumns;
     }
+
+    private int[] tileLocation(FloorTile tile) throws TileNotFound {
+        for (int row = 0; row <= boardRows - 1; row++) {
+            for (int col = 0; col <= boardColumns - 1; col++) {
+                if (boardState[row][col] == tile) {
+                    return new int[] {row, col};
+                }
+            }
+        }
+        throw new TileNotFound("The tile cannot be found.");
+    }
+
+    public FloorTile getTileUpperNeighbour(FloorTile tile) throws TileNotFound {
+        FloorTile neighbour = null;
+        int[] location = tileLocation(tile);
+        int tileX = location[0];
+        int tileY = location[1];
+        if (tileY + 1 < boardColumns) {
+            neighbour = boardState[tileX][tileY + 1];
+        }
+        return neighbour;
+    }
+
+    public FloorTile getTileLowerNeighbour(FloorTile tile) throws TileNotFound {
+        FloorTile neighbour = null;
+        int[] location = tileLocation(tile);
+        int tileX = location[0];
+        int tileY = location[1];
+        if (tileY - 1 > 0) {
+            neighbour = boardState[tileX][tileY - 1];
+        }
+        return neighbour;
+    }
+
+    public FloorTile getTileLeftNeighbour(FloorTile tile) throws TileNotFound {
+        FloorTile neighbour = null;
+        int[] location = tileLocation(tile);
+        int tileX = location[0];
+        int tileY = location[1];
+        if (tileX + 1 < boardRows) {
+            neighbour = boardState[tileX + 1][tileY];
+        }
+        return neighbour;
+    }
+
+    public FloorTile getTileRightNeighbour(FloorTile tile) throws TileNotFound {
+        FloorTile neighbour = null;
+        int[] location = tileLocation(tile);
+        int tileX = location[0];
+        int tileY = location[1];
+        if (tileX + 1 > 0) {
+            neighbour = boardState[tileX - 1][tileY];
+        }
+        return neighbour;
+    }
+
 }

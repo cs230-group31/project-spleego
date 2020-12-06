@@ -112,6 +112,14 @@ public class Controller implements Serializable {
     }
 
     /**
+     * Returns the instance's UUID.
+     * @return the instance's UUID
+     */
+    public String getUuid() {
+        return this.uuid;
+    }
+
+    /**
      * Plays the game by looping until a player has won.
      */
     public void playGame() {
