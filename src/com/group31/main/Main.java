@@ -135,6 +135,7 @@ public class Main {
      */
     public static void initController() {
 
+<<<<<<< Updated upstream
         try {
             HashMap<String, Object> components = Load.loadNewGameFromFile("default level.txt");
             Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
@@ -147,5 +148,11 @@ public class Main {
         } catch (NoSuchDirectory | FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
+=======
+        // Get instance of controller as Controller is a singleton.
+        Controller controller = Controller.getInstance();
+        // Initialise controller.
+        controller.init(gameboard, silkbag);
+>>>>>>> Stashed changes
     }
 }

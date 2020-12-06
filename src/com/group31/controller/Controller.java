@@ -8,6 +8,7 @@ import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.UUID;
 
 public class Controller implements Serializable {
@@ -48,7 +49,7 @@ public class Controller implements Serializable {
     /**
      * Array of players that are playing the game.
      */
-    private Player[] players;
+    private ArrayList<Player> players;
     /**
      * Instance of the gameboard.
      */
@@ -93,6 +94,28 @@ public class Controller implements Serializable {
      * Plays the game by looping until a player has won.
      */
     public void playGame() {
+<<<<<<< Updated upstream
+=======
+        Player winner = null;
+        while (!gameWon) {
+            Player currentPlayer = players.get(playerTurn);
+            Tile drawnTile = silkBag.drawTile();
+            drawnTile.updateDrawnThisTurn(true);
+            if (drawnTile.isActionTile()) {
+                currentPlayer.recieveTile(drawnTile);
+                Game.updatePlayerHand(playerTurn, currentPlayer.getHand());
+            } else {
+                currentFloorTile = (FloorTile) drawnTile;
+                floorTilePlaced = TilePlaced.REQUIRED;
+            }
+
+            drawnTile.updateDrawnThisTurn(false);
+            winner = hasWon();
+            playerTurn++;
+        }
+        assert winner != null;
+        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+>>>>>>> Stashed changes
     }
 
     /**
@@ -282,8 +305,8 @@ public class Controller implements Serializable {
      * @param gameboard The game board for a game.
      * @param silkBag The silk bag for a game.
      */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
-        this.players = players;
+    public void init(Gameboard gameboard, SilkBag silkBag) {
+        //this.players = players;
         this.gameboard = gameboard;
         this.silkBag = silkBag;
     }
@@ -305,6 +328,14 @@ public class Controller implements Serializable {
         String name = String.format("Game_%s", this.uuid);
         Serializer.serialize(this, name, object);
 
+    }
+
+    /**
+     * Adds players to the controller.
+     * @param players players to add
+     */
+    public void addPlayers(ArrayList<Player> players) {
+        this.players = players;
     }
 
 }
