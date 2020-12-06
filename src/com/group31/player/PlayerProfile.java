@@ -1,6 +1,8 @@
 package com.group31.player;
 
 import com.group31.controller.Controller;
+import com.group31.services.serializer.Serializer;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -111,4 +113,14 @@ public class PlayerProfile implements Serializable {
     public void addPlayerToGame(Controller controller) {
         this.gamesParticipating.add(controller.getUuid());
     }
+
+    /**
+     * Saves a PlayerProfile to the file system.
+     */
+    public void save() {
+        String object = "player";
+        String name = String.format("PlayerProfile_%s", this.name);
+        Serializer.serialize(this, name, object);
+    }
+
 }
