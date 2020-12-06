@@ -119,7 +119,8 @@ public class Load {
             FileManager.setDirectory(playerProfileDir, true);
             File[] filesInDir = FileManager.getAllFilesInDir();
             for (File file : filesInDir) {
-                PlayerProfile player = (PlayerProfile) Serializer.deserialize(file.getName(), object);
+                String rawFileName = file.getName().replaceFirst("[.][^.]+$", "");
+                PlayerProfile player = (PlayerProfile) Serializer.deserialize(rawFileName, object);
                 playerNames.add(player.getName());
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
