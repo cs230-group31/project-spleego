@@ -31,7 +31,28 @@ public class PlayerSelection {
     /**
      * test array.
      */
-    private ArrayList<String> playerTest = new ArrayList<>();
+    private static ArrayList<String> playerTest = new ArrayList<>();
+
+    /**
+     * List of comboboxes to update.
+     */
+    private static ArrayList<ComboBox<String>> comboBoxes = new ArrayList<>();
+    /**
+     * One.
+     */
+    private static final int ONE = 1;
+    /**
+     * Two.
+     */
+    private static final int TWO = 2;
+    /**
+     * Three.
+     */
+    private static final int THREE = 3;
+    /**
+     * Four.
+     */
+    private static final int FOUR = 4;
 
     /**
      * Starts the scene.
@@ -44,7 +65,7 @@ public class PlayerSelection {
         BorderPane root = new BorderPane();
         Text tutorial = new Text("Player Selection");
         FlowPane mainPane = new FlowPane(Orientation.VERTICAL);
-        //Button selectLevel = new Button("Select Level");
+        Button selectLevel = new Button("Select Level");
         Button returnMainMenu = new Button("Main Menu");
 
         HBox playerNameBox = new HBox();
@@ -57,17 +78,14 @@ public class PlayerSelection {
 
 
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
-        playerCountList.addAll(1, 2 , 3, 4);
+        playerCountList.addAll(ONE, TWO, THREE, FOUR);
         Button setPlayerCount = new Button("Confirm count");
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
-        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(), mainPane));
+        HBox playerBox = new HBox();
+        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(), mainPane, playerBox));
 
-        ArrayList<String> playerNamesAsString = new ArrayList<>();
-        for (int i = 0; i < players.size(); i++) {
-            playerNamesAsString.add(players.get(i).getName());
-        }
-        ComboBox<String> playerNamesToSelect = new ComboBox<>(FXCollections.observableArrayList(playerNamesAsString));
+        ArrayList<String> playerNames = Load.getPlayerProfileNames();
 
 
         Label chooseLabel = new Label("Choose number of players:");
@@ -102,20 +120,21 @@ public class PlayerSelection {
     }
 
     /**
-     *
-     * @param numPlayers
+     *  @param numPlayers
      * @param mainPane
+     * @param playerBox
      */
-    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane) {
-        ArrayList<String> playerNames = Load.getPlayerProfileNames();
+    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
+        mainPane.getChildren().remove(playerBox);
+        playerBox.getChildren().clear();
         for (int i = 0; i < numPlayers; i++) {
-            HBox playerBox = new HBox();
             Label playerLabel = new Label("Player " + (i + 1) + ":");
             playerBox.getChildren().add(playerLabel);
-            ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerNames));
+            ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerTest));
+            comboBoxes.add(nameDropDown);
             playerBox.getChildren().add(nameDropDown);
-            mainPane.getChildren().add(playerBox);
         }
+        mainPane.getChildren().add(playerBox);
     }
     /**
      * Launches a new Player selection page scene.
