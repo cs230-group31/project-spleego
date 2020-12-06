@@ -1,15 +1,34 @@
 package com.group31.graphics;
 
+import com.group31.logger.Logger;
 import com.group31.settings.Settings;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.text.Text;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 
 public class TutorialPage {
+    /**
+     * File Path for the menu background image.
+     */
+    private static final String MENU_IMAGE_URL = Settings.get("menu_image_url");
+    /**
+     * File Path for the how to play image.
+     */
+    private static final String HOW_TO_PLAY_URL = "resources/images/how to play overlay.png";
 
     /**
      * Starts the scene.
@@ -20,14 +39,30 @@ public class TutorialPage {
 
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
-        String tutorialText = Settings.get("tutorial_text");
-        Text tutorial = new Text(tutorialText);
-        Button button = new Button("Return");
 
-        button.setOnMouseClicked(e -> stage.setScene(mainMenu));
+        try {
+            Image howToPlayImage = new Image(new FileInputStream(HOW_TO_PLAY_URL));
+            ImageView htpImageView = new ImageView(howToPlayImage);
+            root.setCenter(htpImageView);
+        } catch (FileNotFoundException e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        try {
+            Image menuImg = new Image(new FileInputStream(MENU_IMAGE_URL));
+            BackgroundImage bg = new BackgroundImage(menuImg,
+                    BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT,
+                    BackgroundPosition.DEFAULT, BackgroundSize.DEFAULT);
+            root.setBackground(new Background(bg));
+        } catch (FileNotFoundException e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        ImageButton returnSign = new ImageButton("resources/images/return button.png");
+        returnSign.setOnMouseClicked(e -> stage.setScene(mainMenu));
+        HBox bottomBox = new HBox();
+        bottomBox.getChildren().add(returnSign);
+        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
+        root.setBottom(bottomBox);
 
-        root.setCenter(tutorial);
-        root.setBottom(button);
         scene.setRoot(root);
         stage.setScene(scene);
 
