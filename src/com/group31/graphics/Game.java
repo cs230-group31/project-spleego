@@ -196,7 +196,8 @@ public class Game extends Application {
 
     private void drawTile() {
         Controller controller = Controller.getInstance();
-        Player currentPlayer = controller.getPlayers()[controller.getPlayerTurn()];
+        int playerTurn = controller.getPlayerTurn();
+        Player currentPlayer = controller.getPlayers()[playerTurn];
         Tile drawnTile = controller.getSilkbag().drawTile();
         drawnTile.updateDrawnThisTurn(true);
         setCurrentDrawnTile(drawnTile);
@@ -208,7 +209,7 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
-        if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
+        if (controller.getPlayerTurn() == MAX_TURN_COUNT - 1) {
             controller.setPlayerTurn(1);
         }
     }
