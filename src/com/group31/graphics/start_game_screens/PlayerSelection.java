@@ -74,7 +74,10 @@ public class PlayerSelection {
         TextField newPlayerName = new TextField();
         newPlayerName.setPromptText("Enter the name of the new player: ");
         playerNameBox.getChildren().addAll(createPlayerLabel, newPlayerName, createPlayer);
-        createPlayer.setOnMouseClicked(e -> new PlayerProfile(newPlayerName.getText()).save());
+        createPlayer.setOnMouseClicked(e -> {
+            new PlayerProfile(newPlayerName.getText()).save();
+            newPlayerName.clear();
+        });
 
 
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
@@ -83,9 +86,11 @@ public class PlayerSelection {
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
-        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(), mainPane, playerBox));
-
         ArrayList<String> playerNames = Load.getPlayerProfileNames();
+        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
+                mainPane, playerBox, playerNames));
+
+
 
 
         Label chooseLabel = new Label("Choose number of players:");
@@ -120,17 +125,20 @@ public class PlayerSelection {
     }
 
     /**
-     *  @param numPlayers
-     * @param mainPane
-     * @param playerBox
+     * Updates dropdown menus according to number of players.
+     * @param numPlayers number of players
+     * @param mainPane the main pane
+     * @param playerBox the HBox for dropdown menus
+     * @param playerNames arraylist of player names
      */
-    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
+    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane,
+                                             HBox playerBox, ArrayList<String> playerNames) {
         mainPane.getChildren().remove(playerBox);
         playerBox.getChildren().clear();
         for (int i = 0; i < numPlayers; i++) {
             Label playerLabel = new Label("Player " + (i + 1) + ":");
             playerBox.getChildren().add(playerLabel);
-            ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerTest));
+            ComboBox<String> nameDropDown = new ComboBox<>(FXCollections.observableArrayList(playerNames));
             comboBoxes.add(nameDropDown);
             playerBox.getChildren().add(nameDropDown);
         }
