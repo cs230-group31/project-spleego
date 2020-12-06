@@ -70,6 +70,12 @@ public class DefaultSettings {
 
         defaultSettings.put("tutorial_text", "TUTORIAL TEXT GOES HERE!");
 
+        defaultSettings.put("tiles_fed_below", "0,2,4,5,7,8,9");
+        defaultSettings.put("tiles_fed_above", "0,2,3,6,7,9,10");
+        defaultSettings.put("tiles_fed_left", "0,1,5,6,8,9,10");
+        defaultSettings.put("tiles_fed_right", "0,1,3,4,7,8,10");
+
+
         return defaultSettings;
     }
 

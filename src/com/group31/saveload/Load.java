@@ -13,7 +13,6 @@ import com.group31.tile_manager.silk_bag.SilkBag;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -108,6 +107,10 @@ public class Load {
         return loadedInstance;
     }
 
+    /**
+     * Returns a list of player names from Player Profile files.
+     * @return a list of player names from Player Profile files
+     */
     public static ArrayList<String> getPlayerProfileNames() {
         String playerProfileDir = "data/serializing/serialized/players";
         String object = "player";

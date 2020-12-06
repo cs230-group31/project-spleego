@@ -245,6 +245,12 @@ public class Gameboard implements Serializable {
         return boardColumns;
     }
 
+    /**
+     * Returns a tile's location on the gameboard.
+     * @param tile tile instance to search for
+     * @return a tile's location on the gameboard.
+     * @throws TileNotFound if the tile is not found
+     */
     private int[] tileLocation(FloorTile tile) throws TileNotFound {
         for (int row = 0; row <= boardRows - 1; row++) {
             for (int col = 0; col <= boardColumns - 1; col++) {
@@ -256,6 +262,12 @@ public class Gameboard implements Serializable {
         throw new TileNotFound("The tile cannot be found.");
     }
 
+    /**
+     * Returns the upper neighbour of a tile (if it exists).
+     * @param tile tile to search around
+     * @return the upper neighbour of a tile (if it exists)
+     * @throws TileNotFound if the tile is not found
+     */
     public FloorTile getTileUpperNeighbour(FloorTile tile) throws TileNotFound {
         FloorTile neighbour = null;
         int[] location = tileLocation(tile);
@@ -267,6 +279,12 @@ public class Gameboard implements Serializable {
         return neighbour;
     }
 
+    /**
+     * Returns the lower neighbour of a tile (if it exists).
+     * @param tile tile to search around
+     * @return the lower neighbour of a tile (if it exists)
+     * @throws TileNotFound if the tile is not found
+     */
     public FloorTile getTileLowerNeighbour(FloorTile tile) throws TileNotFound {
         FloorTile neighbour = null;
         int[] location = tileLocation(tile);
@@ -278,6 +296,12 @@ public class Gameboard implements Serializable {
         return neighbour;
     }
 
+    /**
+     * Returns the left neighbour of a tile (if it exists).
+     * @param tile tile to search around
+     * @return the left neighbour of a tile (if it exists)
+     * @throws TileNotFound if the tile is not found
+     */
     public FloorTile getTileLeftNeighbour(FloorTile tile) throws TileNotFound {
         FloorTile neighbour = null;
         int[] location = tileLocation(tile);
@@ -289,6 +313,12 @@ public class Gameboard implements Serializable {
         return neighbour;
     }
 
+    /**
+     * Returns the right neighbour of a tile (if it exists).
+     * @param tile tile to search around
+     * @return the right neighbour of a tile (if it exists)
+     * @throws TileNotFound if the tile is not found
+     */
     public FloorTile getTileRightNeighbour(FloorTile tile) throws TileNotFound {
         FloorTile neighbour = null;
         int[] location = tileLocation(tile);
