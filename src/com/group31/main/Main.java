@@ -143,7 +143,9 @@ public class Main {
             // Get instance of controller as Controller is a singleton.
             Controller controller = Controller.getInstance();
             // Initialise controller.
+
             controller.init(players, gameboard, silkbag);
+
         } catch (NoSuchDirectory | FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }

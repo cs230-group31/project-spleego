@@ -12,6 +12,7 @@ import com.group31.saveload.Save;
 import com.group31.services.FileManager;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
+import com.group31.tile_manager.Tile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
@@ -33,6 +34,7 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
 
 
 /**
@@ -58,6 +60,7 @@ public class Game extends Application {
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
     /**
      * File Path for the draw tile button.
+
      */
     private static final String DRAW_TILE_URL = "resources/images/draw tile.png";
     /**
@@ -75,6 +78,7 @@ public class Game extends Application {
     /**
      * Number of player four.
      */
+
     private static final int PLAYER_FOUR = 4;
     /**
      * Player one's hand of tiles.
@@ -100,6 +104,7 @@ public class Game extends Application {
      * FlowPane for the drawtile button and tile next to it.
      */
     private static FlowPane drawShowTile;
+
     /*
      * Player numbers enum.
      */
@@ -121,6 +126,7 @@ public class Game extends Application {
          */
         FOUR
     }
+
     /**
      * Scene for the main menu.
      */
@@ -194,7 +200,9 @@ public class Game extends Application {
         setCurrentDrawnTile(drawnTile);
         if (drawnTile.isActionTile()) {
             currentPlayer.recieveTile(drawnTile);
+
             Game.updatePlayerHand(controller.getPlayerTurnEnum(), currentPlayer.getHand());
+
         } else {
             controller.setCurrentFloorTile(new FloorTile(drawnTile));
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
@@ -342,27 +350,35 @@ public class Game extends Application {
      *               starting with 1 at the top going clockwise
      * @param hand the hand of the corresponding player
      */
+
     public static void updatePlayerHand(PlayerNumber player, ArrayList<Tile> hand) {
         switch (player) {
             case ONE:
+
                 playerOneHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerOneHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
+
             case TWO:
+
                 playerTwoHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerTwoHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
+
             case THREE:
+
                 playerThreeHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerThreeHand.getChildren().add(new ImageView(tile.getCurrentImage()));
                 }
                 break;
+
             case FOUR:
+
                 playerFourHand.getChildren().clear();
                 for (Tile tile : hand) {
                     playerFourHand.getChildren().add(new ImageView(tile.getCurrentImage()));

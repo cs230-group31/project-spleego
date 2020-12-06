@@ -173,6 +173,7 @@ public class SilkBag implements Serializable {
         int ranInt = random.nextInt(tileRoutings.size());
 
         return getFloorTile(ranInt);
+
     }
 
     /**
@@ -193,6 +194,7 @@ public class SilkBag implements Serializable {
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
         return new Tile(tiles.get(randomKey).getId(), true, tileImage);
+
     }
 
     /**
