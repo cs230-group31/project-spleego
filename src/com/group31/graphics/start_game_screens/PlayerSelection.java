@@ -38,10 +38,6 @@ public class PlayerSelection {
      */
     private static ArrayList<ComboBox<String>> comboBoxes = new ArrayList<>();
     /**
-     * One.
-     */
-    private static final int ONE = 1;
-    /**
      * Two.
      */
     private static final int TWO = 2;
@@ -81,14 +77,13 @@ public class PlayerSelection {
 
 
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
-        playerCountList.addAll(ONE, TWO, THREE, FOUR);
+        playerCountList.addAll(TWO, THREE, FOUR);
         Button setPlayerCount = new Button("Confirm count");
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
-        ArrayList<String> playerNames = Load.getPlayerProfileNames();
         setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
-                mainPane, playerBox, playerNames));
+                mainPane, playerBox));
 
 
 
@@ -129,12 +124,11 @@ public class PlayerSelection {
      * @param numPlayers number of players
      * @param mainPane the main pane
      * @param playerBox the HBox for dropdown menus
-     * @param playerNames arraylist of player names
      */
-    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane,
-                                             HBox playerBox, ArrayList<String> playerNames) {
+    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
         mainPane.getChildren().remove(playerBox);
         playerBox.getChildren().clear();
+        ArrayList<String> playerNames = Load.getPlayerProfileNames();
         for (int i = 0; i < numPlayers; i++) {
             Label playerLabel = new Label("Player " + (i + 1) + ":");
             playerBox.getChildren().add(playerLabel);
