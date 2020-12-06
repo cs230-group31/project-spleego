@@ -35,6 +35,14 @@ public class Controller implements Serializable {
         this.playerTurn = playerTurn;
     }
 
+    /**
+     * Returns the current state of FloorTilePlaced.
+     * @return the current state of FloorTilePlaced
+     */
+    public TilePlaced getFloorTilePlaced() {
+        return floorTilePlaced;
+    }
+
     public enum TilePlaced {
         /**
          * Tile has been placed.
@@ -118,8 +126,8 @@ public class Controller implements Serializable {
      */
     public Player hasWon() {
         for (Player player : players) {
-            int playerX = player.getCurrentLocation()[0];
-            int playerY = player.getCurrentLocation()[1];
+            int playerX = player.getCurrentLocation()[0] - 1;
+            int playerY = player.getCurrentLocation()[1] - 1;
             if (gameboard.getTile(playerX, playerY).getId() == 0) {
                 gameWon = true;
                 return player;
