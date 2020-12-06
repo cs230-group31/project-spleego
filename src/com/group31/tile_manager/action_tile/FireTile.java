@@ -60,7 +60,7 @@ public class FireTile extends ActionTile {
      */
     public boolean firePlacementValidation(Player[] players, int coordX, int coordY) {
 
-        boolean valid = true; // this is used to determine whether coordinates are place in valid area
+        boolean valid = false; // this is used to determine whether coordinates are place in valid area
 
         int elemX = 0;
         int elemY = 1; // use to determine what element the x and y coordinates are on
