@@ -9,6 +9,7 @@ import com.group31.tile_manager.silk_bag.SilkBag;
 import com.group31.tile_manager.Tile;
 import java.io.Serializable;
 import java.util.UUID;
+import java.util.ArrayList;
 
 public class Controller implements Serializable {
     /**
@@ -282,8 +283,8 @@ public class Controller implements Serializable {
      * @param gameboard The game board for a game.
      * @param silkBag The silk bag for a game.
      */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
-        this.players = players;
+    public void init(Gameboard gameboard, SilkBag silkBag) {
+        //this.players = players;
         this.gameboard = gameboard;
         this.silkBag = silkBag;
     }
@@ -305,6 +306,14 @@ public class Controller implements Serializable {
         String name = String.format("Game_%s", this.uuid);
         Serializer.serialize(this, name, object);
 
+    }
+
+    /**
+     * Adds players to the controller.
+     * @param players players to add
+     */
+    public void addPlayers(ArrayList<Player> players) {
+        this.players = players.toArray(new Player[0]);
     }
 
 }
