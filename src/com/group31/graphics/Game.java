@@ -89,6 +89,10 @@ public class Game extends Application {
      * Tile representative of the back of another tile.
      */
     private static final Tile FACE_DOWN_TILE = new Tile(-1);
+    /**
+     * The maximum number of turns until we need to loop back to 1.
+     */
+    private static final int MAX_TURN_COUNT = 4;
     /*
      * Player numbers enum.
      */
@@ -167,12 +171,27 @@ public class Game extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
 
+        drawPlayers(board);
         Controller controller = Controller.getInstance();
-        Player winner = null;
-        winner = controller.hasWon();
+        Player winner = controller.hasWon();
         if (winner != null) {
             Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
         }
+    }
+
+    private static void drawPlayers(GridPane board) {
+        Controller controller = Controller.getInstance();
+        Player[] players = controller.getPlayers();
+        for (Player player : players) {
+            int[] location = player.getCurrentLocation();
+            ImageView playerSprite = new ImageView(player.getSprite());
+            stackImageAt(board, playerSprite, location[0], location[1]);
+        }
+    }
+
+    private static void stackImageAt(GridPane board, ImageView imageView, int atRow, int atCol) {
+        board.add(imageView, atCol, atRow);
+//        }
     }
 
     private void drawTile() {
@@ -189,6 +208,9 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
+        if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
+            controller.setPlayerTurn(1);
+        }
     }
 
     private void saveAndExit(Stage stage) {
@@ -242,9 +264,9 @@ public class Game extends Application {
     public static void drawTileArrows(GridPane board) {
         Controller controller = Controller.getInstance();
         int boardRows = controller.getGameboard().getBoardRows();
-        int boardCols = controller.getGameboard().getBoardRows();
+        int boardCols = controller.getGameboard().getBoardCols();
         Gameboard gameboard = controller.getGameboard();
-        for (int col = 0; col < boardRows; col++) {
+        for (int col = 0; col < boardCols; col++) {
             if (!gameboard.rowHasFixedTile(col)) {
                 ImageButton arrowUpButton = new ImageButton("resources/images/tiles/arrow up.png");
                 ImageButton arrowDownButton = new ImageButton("resources/images/tiles/arrow down.png");
@@ -258,6 +280,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         controller.nextPlayerTurn();
+                        drawPlayers(board);
                     }
                 });
 
@@ -268,6 +291,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         controller.nextPlayerTurn();
+                        drawPlayers(board);
                     }
                 });
 
@@ -277,7 +301,7 @@ public class Game extends Application {
                 board.add(tileStackTwo, col + 1, boardRows + 1);
             }
         }
-        for (int row = 0; row < boardCols; row++) {
+        for (int row = 0; row < boardRows; row++) {
             if (!gameboard.colHasFixedTile(row)) {
                 ImageButton arrowRightButton = new ImageButton("resources/images/tiles/arrow right.png");
                 ImageButton arrowLeftButton = new ImageButton("resources/images/tiles/arrow left.png");
@@ -290,6 +314,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         controller.nextPlayerTurn();
+                        drawPlayers(board);
                     }
                 });
 
@@ -300,6 +325,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         controller.nextPlayerTurn();
+                        drawPlayers(board);
                     }
                 });
 
@@ -324,6 +350,7 @@ public class Game extends Application {
         for (int row = 1; row <=  boardRows; row++) {
             for (int col = 1; col <= boardCols; col++) {
                 FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][col - 1];
+                board.getChildren().remove(boardStateAtCoords);
                 Image tileImg = null;
                 try {
                     FileManager.setDirectory(Settings.get("tile_images_url"), false);
