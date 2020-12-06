@@ -17,8 +17,6 @@ import com.group31.graphics.Game;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.HBox;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import javafx.scene.control.Label;
 
@@ -83,18 +81,13 @@ public class PlayerSelection {
 
 
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
-        playerCountList.addAll(ONE, TWO, THREE, FOUR);
+        playerCountList.addAll(TWO, THREE, FOUR);
         Button setPlayerCount = new Button("Confirm count");
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
-        ArrayList<PlayerProfile> players = Load.getPlayerProfiles();
-        ArrayList<String> playerNames = new ArrayList<>();
-        for (PlayerProfile player : players) {
-            playerNames.add(player.getName());
-        }
         setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
-                mainPane, playerBox, playerNames));
+                mainPane, playerBox));
 
 
 
@@ -137,10 +130,14 @@ public class PlayerSelection {
      * @param playerBox the HBox for dropdown menus
      * @param playerNames arraylist of player names
      */
-    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane,
-                                             HBox playerBox, ArrayList<String> playerNames) {
+    public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
         mainPane.getChildren().remove(playerBox);
         playerBox.getChildren().clear();
+        ArrayList<PlayerProfile> players = Load.getPlayerProfiles();
+        ArrayList<String> playerNames = new ArrayList<>();
+        for (PlayerProfile player : players) {
+            playerNames.add(player.getName());
+        }
         for (int i = 0; i < numPlayers; i++) {
             Label playerLabel = new Label("Player " + (i + 1) + ":");
             playerBox.getChildren().add(playerLabel);
