@@ -132,9 +132,9 @@ public class Controller implements Serializable {
      */
     public Player hasWon() {
         for (Player player : players) {
-            int playerX = player.getCurrentLocation()[0] - 1;
-            int playerY = player.getCurrentLocation()[1] - 1;
-            if (gameboard.getTile(playerX, playerY).getId() == 0) {
+            int playerX = player.getCurrentLocation()[0];
+            int playerY = player.getCurrentLocation()[1];
+            if (gameboard.getTile(playerX - 1, playerY - 1).getId() == 0) {
                 gameWon = true;
                 return player;
             }
@@ -300,12 +300,10 @@ public class Controller implements Serializable {
     }
 
     /**
-     * @param players Array of players playing the game.
      * @param gameboard The game board for a game.
      * @param silkBag The silk bag for a game.
      */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
-        this.players = players;
+    public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
     }
