@@ -2,6 +2,7 @@ package com.group31.graphics;
 
 import com.group31.logger.Logger;
 import com.group31.settings.Settings;
+import com.sun.org.apache.bcel.internal.generic.RET;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -29,6 +30,10 @@ public class TutorialPage {
      * File Path for the how to play image.
      */
     private static final String HOW_TO_PLAY_URL = "resources/images/how to play overlay.png";
+    /**
+     * File Path for the return button image.
+     */
+    private static final String RETURN_BUTTON_URL = "resources/images/return button.png";
 
     /**
      * Starts the scene.
@@ -56,7 +61,7 @@ public class TutorialPage {
         } catch (FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
-        ImageButton returnSign = new ImageButton("resources/images/return button.png");
+        ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
         returnSign.setOnMouseClicked(e -> stage.setScene(mainMenu));
         HBox bottomBox = new HBox();
         bottomBox.getChildren().add(returnSign);
