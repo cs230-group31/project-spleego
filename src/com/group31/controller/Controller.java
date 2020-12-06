@@ -12,6 +12,36 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Controller implements Serializable {
+    public enum TilePlaced {
+        /**
+         * Tile has been placed.
+         */
+        PLACED,
+        /**
+         * Tile needs to be placed.
+         */
+        REQUIRED,
+        /**
+         * Tile does not need to be placed.
+         */
+        NOT_REQUIRED
+    }
+    /**
+     * Instance of the controller.
+     */
+    private static Controller instance = null;
+    /**
+     * Array of players that are playing the game.
+     */
+    private Player[] players;
+    /**
+     * Instance of the gameboard.
+     */
+    private Gameboard gameboard;
+    /**
+     * Instance of the silkBag.
+     */
+    private SilkBag silkBag;
     /**
      * Returns the current player turn.
      * @return the player turn
@@ -48,37 +78,6 @@ public class Controller implements Serializable {
     public TilePlaced getFloorTilePlaced() {
         return floorTilePlaced;
     }
-
-    public enum TilePlaced {
-        /**
-         * Tile has been placed.
-         */
-        PLACED,
-        /**
-         * Tile needs to be placed.
-         */
-        REQUIRED,
-        /**
-         * Tile does not need to be placed.
-         */
-        NOT_REQUIRED
-    }
-    /**
-     * Instance of the controller.
-     */
-    private static Controller instance = null;
-    /**
-     * Array of players that are playing the game.
-     */
-    private Player[] players;
-    /**
-     * Instance of the gameboard.
-     */
-    private Gameboard gameboard;
-    /**
-     * Instance of the silkBag.
-     */
-    private SilkBag silkBag;
 
     /**
      * The FloorTile waiting to be placed by the player.
