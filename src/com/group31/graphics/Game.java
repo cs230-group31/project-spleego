@@ -60,6 +60,10 @@ public class Game extends Application {
      */
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
     /**
+     * File Path for the return button image.
+     */
+    private static final String RETURN_BUTTON_URL = "resources/images/return button.png";
+    /**
      * File Path for the draw tile button.
      */
     private static final String DRAW_TILE_URL = "resources/images/draw tile.png";
@@ -96,7 +100,7 @@ public class Game extends Application {
      * The maximum number of turns until we need to loop back to 1.
      */
     private static final int MAX_TURN_COUNT = 4;
-    /*
+    /**
      * Player numbers enum.
      */
     public enum PlayerNumber {
@@ -157,17 +161,27 @@ public class Game extends Application {
         StackPane.setAlignment(close, Pos.TOP_RIGHT);
         topThing.setPickOnBounds(false);
         root.setTop(topThing);
+
         root.setRight(playerTwoHand);
+
         StackPane bottomPane = new StackPane();
         bottomPane.getChildren().add(playerThreeHand);
         ImageButton drawTile = new ImageButton(DRAW_TILE_URL);
         drawTile.setOnMouseClicked(e -> drawTile(board));
         drawShowTile.getChildren().add(drawTile);
         bottomPane.getChildren().add(drawShowTile);
+        ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
+        returnSign.setOnMouseClicked(e -> stage.setScene(mainScene));
+        HBox bottomBox = new HBox();
+        bottomBox.getChildren().add(returnSign);
+        bottomPane.getChildren().add(bottomBox);
         bottomPane.setPickOnBounds(false);
         StackPane.setAlignment(drawShowTile, Pos.BOTTOM_LEFT);
+        StackPane.setAlignment(bottomBox, Pos.BOTTOM_RIGHT);
         root.setBottom(bottomPane);
+
         root.setLeft(playerFourHand);
+
         root.setCenter(board);
         drawTileArrows(board);
         drawGameBoard(board);
