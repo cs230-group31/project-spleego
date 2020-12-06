@@ -122,5 +122,4 @@ public class PlayerProfile implements Serializable {
         String name = String.format("PlayerProfile_%s", this.name);
         Serializer.serialize(this, name, object);
     }
-
 }
