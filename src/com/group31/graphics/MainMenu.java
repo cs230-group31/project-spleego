@@ -2,7 +2,6 @@ package com.group31.graphics;
 
 import com.group31.graphics.start_game_screens.PlayerSelection;
 import com.group31.logger.Logger;
-import com.group31.saveload.Save;
 import com.group31.services.ApiRequest;
 import com.group31.services.PuzzleSolver;
 import com.group31.settings.Settings;
@@ -216,11 +215,6 @@ public class MainMenu extends Application {
         scene.setRoot(root);
         stage.setScene(scene);
         stage.show();
-    }
-
-    private void saveAndExit() {
-        Save.saveAll();
-        Platform.exit();
     }
 
     /**

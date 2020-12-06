@@ -39,6 +39,23 @@ public class FloorTile extends Tile implements Serializable {
     }
 
     /**
+     * please work.
+     * @param tile lolololololo
+     */
+    public FloorTile(Tile tile) {
+        super(tile.getId(), false, tile.getCurrentImage());
+        this.routing =  "";
+    }
+
+    /**
+     * image.
+     * @return image
+     */
+    public Image getCurrentImage() {
+        return super.getCurrentImage();
+    }
+
+    /**
      * FloorTile constructor using just an ID to grab all the needed information.
      * @param id
      */

@@ -1,8 +1,6 @@
 package com.group31.player;
 
 import com.group31.tile_manager.Tile;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 import java.io.Serializable;
@@ -30,11 +28,6 @@ public class Player implements Serializable {
      * Player's current location on the board.
      */
     private int[] location;
-
-    /**
-     * Starting location of the player.
-     */
-    private final int[] startingLocation;
 
     /**
      * Stores the player's hand.
@@ -75,13 +68,13 @@ public class Player implements Serializable {
      * @param name human name of the player
      * @param sprite player's picture
      * @param colour player's colour
-     * @param startingLocation player's starting location on the gameboard
+     * @param location player's starting location on the gameboard
      */
-    public Player(String name, Image sprite, Color colour, int[] startingLocation) {
+    public Player(String name, Image sprite, Color colour, int[] location) {
         this.name = name;
         this.sprite = sprite;
         this.colour = colour;
-        this.startingLocation = startingLocation;
+        this.location = location;
 
         this.instanceUuid = UUID.randomUUID().toString();
         this.wins = 0;

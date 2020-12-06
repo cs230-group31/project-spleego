@@ -2,6 +2,7 @@ package com.group31.tile_manager.silk_bag;
 
 import com.group31.settings.Settings;
 import com.group31.tile_manager.FloorTile;
+import com.group31.tile_manager.GoalTile;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 import java.io.FileInputStream;
@@ -131,7 +132,7 @@ public class SilkBag implements Serializable {
             while (tiles.get(ranInt).isActionTile()) {
                 ranInt = random.nextInt(tiles.size());
             }
-            floorTiles.add((FloorTile) tiles.get(ranInt));
+            floorTiles.add(new FloorTile(tiles.get(ranInt)));
             tiles.remove(ranInt);
         }
         return floorTiles;
@@ -171,12 +172,27 @@ public class SilkBag implements Serializable {
         // we want as the tiles are named from 0 to 10.
         int ranInt = random.nextInt(tileRoutings.size());
 
-        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, ranInt);
+        return getFloorTile(ranInt);
+    }
+
+    /**
+     * Generates a random action tile.
+     * @return the action tile
+     */
+    public Tile genActionTile() throws FileNotFoundException {
+        Random random = new Random();
+
+        int randomKey = random.nextInt(maxTiles);
+
+        while (!tiles.get(randomKey).isActionTile()) {
+            randomKey = random.nextInt(maxTiles);
+        }
+
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, tiles.get(randomKey).getId());
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
-        String routing = tileRoutings.get(ranInt);
-        return new FloorTile(ranInt, routing, tileImage);
+        return new Tile(tiles.get(randomKey).getId(), true, tileImage);
     }
 
     /**
@@ -185,12 +201,28 @@ public class SilkBag implements Serializable {
      * @return the generated FloorTile
      */
     public FloorTile genFloorTile(int id) throws FileNotFoundException {
+        return getFloorTile(id);
+    }
+
+    private FloorTile getFloorTile(int id) throws FileNotFoundException {
         String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, id);
         FileInputStream imageFile = new FileInputStream(imageFileLocation);
         Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
 
         String routing = tileRoutings.get(id);
         return new FloorTile(id, routing, tileImage);
+    }
+
+    /**
+     * Makes a goal tile and returns it.
+     * @return a goal tile
+     * @throws FileNotFoundException if the requested image doesnt exist
+     */
+    public FloorTile genGoalTile() throws FileNotFoundException {
+        String imageFileLocation = String.format("%s%s.png", this.tileImagesUrl, 0);
+        FileInputStream imageFile = new FileInputStream(imageFileLocation);
+        Image tileImage = new Image(imageFile, this.tileWidth, this.tileHeight, true, false);
+        return new GoalTile(tileImage);
     }
 
 //    private FireTile genFireTile() {

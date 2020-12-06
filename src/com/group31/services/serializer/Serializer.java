@@ -3,13 +3,13 @@ package com.group31.services.serializer;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
-import com.group31.player.Player;
 import com.group31.services.FileManager;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class Serializer {
 
@@ -67,7 +67,7 @@ public class Serializer {
                     String serializedObjectsDir = String.format("%s%s/", SERIALIZED_OBJECTS_FOLDER, object);
                     FileManager.setDirectory(serializedObjectsDir, false);
                     if (FileManager.fileExists(fileName)) {
-                        identifiers.remove(identifier);
+                        identifiers.removeAll(Collections.singleton(identifier));
                         Object deserializedFile = FileManager.deserializeRead(identifier);
                         FileManager.deleteFile(String.format("%s.ser", identifier));
                         saveIdentifiers();

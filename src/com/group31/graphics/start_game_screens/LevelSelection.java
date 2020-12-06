@@ -23,20 +23,18 @@ public class LevelSelection {
      * @param playerSelection instance of the Player Selection scene
      */
     private void start(Stage stage, Scene mainMenu, Scene playerSelection) {
-        Controller controller = Controller.getInstance();
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text title = new Text("Level Selection");
-        Button start = new Button("Start");
+        Button start = new Button("Start New Game");
         Button returnMainMenu = new Button("Main Menu");
         Button backToPlayerProfile = new Button("Back");
+        VBox gameSaveButtons = new VBox();
         VBox buttonBox = new VBox();
-        VBox gameButtons = new VBox();
         VBox allButtons = new VBox();
-
         start.setOnMouseClicked(e -> {
             Game.launch(stage, mainMenu);
-            controller.startGame();
+            Controller.getInstance().startGame();
         });
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
         backToPlayerProfile.setOnMouseClicked(e -> stage.setScene(playerSelection));
@@ -45,13 +43,19 @@ public class LevelSelection {
 
         try {
             for (String name : LevelSelectionController.getSavedGamesName()) {
-                gameButtons.getChildren().add(new Button(name));
+                Button gameSave = new Button(name);
+                gameSave.setOnMouseClicked(e -> {
+                    LevelSelectionController.loadGame(name);
+                    Game.launch(stage, mainMenu);
+                    Controller.getInstance().startGame();
+                });
+                gameSaveButtons.getChildren().add(gameSave);
             }
         } catch (NoSuchDirectory e) {
             Logger.log("Getting game save names threw an error.", Logger.Level.ERROR);
         }
 
-        allButtons.getChildren().addAll(gameButtons, buttonBox);
+        allButtons.getChildren().addAll(gameSaveButtons, buttonBox);
 
         root.setTop(title);
         root.setCenter(allButtons);
@@ -70,4 +74,5 @@ public class LevelSelection {
         LevelSelection levelSelection = new LevelSelection();
         levelSelection.start(stage, mainMenu, playerSelection);
     }
+
 }

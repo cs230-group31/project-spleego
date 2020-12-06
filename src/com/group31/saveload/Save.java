@@ -1,7 +1,6 @@
 package com.group31.saveload;
 
 import com.group31.controller.Controller;
-import com.group31.leaderboard.Leaderboard;
 
 public class Save {
 
@@ -13,7 +12,5 @@ public class Save {
     public static void saveAll() {
 
         Controller.getInstance().save();
-        Controller.getInstance().addPlayersToLeaderboard();
-        Leaderboard.save();
     }
 }

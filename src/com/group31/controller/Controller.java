@@ -3,8 +3,6 @@ package com.group31.controller;
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.gameboard.Gameboard;
 import com.group31.graphics.Game;
-import com.group31.leaderboard.Leaderboard;
-import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.FloorTile;
@@ -14,6 +12,29 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Controller implements Serializable {
+    /**
+     * Returns the current player turn.
+     * @return the player turn
+     */
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    /**
+     * return the current player turn.
+     * @return the current player turn.
+     */
+    public Game.PlayerNumber getPlayerTurnEnum() {
+        return Game.PlayerNumber.values()[playerTurn];
+    }
+    /**
+     * Sets the current turn.
+     * @param playerTurn the turn count
+     */
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+
     public enum TilePlaced {
         /**
          * Tile has been placed.
@@ -76,32 +97,10 @@ public class Controller implements Serializable {
         this.uuid = UUID.randomUUID().toString();
     }
 
-    //TODO: THIS IS SHIT AND WRONG AND WE NEED TO CHANGE IT
-    //TODO: MODIFY BY PUTTING LOTS OF THESE THINGS IN GAME
-    //TODO: AND REFERENCING THE CONTROLLER'S VARIABLES IN GAME
     /**
      * Plays the game by looping until a player has won.
      */
     public void playGame() {
-        Player winner = null;
-        while (!gameWon) {
-            Player currentPlayer = players[playerTurn];
-            Tile drawnTile = silkBag.drawTile();
-            drawnTile.updateDrawnThisTurn(true);
-            if (drawnTile.isActionTile()) {
-                currentPlayer.recieveTile(drawnTile);
-                Game.updatePlayerHand(playerTurn, currentPlayer.getHand());
-            } else {
-                currentFloorTile = (FloorTile) drawnTile;
-                floorTilePlaced = TilePlaced.REQUIRED;
-            }
-
-            drawnTile.updateDrawnThisTurn(false);
-            winner = hasWon();
-            playerTurn++;
-        }
-        assert winner != null;
-        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
     }
 
     /**
@@ -117,7 +116,7 @@ public class Controller implements Serializable {
      * Checks every player's location and compares if they are in the same place as a goal tile.
      * @return True if a player is on top of a goal tile, false otherwise.
      */
-    private Player hasWon() {
+    public Player hasWon() {
         for (Player player : players) {
             int playerX = player.getCurrentLocation()[0];
             int playerY = player.getCurrentLocation()[1];
@@ -127,6 +126,38 @@ public class Controller implements Serializable {
             }
         }
         return null;
+    }
+
+    /**
+     * Returns if the game is won.
+     * @return the value of gameWon
+     */
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
+    /**
+     * Returns the players in the game.
+     * @return the players in the game
+     */
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    /**
+     * Sets the players in Controller.
+     * @param players new array of players
+     */
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    /**
+     * Takes a tile and makes it the current floor tile.
+     * @param drawnTile tile to set as the current tile
+     */
+    public void setCurrentFloorTile(FloorTile drawnTile) {
+        currentFloorTile = drawnTile;
     }
 
     /**
@@ -240,6 +271,13 @@ public class Controller implements Serializable {
     }
 
     /**
+     * Resets the controller's instance to a fresh controller.
+     */
+    public static void resetInstance() {
+        instance = null;
+    }
+
+    /**
      * Sets the Controller to a given instance.
      * @param controller the Controller for this class to become
      */
@@ -260,19 +298,10 @@ public class Controller implements Serializable {
 
     /**
      * Sets the floorTilePlaced to PLACED.
+     * @param tilePlaced ENUM of the state of the floorTile.
      */
-    public void setFloorTilePlaced() {
-        this.floorTilePlaced = TilePlaced.PLACED;
-    }
-
-    /**
-     * Adds every player to the leaderboard.
-     */
-    // All players should be added when the game starts, if the players aren't loaded in.
-    public void addPlayersToLeaderboard() {
-        for (Player player : this.players) {
-            Leaderboard.addPlayer(player);
-        }
+    public void setFloorTilePlaced(TilePlaced tilePlaced) {
+        this.floorTilePlaced = tilePlaced;
     }
 
     /**
