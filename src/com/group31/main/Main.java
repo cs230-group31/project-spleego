@@ -140,6 +140,14 @@ public class Main {
             Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
             Gameboard gameboard = (Gameboard) components.get("Gameboard");
             SilkBag silkbag = (SilkBag) components.get("SilkBag");
+            ArrayList<String> playerLocations = (ArrayList<String>) components.get("playerLocations");
+            for (int i = 0; i < players.length; i++) {
+                String startingLocations = playerLocations.get(i);
+                String[] coordinates = startingLocations.split(",");
+                int playerX = Integer.parseInt(coordinates[0]);
+                int playerY = Integer.parseInt(coordinates[1]);
+                players[i].setLocation(playerX, playerY);
+            }
             // Get instance of controller as Controller is a singleton.
             Controller controller = Controller.getInstance();
             // Initialise controller.
