@@ -9,7 +9,7 @@ import java.util.HashMap;
 /**
  * This class represents a tile which has coordinates [x, y] in the
  * game board.
- * @author Alvaro
+ * @author Alvaro, Aaron
  */
 public class Tile implements Serializable {
     /**

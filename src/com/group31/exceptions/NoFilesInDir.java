@@ -1,5 +1,8 @@
 package com.group31.exceptions;
 
+/**
+ * @author Liam
+ */
 public class NoFilesInDir extends Exception {
 
     /**

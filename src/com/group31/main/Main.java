@@ -16,6 +16,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * @author Moe, Liam, Aaron
+ */
 public class Main {
 
     /**

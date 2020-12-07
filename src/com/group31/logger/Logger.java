@@ -2,10 +2,13 @@ package com.group31.logger;
 
 import java.sql.Timestamp;
 
+/**
+ * @author liamdp
+ */
 public class Logger {
 
     /**
-     * Log levels that can be used.
+     * Logs a message to the console.
      */
     public enum Level {
         /**

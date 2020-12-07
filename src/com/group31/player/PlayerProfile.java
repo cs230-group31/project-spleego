@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 /**
- * @author Liam,Moe
+ * @author Liam, Moe
  */
 public class PlayerProfile implements Serializable {
     /**

@@ -19,6 +19,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * @author liamdp
+ */
 public class FileManager {
     /**
      * Directory of the file we are reading/writing to.

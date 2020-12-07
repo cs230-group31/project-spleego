@@ -1,5 +1,8 @@
 package com.group31.services;
 
+/**
+ * @author Liamdp, Moe
+ */
 public class PuzzleSolver {
 
     /**

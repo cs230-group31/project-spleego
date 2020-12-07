@@ -7,7 +7,6 @@ import com.group31.player.Player;
 import com.group31.tile_manager.FloorTile;
 import com.group31.tile_manager.Tile;
 import com.group31.tile_manager.silk_bag.SilkBag;
-
 import java.io.FileNotFoundException;
 import java.io.Serializable;
 
@@ -16,11 +15,11 @@ import java.io.Serializable;
  */
 public class Gameboard implements Serializable {
     /**
-     * 2D array of the tiles on the board.
+     * Represents the tiles on the board.
      */
     private final FloorTile[][] boardState;
     /**
-     * 2D array to keep track of currently fixed tiles.
+     * Represents fixed tiles on the board.
      */
     private boolean[][] boardFixedTiles;
     /**
@@ -33,8 +32,7 @@ public class Gameboard implements Serializable {
     private final int boardColumns;
 
     /**
-     * .
-     *
+     * Gameboard represents the visual board and tiles, as well as handling game logic.
      * @param width  width of the GameBoard
      * @param height height of the GameBoard
      */
@@ -46,10 +44,9 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Fills the board with random floor tiles.
-     *
+     * Populates the board with silkbag tiles.
      * @param silkBag the silk bag for the game
-     * @throws FileNotFoundException If the image file cannot be found.
+     * @throws FileNotFoundException if the image file cannot be found
      */
     public void genBoard(SilkBag silkBag) throws FileNotFoundException {
         for (int r = 0; r < boardRows; r++) {
@@ -60,34 +57,29 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Returns whether the tile at the coordinates provided
-     * is fixed or not.
-     *
+     * Returns the fixture state of the tiles.
      * @param row row the tile is in
      * @param col column the tile is in
-     * @return true if the tile cannot move, false if not
+     * @return the fixture state of the tiles
      */
     public boolean isFixedTile(int row, int col) {
         return boardFixedTiles[row][col];
     }
 
     /**
-     * Sets the tile at the coordinates provided according
-     * to the boolean provided.
-     *
-     * @param row     row the tile is in
-     * @param col     column the tile is in
-     * @param isFixed true if the tile should not move
+     * Tags a tile as a fixed tile.
+     * @param row row the tile is in
+     * @param col column the tile is in
+     * @param isFixed whether or not a tile must be fixed.
      */
     public void setFixedTile(int row, int col, boolean isFixed) {
         boardFixedTiles[row][col] = isFixed;
     }
 
     /**
-     * Checks the row of tiles given, if any of them are fixed this returns true.
-     *
+     * Return the tile fixture status of a row.
      * @param row the row of tiles to check
-     * @return true if the row has any fixed tiles, false otherwise.
+     * @return the fixture status of a tile
      */
     public boolean rowHasFixedTile(int row) {
         for (int col = 0; col < boardColumns; col++) {
@@ -99,10 +91,9 @@ public class Gameboard implements Serializable {
     }
 
     /**
-     * Checks the columnn of tiles given, if any of them are fixed this returns true.
-     *
-     * @param col the column of tiles to check
-     * @return true if the row has any fixed tiles, false otherwise.
+     * Return the tile fixture status of a column.
+     * @param col the row of tiles to check
+     * @return the fixture status of a column
      */
     public boolean colHasFixedTile(int col) {
         for (int row = 0; row < boardRows; row++) {
@@ -115,7 +106,6 @@ public class Gameboard implements Serializable {
 
     /**
      * Insert tile into the Gameboard at the next empty position.
-     *
      * @param tile the Tile to be inserted
      */
     public void putTile(FloorTile tile) {
@@ -138,7 +128,6 @@ public class Gameboard implements Serializable {
 
     /**
      * Returns the Tile at the given coordinates.
-     *
      * @param row the row coordinate of the target position
      * @param col the column coordinate of the target position
      * @return the tile at the given coordinates

@@ -13,6 +13,9 @@ import javafx.collections.ObservableList;
 import java.io.File;
 import java.util.ArrayList;
 
+/**
+ * @author liamdp, Moe
+ */
 public class Leaderboard {
 
     /**

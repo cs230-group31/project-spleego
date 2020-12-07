@@ -3,6 +3,9 @@ package com.group31.settings;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+/**
+ * @author liamdp
+ */
 public class DefaultSettings {
 
     /**

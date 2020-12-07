@@ -6,6 +6,9 @@ import com.group31.player.Player;
 import com.group31.tile_manager.FloorTile;
 import javafx.scene.image.Image;
 
+/**
+ * @author Kevin, Alvaro, Salar, Aaron
+ */
 public class FreezeTile extends ActionTile {
 
     /**

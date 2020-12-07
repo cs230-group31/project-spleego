@@ -19,7 +19,9 @@ import javafx.stage.Stage;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
-
+/**
+ * @author liamdp, Aaron, Emily
+ */
 public class TutorialPage {
     /**
      * File Path for the menu background image.

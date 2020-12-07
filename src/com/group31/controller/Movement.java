@@ -1,5 +1,8 @@
 package com.group31.controller;
 
+/**
+ * @author liamp, Moe
+ */
 public class Movement {
 
     /**

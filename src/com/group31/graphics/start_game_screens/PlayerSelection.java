@@ -23,7 +23,9 @@ import javafx.scene.layout.HBox;
 import java.util.ArrayList;
 import javafx.scene.control.Label;
 
-
+/**
+ * @author Kevin, Liam, Aaron
+ */
 public class PlayerSelection {
 
     /**

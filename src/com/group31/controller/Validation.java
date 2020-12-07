@@ -2,10 +2,12 @@ package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
 import com.group31.settings.Settings;
-
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author liamdp, Moe
+ */
 public class Validation {
 
     /**
@@ -46,9 +48,7 @@ public class Validation {
     }
 
     /**
-     * Takes the current tile and a neighbouring tile, plus the direction to that tile.
-     * Checks to see if the neighbouring tile is in the set of tiles that the current
-     * tile connects to.
+     * Validates a routing between two tiles.
      * @param currentTileId the current tile
      * @param neighbourTileId a tile next to the current tile
      * @param neighbourDirection the direction the neighbouring tile is from the current one
@@ -62,6 +62,9 @@ public class Validation {
         List<String> tileAcceptsRouteRightList = Arrays.asList(Settings.get("tiles_fed_right").split(delimiter));
         String currentTileString = Integer.toString(currentTileId);
         String neighbourTileString = Integer.toString(neighbourTileId);
+
+        // Can the routing go up from the current tile, and can another tile then accept players from the bottom
+        // of itself.
         if (neighbourDirection.equals("up") && tileAcceptsRouteAboveList.contains(currentTileString)
                 && tileAcceptsRouteBelowList.contains(neighbourTileString)) {
             return true;

@@ -5,6 +5,9 @@ import com.group31.logger.Logger;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @author liamdp
+ */
 public class Settings {
 
     /**

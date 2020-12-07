@@ -7,6 +7,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
+/**
+ * @author liamdp
+ */
 public class WinnerScreen {
 
 

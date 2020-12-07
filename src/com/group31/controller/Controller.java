@@ -11,7 +11,13 @@ import com.group31.tile_manager.Tile;
 import java.io.Serializable;
 import java.util.UUID;
 
+/**
+ * @author liamdp, Moe, Aaron
+ */
 public class Controller implements Serializable {
+    /**
+     * Dictates the placement properties of a tile.
+     */
     public enum TilePlaced {
         /**
          * Tile has been placed.
@@ -26,6 +32,10 @@ public class Controller implements Serializable {
          */
         NOT_REQUIRED
     }
+
+    /**
+     * Dictates the state of movement for a player.
+     */
     public enum MoveMade {
         /**
          * Player has been moved.
@@ -43,6 +53,8 @@ public class Controller implements Serializable {
     /**
      * Instance of the controller.
      */
+    // Controller is a singleton, so it's static but not static at the same time?
+    // Allows us to get an instance of the Controller without passing it around like the only can at a party.
     private static Controller instance = null;
     /**
      * Array of players that are playing the game.
@@ -61,21 +73,19 @@ public class Controller implements Serializable {
      */
     private FloorTile currentFloorTile;
     /**
-     * Keeps track of if a floor tile has been placed yet.
-     * Use The Enum.
+     * Keeps track of the placement status of a floor tile.
      */
     private TilePlaced floorTilePlaced;
     /**
-     * Keeps track of if a player has moved yet.
-     * Use The Enum.
+     * Keeps track of the movement status of a player.
      */
     private MoveMade playerMoved;
     /**
-     *  Tracks if the game has been won.
+     *  Keeps track of the game status. (Has the game been won).
      */
     private boolean gameWon;
     /**
-     * Which player's turn it is.
+     * Player's turn indicator.
      */
     private int playerTurn;
     /**
@@ -87,15 +97,18 @@ public class Controller implements Serializable {
      */
     private final String uuid;
     /**
-     * The maximum number of turns until we need to loop back to 1.
+     * The total turns in one round of the game.
      */
     private static int maxTurnCount;
 
     /**
-     * Controller deals with game logic, loading and saving.
+     * Controller is responsible for game logic, loading and saving.
      */
     private Controller() {
         gameWon = false;
+
+        // Each instance controller is assigned a random UUID, this helps us keep track of it when
+        // it's serialized.
         this.uuid = UUID.randomUUID().toString();
     }
 
@@ -108,7 +121,7 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Starts a new game by making the playerTurn 0.
+     * Starts a new game.
      */
     public void startGame() {
         playerTurn = 1;
@@ -116,8 +129,9 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Checks every player's location and compares if they are in the same place as a goal tile.
-     * @return True if a player is on top of a goal tile, false otherwise.
+     * Checks every player's location, comparing it to the location of the goal tile. Should the player be
+     * on the goal tile, they win the game.
+     * @return true if a player is on top of a goal tile, false otherwise
      */
     public Player hasWon() {
         for (Player player : players) {
@@ -133,7 +147,7 @@ public class Controller implements Serializable {
 
     /**
      * Returns if the game is won.
-     * @return the value of gameWon
+     * @return if the game is won
      */
     public boolean isGameWon() {
         return gameWon;
@@ -166,8 +180,8 @@ public class Controller implements Serializable {
 
     /**
      * Takes a tile and gives it to a player.
-     * @param player Player we want to give the tile to.
-     * @return A Tile for the player.
+     * @param player Player to give the tile to.
+     * @return a Tile for the player
      */
     public Tile takeTile(Player player) {
         // give tile to player from silkBag
@@ -181,6 +195,8 @@ public class Controller implements Serializable {
      */
     public void movePlayer(int x, int y) {
         // move a player on a board
+        // Handled somewhere else?
+        // remove this?
     }
 
     /**
@@ -210,9 +226,7 @@ public class Controller implements Serializable {
     }
 
     /**
-     * If the player's location one turn and two turns ago are not on fire,
-     * move them back two turns, otherwise move them back one turn.
-     * If their location one turn ago is on fire, do not move them.
+     * Back track the player. (Result of the backtrack tile being used).
      * @param player the target player.
      */
     public void backtrackPlayer(Player player) {
@@ -234,7 +248,7 @@ public class Controller implements Serializable {
     }
     /**
      * Returns the current player turn.
-     * @return the player turn
+     * @return the current player turn
      */
     public int getPlayerTurn() {
         return playerTurn;
@@ -255,7 +269,7 @@ public class Controller implements Serializable {
         this.playerTurn = playerTurn;
     }
     /**
-     * Updates the playerTurn counter to the next term.
+     * Increment the turn counter.
      */
     public void nextPlayerTurn() {
         nextGlobalTurn();
@@ -265,7 +279,7 @@ public class Controller implements Serializable {
         this.playerTurn++;
     }
     /**
-     * Updates the global turn counter to the next term.
+     * Increment the global turn counter.
      */
     public void nextGlobalTurn() {
         this.globalTurnCount++;
@@ -278,8 +292,8 @@ public class Controller implements Serializable {
         return floorTilePlaced;
     }
     /**
-     * Sets the floorTilePlaced to Enum provided.
-     * @param tilePlaced ENUM of the state of the floorTile.
+     * Sets the state of the placement of a floor tile.
+     * @param tilePlaced State of the tile.
      */
     public void setFloorTilePlaced(TilePlaced tilePlaced) {
         this.floorTilePlaced = tilePlaced;
@@ -292,20 +306,14 @@ public class Controller implements Serializable {
         return playerMoved;
     }
     /**
-     * Sets playerMoved to Enum provided.
-     * @param playerMoved ENUM of if the player has moved.
+     * Sets the state of the movement of a player.
+     * @param playerMoved State of the player's movement.
      */
     public void setPlayerMoved(MoveMade playerMoved) {
         this.playerMoved = playerMoved;
     }
     /**
-     * Saves the game.
-     */
-    public void saveGame() {
-        // save the game passing info to the file reader
-    }
-
-    /**
+     * Returns the GameBoard.
      * @return the GameBoard
      */
     public Gameboard getGameboard() {
@@ -322,15 +330,14 @@ public class Controller implements Serializable {
 
     /**
      * Returns the FloorTile that the player just drew.
-     * @return the FloorTile the player just drew
+     * @return the FloorTile that the player just drew
      */
     public FloorTile getCurrentFloorTile() {
         return currentFloorTile;
     }
     /**
-     * Creates a new instance of Controller if one does not exist,
-     * then returns the current instance of Controller.
-     * @return the current Controller instance
+     * Returns an instance of the Controller.
+     * @return an instance of the Controller
      */
     public static Controller getInstance() {
         if (instance == null) {
@@ -342,21 +349,23 @@ public class Controller implements Serializable {
     /**
      * Resets the controller's instance to a fresh controller.
      */
+    // Dangerous :O
     public static void resetInstance() {
         instance = null;
     }
 
     /**
-     * Sets the Controller to a given instance.
-     * @param controller the Controller for this class to become
+     * Replaces the instance of the controller.
+     * @param controller new instance
      */
     public static void setInstance(Controller controller) {
         instance = controller;
     }
 
     /**
-     * @param gameboard The game board for a game.
-     * @param silkBag The silk bag for a game.
+     * Initialises the controller.
+     * @param gameboard the game board for a game
+     * @param silkBag the silk bag for a game
      */
     public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
@@ -368,6 +377,7 @@ public class Controller implements Serializable {
     /**
      * Save the controller to a file.
      */
+    // Serialization... fancy :)
     public void save() {
 
         String object = "controller";

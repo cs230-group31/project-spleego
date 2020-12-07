@@ -6,6 +6,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * @author Salar, Zero, Liam, Aaron
+ */
 public class Player implements Serializable {
 
     /**

@@ -3,6 +3,9 @@ import com.group31.logger.Logger;
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
 
+/**
+ * @author Alvaro, Kevin, Aaron
+ */
 public class ActionTile extends Tile {
     /**
      * Class constructor.
