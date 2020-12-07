@@ -6,15 +6,14 @@ import com.group31.graphics.MainMenu;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
 import com.group31.controller.Controller;
-import com.group31.player.Player;
 import com.group31.saveload.Load;
 import com.group31.services.FileManager;
+import com.group31.services.serializer.Serializer;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Main {
@@ -50,6 +49,9 @@ public class Main {
 
         // Testing.
         Settings.dumpSettingsToConsole();
+
+        // Serializer
+        Serializer.init();
 
         // Initialise components.
         initLeaderBoard();
@@ -112,23 +114,23 @@ public class Main {
         return new Gameboard(BOARD_ROWS, BOARD_COLS);
     }
 
-    /**
-     * Initialises players.
-     * @param numPlayers the number of players in the game.
-     * @param playerLocation arraylist containing all player locations.
-     * @return New instance of player depending on how many players are in the game.
-     */
-    private static Player[] initPlayers(int numPlayers, ArrayList<String> playerLocation) {
-        Player[] players = new Player[numPlayers];
-        for (int i = 0; i <= numPlayers - 1; i++) {
-            String currentPlayerLocation = playerLocation.get(i);
-            String[] splitLocations = currentPlayerLocation.split(",");
-            int[] location = {Integer.parseInt(splitLocations[0]), Integer.parseInt(splitLocations[1])};
-            players[i] = new Player(null, null, null, location);
-        }
-
-        return players;
-    }
+//    /**
+//     * Initialises players.
+//     * @param numPlayers the number of players in the game.
+//     * @param playerLocation arraylist containing all player locations.
+//     * @return New instance of player depending on how many players are in the game.
+//     */
+//    private static Player[] initPlayers(int numPlayers, ArrayList<String> playerLocation) {
+//        Player[] players = new Player[numPlayers];
+//        for (int i = 0; i <= numPlayers - 1; i++) {
+//            String currentPlayerLocation = playerLocation.get(i);
+//            String[] splitLocations = currentPlayerLocation.split(",");
+//            int[] location = {Integer.parseInt(splitLocations[0]), Integer.parseInt(splitLocations[1])};
+//            players[i] = new Player(null, null, null, location);
+//        }
+//
+//        return players;
+//    }
 
     /**
      * Initialises controller.
@@ -137,13 +139,21 @@ public class Main {
 
         try {
             HashMap<String, Object> components = Load.loadNewGameFromFile("default level.txt");
-            Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
+            //Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
             Gameboard gameboard = (Gameboard) components.get("Gameboard");
             SilkBag silkbag = (SilkBag) components.get("SilkBag");
+//            ArrayList<String> playerLocations = (ArrayList<String>) components.get("playerLocations");
+//            for (int i = 0; i < players.length; i++) {
+//                String startingLocations = playerLocations.get(i);
+//                String[] coordinates = startingLocations.split(",");
+//                int playerX = Integer.parseInt(coordinates[0]);
+//                int playerY = Integer.parseInt(coordinates[1]);
+//                players[i].setLocation(playerX, playerY);
+//            }
             // Get instance of controller as Controller is a singleton.
             Controller controller = Controller.getInstance();
             // Initialise controller.
-            controller.init(players, gameboard, silkbag);
+            controller.init(gameboard, silkbag);
         } catch (NoSuchDirectory | FileNotFoundException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }

@@ -60,7 +60,6 @@ public class Serializer {
      * @return Instance of player.
      */
     public static Object deserialize(String identifier, String object) throws ObjectNeverSerialized {
-        readIdentifiers();
             try {
                 if (identifiers.contains(identifier)) {
                     String fileName = String.format("%s.%s", identifier, FILE_EXTENSION);
@@ -77,7 +76,8 @@ public class Serializer {
                     }
                 } else {
                     throw new ObjectNeverSerialized(
-                            "Object has not been serialized, or serialized file cannot be found.");
+                            identifier + " has not been serialized, "
+                                    + "or serialized file cannot be found. (Deserializer)");
                 }
             } catch (NoSuchDirectory | IOException | ClassNotFoundException e) {
                 Logger.log(e.getMessage(), Logger.Level.ERROR);
@@ -109,8 +109,25 @@ public class Serializer {
             FileManager.setDirectory(IDENTIFIERS_FILE_LOCATION, allowCreation);
             String[] contents = FileManager.read(identifiersFileName);
             identifiers.addAll(Arrays.asList(contents));
-        } catch (NoSuchDirectory | FileNotFoundException e) {
+        } catch (NoSuchDirectory | IOException e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);
         }
+    }
+
+    /**
+     * Initialise the serializer.
+     */
+    public static void init() {
+        identifiers.clear();
+        try {
+            String fileName = "identifiers.txt";
+            FileManager.setDirectory(IDENTIFIERS_FILE_LOCATION, true);
+            if (!FileManager.fileExists(fileName)) {
+                saveIdentifiers();
+            }
+        } catch (NoSuchDirectory noSuchDirectory) {
+            Logger.log(noSuchDirectory.getMessage(), Logger.Level.ERROR);
+        }
+        readIdentifiers();
     }
 }

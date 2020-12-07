@@ -1,6 +1,7 @@
 font_stroke;1
 start_button_pressed_url;resources/images/start pressed.png
-tile_route_id_10;dab
+tiles_fed_left;0,1,5,6,8,9,10
+tile_route_id_10;d,a,b
 tile_weight_fire;15
 window_width;1280
 message_route;message
@@ -12,7 +13,9 @@ title_image_height;315
 tile_weight_doublemove;10
 font_family;Ink Free
 tile_weight_freeze;15
+tiles_fed_above;0,2,3,6,7,9,10
 menu_image_url;resources/images/background 1280 x 720.png
+tiles_fed_below;0,2,4,5,7,8,9
 tile_height;64
 font_size;40
 how_play_button_unpressed;resources/images/how to play unpressed.png
@@ -33,18 +36,19 @@ tile_weight_floortile;50
 tile_images_url;resources/images/tiles/
 window_height;720
 text_wrapping_width;1240
-tile_route_id_0;abcd
+tile_route_id_0;a,b,c,d
 tile_width;64
 token_identifier;?solution=
-tile_route_id_2;ac
-tile_route_id_1;bd
-tile_route_id_4;bc
-tile_route_id_3;ab
-tile_route_id_6;da
-tile_route_id_5;cd
+tile_route_id_2;a,c
+tiles_fed_right;0,1,3,4,7,8,10
+tile_route_id_1;b,d
+tile_route_id_4;b,c
+tile_route_id_3;a,b
+tile_route_id_6;d,a
+tile_route_id_5;c,d
 settings_button_pressed;resources/images/settings pressed.png
-tile_route_id_8;bcd
-tile_route_id_7;abc
+tile_route_id_8;b,c,d
+tile_route_id_7;a,b,c
 max_tiles;10
-tile_route_id_9;cda
+tile_route_id_9;c,d,a
 button_spacing;10

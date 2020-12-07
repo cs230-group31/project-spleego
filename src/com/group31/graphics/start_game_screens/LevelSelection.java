@@ -1,10 +1,9 @@
 package com.group31.graphics.start_game_screens;
 
 import com.group31.controller.Controller;
-import com.group31.exceptions.NoSuchDirectory;
 import com.group31.graphics.Game;
 import com.group31.graphics.view_controllers.LevelSelectionController;
-import com.group31.logger.Logger;
+import com.group31.player.PlayerProfile;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -12,6 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import java.util.ArrayList;
 
 
 public class LevelSelection {
@@ -21,8 +21,9 @@ public class LevelSelection {
      * @param stage instance of the stage (window)
      * @param mainMenu instance of the Main Menu scene
      * @param playerSelection instance of the Player Selection scene
+     * @param playerProfiles player profiles
      */
-    private void start(Stage stage, Scene mainMenu, Scene playerSelection) {
+    private void start(Stage stage, Scene mainMenu, Scene playerSelection, ArrayList<PlayerProfile> playerProfiles) {
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         Text title = new Text("Level Selection");
@@ -33,27 +34,37 @@ public class LevelSelection {
         VBox buttonBox = new VBox();
         VBox allButtons = new VBox();
         start.setOnMouseClicked(e -> {
-            Game.launch(stage, mainMenu);
+            Controller.getInstance().setPlayers(LevelSelectionController.initPlayers(playerProfiles));
             Controller.getInstance().startGame();
+            Game.launch(stage, mainMenu, playerProfiles);
         });
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
         backToPlayerProfile.setOnMouseClicked(e -> stage.setScene(playerSelection));
 
         buttonBox.getChildren().addAll(start, backToPlayerProfile, returnMainMenu);
 
-        try {
-            for (String name : LevelSelectionController.getSavedGamesName()) {
-                Button gameSave = new Button(name);
-                gameSave.setOnMouseClicked(e -> {
-                    LevelSelectionController.loadGame(name);
-                    Game.launch(stage, mainMenu);
-                    Controller.getInstance().startGame();
-                });
-                gameSaveButtons.getChildren().add(gameSave);
-            }
-        } catch (NoSuchDirectory e) {
-            Logger.log("Getting game save names threw an error.", Logger.Level.ERROR);
+        for (String gameSaveName : LevelSelectionController.getGamesWithPlayerParticipation(playerProfiles)) {
+            Button gameSave = new Button(gameSaveName);
+            gameSave.setOnMouseClicked(e -> {
+                LevelSelectionController.loadGame(gameSaveName);
+                Controller.getInstance().startGame();
+                Game.launch(stage, mainMenu, playerProfiles);
+            });
+            gameSaveButtons.getChildren().add(gameSave);
         }
+
+//        for (PlayerProfile profile : playerProfiles) {
+//            if (profile.getGamesParticipating() != null) {
+//                for (String controllerId : profile.getGamesParticipating()) {
+//                    Button gameSave = new Button("Game: " + controllerId);
+//                    gameSave.setOnMouseClicked(e -> {
+//                        LevelSelectionController.loadGame(controllerId);
+//                        Controller.getInstance().startGame();
+//                        Game.launch(stage, mainMenu, playerProfiles);
+//                    });
+//                }
+//            }
+//        }
 
         allButtons.getChildren().addAll(gameSaveButtons, buttonBox);
 
@@ -69,10 +80,12 @@ public class LevelSelection {
      * @param stage instance of the stage (windows)
      * @param mainMenu instance of the Main Menu scene
      * @param playerSelection instance of the Player Selection scene
+     * @param playerProfiles player profiles
      */
-    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection) {
+    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection,
+                              ArrayList<PlayerProfile> playerProfiles) {
         LevelSelection levelSelection = new LevelSelection();
-        levelSelection.start(stage, mainMenu, playerSelection);
+        levelSelection.start(stage, mainMenu, playerSelection, playerProfiles);
     }
 
 }

@@ -1,6 +1,10 @@
 package com.group31.controller;
 
 import com.group31.exceptions.InvalidMoveDirection;
+import com.group31.settings.Settings;
+
+import java.util.Arrays;
+import java.util.List;
 
 public class Validation {
 
@@ -39,5 +43,42 @@ public class Validation {
             default:
                 throw new InvalidMoveDirection("Move not valid.");
         }
+    }
+
+    /**
+     * Takes the current tile and a neighbouring tile, plus the direction to that tile.
+     * Checks to see if the neighbouring tile is in the set of tiles that the current
+     * tile connects to.
+     * @param currentTileId the current tile
+     * @param neighbourTileId a tile next to the current tile
+     * @param neighbourDirection the direction the neighbouring tile is from the current one
+     * @return true if the two tiles connect
+     */
+    public static boolean validRouting(int currentTileId, int neighbourTileId, String neighbourDirection) {
+        String delimiter = ",";
+        List<String> tileAcceptsRouteBelowList = Arrays.asList(Settings.get("tiles_fed_below").split(delimiter));
+        List<String> tileAcceptsRouteAboveList = Arrays.asList(Settings.get("tiles_fed_above").split(delimiter));
+        List<String> tileAcceptsRouteLeftList = Arrays.asList(Settings.get("tiles_fed_left").split(delimiter));
+        List<String> tileAcceptsRouteRightList = Arrays.asList(Settings.get("tiles_fed_right").split(delimiter));
+        String currentTileString = Integer.toString(currentTileId);
+        String neighbourTileString = Integer.toString(neighbourTileId);
+        if (neighbourDirection.equals("up") && tileAcceptsRouteAboveList.contains(currentTileString)
+                && tileAcceptsRouteBelowList.contains(neighbourTileString)) {
+            return true;
+        }
+        if (neighbourDirection.equals("down") && tileAcceptsRouteBelowList.contains(currentTileString)
+                && tileAcceptsRouteAboveList.contains(neighbourTileString)) {
+            return true;
+        }
+        if (neighbourDirection.equals("left") && tileAcceptsRouteLeftList.contains(currentTileString)
+                && tileAcceptsRouteRightList.contains(neighbourTileString)) {
+            return true;
+        }
+        if (neighbourDirection.equals("right") && tileAcceptsRouteRightList.contains(currentTileString)
+                && tileAcceptsRouteLeftList.contains(neighbourTileString)) {
+            return true;
+        }
+        return false;
+
     }
 }

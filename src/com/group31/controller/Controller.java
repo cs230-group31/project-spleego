@@ -12,29 +12,6 @@ import java.io.Serializable;
 import java.util.UUID;
 
 public class Controller implements Serializable {
-    /**
-     * Returns the current player turn.
-     * @return the player turn
-     */
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-
-    /**
-     * return the current player turn.
-     * @return the current player turn.
-     */
-    public Game.PlayerNumber getPlayerTurnEnum() {
-        return Game.PlayerNumber.values()[playerTurn];
-    }
-    /**
-     * Sets the current turn.
-     * @param playerTurn the turn count
-     */
-    public void setPlayerTurn(int playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-
     public enum TilePlaced {
         /**
          * Tile has been placed.
@@ -46,6 +23,20 @@ public class Controller implements Serializable {
         REQUIRED,
         /**
          * Tile does not need to be placed.
+         */
+        NOT_REQUIRED
+    }
+    public enum MoveMade {
+        /**
+         * Player has been moved.
+         */
+        MOVED,
+        /**
+         * Player needs to be moved.
+         */
+        REQUIRED,
+        /**
+         * Player does not need to be moved.
          */
         NOT_REQUIRED
     }
@@ -65,7 +56,6 @@ public class Controller implements Serializable {
      * Instance of the silkBag.
      */
     private SilkBag silkBag;
-
     /**
      * The FloorTile waiting to be placed by the player.
      */
@@ -76,6 +66,11 @@ public class Controller implements Serializable {
      */
     private TilePlaced floorTilePlaced;
     /**
+     * Keeps track of if a player has moved yet.
+     * Use The Enum.
+     */
+    private MoveMade playerMoved;
+    /**
      *  Tracks if the game has been won.
      */
     private boolean gameWon;
@@ -83,11 +78,18 @@ public class Controller implements Serializable {
      * Which player's turn it is.
      */
     private int playerTurn;
-
+    /**
+     * Keeps track of how many turns have passed.
+     */
+    private int globalTurnCount;
     /**
      * UUID of an instance of the controller.
      */
     private final String uuid;
+    /**
+     * The maximum number of turns until we need to loop back to 1.
+     */
+    private static int maxTurnCount;
 
     /**
      * Controller deals with game logic, loading and saving.
@@ -98,18 +100,19 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Plays the game by looping until a player has won.
+     * Returns the instance's UUID.
+     * @return the instance's UUID
      */
-    public void playGame() {
+    public String getUuid() {
+        return this.uuid;
     }
 
     /**
      * Starts a new game by making the playerTurn 0.
      */
     public void startGame() {
-        playerTurn = 0;
+        playerTurn = 1;
         floorTilePlaced = TilePlaced.NOT_REQUIRED;
-        playGame();
     }
 
     /**
@@ -150,6 +153,7 @@ public class Controller implements Serializable {
      */
     public void setPlayers(Player[] players) {
         this.players = players;
+        maxTurnCount = players.length;
     }
 
     /**
@@ -229,6 +233,72 @@ public class Controller implements Serializable {
         }
     }
     /**
+     * Returns the current player turn.
+     * @return the player turn
+     */
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    /**
+     * return the current player turn.
+     * @return the current player turn.
+     */
+    public Game.PlayerNumber getPlayerTurnEnum() {
+        return Game.PlayerNumber.values()[playerTurn];
+    }
+    /**
+     * Sets the current turn.
+     * @param playerTurn the turn count
+     */
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+    /**
+     * Updates the playerTurn counter to the next term.
+     */
+    public void nextPlayerTurn() {
+        nextGlobalTurn();
+        if (getPlayerTurn() == maxTurnCount) {
+            setPlayerTurn(0);
+        }
+        this.playerTurn++;
+    }
+    /**
+     * Updates the global turn counter to the next term.
+     */
+    public void nextGlobalTurn() {
+        this.globalTurnCount++;
+    }
+    /**
+     * Returns the current state of floorTilePlaced.
+     * @return the current state of floorTilePlaced
+     */
+    public TilePlaced getFloorTilePlaced() {
+        return floorTilePlaced;
+    }
+    /**
+     * Sets the floorTilePlaced to Enum provided.
+     * @param tilePlaced ENUM of the state of the floorTile.
+     */
+    public void setFloorTilePlaced(TilePlaced tilePlaced) {
+        this.floorTilePlaced = tilePlaced;
+    }
+    /**
+     * Returns the current state of playerMoved.
+     * @return the current state of playerMoved
+     */
+    public MoveMade getPlayerMoved() {
+        return playerMoved;
+    }
+    /**
+     * Sets playerMoved to Enum provided.
+     * @param playerMoved ENUM of if the player has moved.
+     */
+    public void setPlayerMoved(MoveMade playerMoved) {
+        this.playerMoved = playerMoved;
+    }
+    /**
      * Saves the game.
      */
     public void saveGame() {
@@ -257,7 +327,6 @@ public class Controller implements Serializable {
     public FloorTile getCurrentFloorTile() {
         return currentFloorTile;
     }
-
     /**
      * Creates a new instance of Controller if one does not exist,
      * then returns the current instance of Controller.
@@ -286,22 +355,14 @@ public class Controller implements Serializable {
     }
 
     /**
-     * @param players Array of players playing the game.
      * @param gameboard The game board for a game.
      * @param silkBag The silk bag for a game.
      */
-    public void init(Player[] players, Gameboard gameboard, SilkBag silkBag) {
-        this.players = players;
+    public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
-    }
-
-    /**
-     * Sets the floorTilePlaced to PLACED.
-     * @param tilePlaced ENUM of the state of the floorTile.
-     */
-    public void setFloorTilePlaced(TilePlaced tilePlaced) {
-        this.floorTilePlaced = tilePlaced;
+        setPlayerMoved(MoveMade.NOT_REQUIRED);
+        setFloorTilePlaced(Controller.TilePlaced.NOT_REQUIRED);
     }
 
     /**

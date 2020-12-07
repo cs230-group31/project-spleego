@@ -2,7 +2,6 @@ package com.group31.player;
 
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -17,12 +16,7 @@ public class Player implements Serializable {
     /**
      * Player's sprite.
      */
-    private final Image sprite;
-
-    /**
-     * Player's colour.
-     */
-    private final Color colour;
+    private transient Image sprite;
 
     /**
      * Player's current location on the board.
@@ -32,7 +26,7 @@ public class Player implements Serializable {
     /**
      * Stores the player's hand.
      */
-    private final ArrayList<Tile> hand = new ArrayList<>();
+    private final ArrayList<Tile> hand;
 
     /**
      * UUID of an instance of the Player class.
@@ -67,19 +61,35 @@ public class Player implements Serializable {
      * Class for a player who has or is playing the game.
      * @param name human name of the player
      * @param sprite player's picture
-     * @param colour player's colour
-     * @param location player's starting location on the gameboard
+     * @param location player's current location on the board
      */
-    public Player(String name, Image sprite, Color colour, int[] location) {
+    public Player(String name, Image sprite, int[] location) {
         this.name = name;
         this.sprite = sprite;
-        this.colour = colour;
         this.location = location;
 
         this.instanceUuid = UUID.randomUUID().toString();
         this.wins = 0;
         this.losses = 0;
         this.gamesPlayed = 0;
+        this.hand = new ArrayList<>();
+    }
+
+    /**
+     * Class for a player who has or is playing the game.
+     * @param name human name of the player
+     * @param location player's current location on the board
+     */
+    public Player(String name, int[] location) {
+        this.name = name;
+        this.instanceUuid = UUID.randomUUID().toString();
+        this.wins = 0;
+        this.losses = 0;
+        this.gamesPlayed = 0;
+        this.hand = new ArrayList<>();
+        this.location = location;
+
+        this.sprite = null;
     }
 
     /**
@@ -123,6 +133,14 @@ public class Player implements Serializable {
     }
 
     /**
+     * Sets the Player's sprite.
+     * @param sprite image to set as the player's sprite
+     */
+    public void setSprite(Image sprite) {
+        this.sprite = sprite;
+    }
+
+    /**
      * Increment the number of wins a player has.
      */
     public void incrementLosses() {
@@ -143,15 +161,6 @@ public class Player implements Serializable {
      */
     public Image getSprite() {
         return this.sprite;
-    }
-
-    /**
-     * Returns the player colour.
-     * @return the player's colour
-     */
-    public Color getColour() {
-
-        return this.colour;
     }
 
     /**

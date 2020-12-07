@@ -1,6 +1,11 @@
 package com.group31.graphics;
 
 import java.util.ArrayList;
+
+import com.group31.controller.Validation;
+import com.group31.exceptions.ObjectNeverSerialized;
+import com.group31.player.PlayerProfile;
+import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.Tile;
 import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
@@ -15,6 +20,7 @@ import com.group31.tile_manager.FloorTile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -57,25 +63,13 @@ public class Game extends Application {
      */
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
     /**
+     * File Path for the return button image.
+     */
+    private static final String RETURN_BUTTON_URL = "resources/images/return button.png";
+    /**
      * File Path for the draw tile button.
      */
     private static final String DRAW_TILE_URL = "resources/images/draw tile.png";
-    /**
-     * Number of player one.
-     */
-    private static final int PLAYER_ONE = 1;
-    /**
-     * Number of player two.
-     */
-    private static final int PLAYER_TWO = 2;
-    /**
-     * Number of player three.
-     */
-    private static final int PLAYER_THREE = 3;
-    /**
-     * Number of player four.
-     */
-    private static final int PLAYER_FOUR = 4;
     /**
      * Player one's hand of tiles.
      */
@@ -100,7 +94,12 @@ public class Game extends Application {
      * FlowPane for the drawtile button and tile next to it.
      */
     private static FlowPane drawShowTile;
-    /*
+
+    /**
+     * Tile representative of the back of another tile.
+     */
+    private static final Tile FACE_DOWN_TILE = new Tile(-1);
+    /**
      * Player numbers enum.
      */
     public enum PlayerNumber {
@@ -127,10 +126,21 @@ public class Game extends Application {
     private static Scene mainScene;
 
     /**
+     * Stage instance.
+     */
+    private static Stage stageWindow;
+
+    /**
+     * Player Profiles.
+     */
+    private static ArrayList<PlayerProfile> profiles;
+
+    /**
      * Creates the board.
      * @param stage JavaFX Stage of the main window
      */
     public void start(Stage stage) {
+        stageWindow = stage;
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         GridPane board = new GridPane();
@@ -152,6 +162,7 @@ public class Game extends Application {
         playerTwoHand = new VBox();
         playerThreeHand = new HBox();
         playerFourHand = new VBox();
+        Controller controller = Controller.getInstance();
 
         StackPane topThing = new StackPane();
         topThing.getChildren().add(playerOneHand);
@@ -161,34 +172,68 @@ public class Game extends Application {
         StackPane.setAlignment(close, Pos.TOP_RIGHT);
         topThing.setPickOnBounds(false);
         root.setTop(topThing);
+
         root.setRight(playerTwoHand);
+
         StackPane bottomPane = new StackPane();
         bottomPane.getChildren().add(playerThreeHand);
         ImageButton drawTile = new ImageButton(DRAW_TILE_URL);
-        drawTile.setOnMouseClicked(e -> drawTile());
+        drawTile.setOnMouseClicked(e -> {
+            if ((controller.getPlayerMoved() != Controller.MoveMade.REQUIRED
+                    && controller.getFloorTilePlaced() != Controller.TilePlaced.REQUIRED)) {
+                drawTile();
+            }
+        });
         drawShowTile.getChildren().add(drawTile);
         bottomPane.getChildren().add(drawShowTile);
+        ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
+        returnSign.setOnMouseClicked(e -> saveAndExit(stage));
+        HBox bottomBox = new HBox();
+        bottomBox.getChildren().add(returnSign);
+        bottomBox.setPickOnBounds(false);
+        bottomPane.getChildren().add(bottomBox);
+        playerThreeHand.setPickOnBounds(false);
+        drawShowTile.setPickOnBounds(false);
         bottomPane.setPickOnBounds(false);
-        StackPane.setAlignment(drawShowTile, Pos.BOTTOM_LEFT);
+        drawShowTile.setAlignment(Pos.BOTTOM_LEFT);
+        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
         root.setBottom(bottomPane);
+
         root.setLeft(playerFourHand);
+
         root.setCenter(board);
         drawTileArrows(board);
         drawGameBoard(board);
         scene.setRoot(root);
         stage.setScene(scene);
 
+        drawPlayers(board);
+    }
+
+    private static void drawPlayers(GridPane board) {
         Controller controller = Controller.getInstance();
-        Player winner = null;
-        winner = controller.hasWon();
-        if (winner != null) {
-            Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+        Player[] players = controller.getPlayers();
+        for (Player player : players) {
+            int[] location = player.getCurrentLocation();
+            ImageView playerSprite = new ImageView(player.getSprite());
+            stackNodeAt(board, playerSprite, location[0] + 1, location[1] + 1);
         }
     }
 
-    private void drawTile() {
+    private static void skipPlayerMovement() {
         Controller controller = Controller.getInstance();
-        Player currentPlayer = controller.getPlayers()[controller.getPlayerTurn()];
+        controller.setPlayerMoved(Controller.MoveMade.NOT_REQUIRED);
+    }
+
+    private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
+        board.add(node, atRow, atCol);
+    }
+
+    private void drawTile() {
+
+        Controller controller = Controller.getInstance();
+        int playerTurn = controller.getPlayerTurn();
+        Player currentPlayer = controller.getPlayers()[playerTurn - 1];
         Tile drawnTile = controller.getSilkbag().drawTile();
         drawnTile.updateDrawnThisTurn(true);
         setCurrentDrawnTile(drawnTile);
@@ -200,10 +245,121 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
+
+    }
+
+    private static void startPlayerMove(GridPane board) {
+        Controller controller = Controller.getInstance();
+        Gameboard gameboard = controller.getGameboard();
+        Player[] players = controller.getPlayers();
+        Player currentPlayer = players[controller.getPlayerTurn() - 1];
+        int playerX = currentPlayer.getCurrentLocation()[0];
+        int playerY = currentPlayer.getCurrentLocation()[1];
+        FloorTile playerTile = gameboard.getBoardState()[playerX][playerY];
+        boolean upIsValid;
+        try {
+            upIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX][playerY - 1].getId(), "up");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            upIsValid = false;
+        }
+        boolean downIsValid;
+        try {
+            downIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX][playerY + 1].getId(), "down");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            downIsValid = false;
+        }
+        boolean leftIsValid;
+        try {
+            leftIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX - 1][playerY].getId(), "left");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            leftIsValid = false;
+        }
+        boolean rightIsValid;
+        try {
+            rightIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX + 1][playerY].getId(), "right");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            rightIsValid = false;
+        }
+        if (upIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move up.png");
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX, playerY - 1);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 1, playerY);
+            }
+        }
+        if (downIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move down.png");
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX, playerY + 1);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 1, playerY + 2);
+            }
+        }
+        if (leftIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move left.png");
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX - 1, playerY);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX, playerY + 1);
+            }
+        }
+        if (rightIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move right.png");
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX + 1, playerY);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 2, playerY + 1);
+            }
+        }
+        if ((!upIsValid && !downIsValid && !leftIsValid && !rightIsValid)) {
+            skipPlayerMovement();
+        }
+        controller.nextPlayerTurn();
     }
 
     private void saveAndExit(Stage stage) {
-        Save.saveAll();
+        Save.saveAll(profiles);
         Controller.resetInstance();
         Main.initController();
         stage.setScene(mainScene);
@@ -224,25 +380,50 @@ public class Game extends Application {
         drawShowTile.getChildren().add(currentDrawnTile);
     }
 
+    private static void declareWinner(String winner, Stage stage, Scene mainMenu) {
+        String object = "player";
+        String winnerFileName = String.format("PlayerProfile_%s", winner);
+        try {
+            PlayerProfile winningProfile = (PlayerProfile) Serializer.deserialize(winnerFileName, object);
+            winningProfile.incrementGamesWon();
+            winningProfile.save();
+            for (Player player : Controller.getInstance().getPlayers()) {
+                if (!player.getName().equals(winner)) {
+                    String loserFileName = String.format("PlayerProfile_%s", player.getName());
+                    PlayerProfile profile = (PlayerProfile) Serializer.deserialize(loserFileName, object);
+                    profile.incrementGamesLost();
+                    profile.save();
+                }
+            }
+        } catch (ObjectNeverSerialized e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        Controller.resetInstance();
+        WinnerScreen.launch(stage, mainMenu, winner);
+    }
+
     /**
      * Creates an instance of Game and starts it.
      * @param stage JavaFX Stage of the main window.
      * @param mainScene JavaFX Scene of the main menu.
+     * @param profiles player profiles
      */
-    public static void launch(Stage stage, Scene mainScene) {
+    public static void launch(Stage stage, Scene mainScene, ArrayList<PlayerProfile> profiles) {
         Game game = new Game();
-        init(mainScene);
+        init(mainScene, profiles);
         game.start(stage);
     }
 
     /**
      * Initialises the main menu scene into this Game instance so it can be referenced.
      * @param mainMenuScene JavaFX Scene of the main menu.
+     * @param playerProfiles Player profiles
      */
-    private static void init(Scene mainMenuScene) {
+    private static void init(Scene mainMenuScene, ArrayList<PlayerProfile> playerProfiles) {
         mainScene = mainMenuScene;
         drawShowTile = new FlowPane();
-        setCurrentDrawnTile(new Tile(-1));
+        profiles = playerProfiles;
+        setCurrentDrawnTile(FACE_DOWN_TILE);
     }
 
     /**
@@ -253,9 +434,9 @@ public class Game extends Application {
     public static void drawTileArrows(GridPane board) {
         Controller controller = Controller.getInstance();
         int boardRows = controller.getGameboard().getBoardRows();
-        int boardCols = controller.getGameboard().getBoardRows();
+        int boardCols = controller.getGameboard().getBoardCols();
         Gameboard gameboard = controller.getGameboard();
-        for (int col = 0; col < boardRows; col++) {
+        for (int col = 0; col < boardCols; col++) {
             if (!gameboard.rowHasFixedTile(col)) {
                 ImageButton arrowUpButton = new ImageButton("resources/images/tiles/arrow up.png");
                 ImageButton arrowDownButton = new ImageButton("resources/images/tiles/arrow down.png");
@@ -263,15 +444,27 @@ public class Game extends Application {
                 int finalCol = col;
 
                 arrowUpButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol, "down");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToCol(finalCol, "down");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                        drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
+                        startPlayerMove(board);
+                    }
                 });
 
                 arrowDownButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToCol(finalCol, "up");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToCol(finalCol, "up");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                        drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
+                        startPlayerMove(board);
+                    }
                 });
 
                 StackPane tileStackOne = new StackPane(arrowDownButton);
@@ -280,22 +473,34 @@ public class Game extends Application {
                 board.add(tileStackTwo, col + 1, boardRows + 1);
             }
         }
-        for (int row = 0; row < boardCols; row++) {
+        for (int row = 0; row < boardRows; row++) {
             if (!gameboard.colHasFixedTile(row)) {
                 ImageButton arrowRightButton = new ImageButton("resources/images/tiles/arrow right.png");
                 ImageButton arrowLeftButton = new ImageButton("resources/images/tiles/arrow left.png");
                 int finalRow = row;
 
                 arrowLeftButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow, "right");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToRow(finalRow, "right");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                        drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
+                        startPlayerMove(board);
+                    }
                 });
 
                 arrowRightButton.setOnMouseClicked(e -> {
-                    gameboard.addTileToRow(finalRow, "left");
-                    drawGameBoard(board);
-                    controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                    if (controller.getFloorTilePlaced() == Controller.TilePlaced.REQUIRED) {
+                        gameboard.addTileToRow(finalRow, "left");
+                        drawGameBoard(board);
+                        controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
+                        setCurrentDrawnTile(FACE_DOWN_TILE);
+                        drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
+                        startPlayerMove(board);
+                    }
                 });
 
                 StackPane tileStackOne = new StackPane(arrowRightButton);
@@ -318,11 +523,12 @@ public class Game extends Application {
         Gameboard gameboard = controller.getGameboard();
         for (int row = 1; row <=  boardRows; row++) {
             for (int col = 1; col <= boardCols; col++) {
-                FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][col - 1];
+                FloorTile tileAtCoords = gameboard.getBoardState()[row - 1][col - 1];
+                board.getChildren().remove(tileAtCoords);
                 Image tileImg = null;
                 try {
                     FileManager.setDirectory(Settings.get("tile_images_url"), false);
-                    tileImg = FileManager.readImage(boardStateAtCoords.getId() + "", "png");
+                    tileImg = FileManager.readImage(tileAtCoords.getId() + "", "png");
                 } catch (NoSuchDirectory noSuchDirectory) {
                     noSuchDirectory.printStackTrace();
                 } catch (IOException e) {

@@ -39,17 +39,17 @@ public class DefaultSettings {
         defaultSettings.put("exit_button_unpressed", "resources/images/exit unpressed.png");
         defaultSettings.put("exit_button_pressed", "resources/images/exit pressed.png");
 
-        defaultSettings.put("tile_route_id_0", "abcd");
-        defaultSettings.put("tile_route_id_1", "bd");
-        defaultSettings.put("tile_route_id_2", "ac");
-        defaultSettings.put("tile_route_id_3", "ab");
-        defaultSettings.put("tile_route_id_4", "bc");
-        defaultSettings.put("tile_route_id_5", "cd");
-        defaultSettings.put("tile_route_id_6", "da");
-        defaultSettings.put("tile_route_id_7", "abc");
-        defaultSettings.put("tile_route_id_8", "bcd");
-        defaultSettings.put("tile_route_id_9", "cda");
-        defaultSettings.put("tile_route_id_10", "dab");
+        defaultSettings.put("tile_route_id_0", "a,b,c,d");
+        defaultSettings.put("tile_route_id_1", "b,d");
+        defaultSettings.put("tile_route_id_2", "a,c");
+        defaultSettings.put("tile_route_id_3", "a,b");
+        defaultSettings.put("tile_route_id_4", "b,c");
+        defaultSettings.put("tile_route_id_5", "c,d");
+        defaultSettings.put("tile_route_id_6", "d,a");
+        defaultSettings.put("tile_route_id_7", "a,b,c");
+        defaultSettings.put("tile_route_id_8", "b,c,d");
+        defaultSettings.put("tile_route_id_9", "c,d,a");
+        defaultSettings.put("tile_route_id_10", "d,a,b");
         defaultSettings.put("num_tile_routes", "11");
         defaultSettings.put("max_tiles", "10");
 
@@ -69,6 +69,12 @@ public class DefaultSettings {
         defaultSettings.put("serialized_objects_folder", "data/serializing/serialized/");
 
         defaultSettings.put("tutorial_text", "TUTORIAL TEXT GOES HERE!");
+
+        defaultSettings.put("tiles_fed_below", "0,2,4,5,7,8,9");
+        defaultSettings.put("tiles_fed_above", "0,2,3,6,7,9,10");
+        defaultSettings.put("tiles_fed_left", "0,1,5,6,8,9,10");
+        defaultSettings.put("tiles_fed_right", "0,1,3,4,7,8,10");
+
 
         return defaultSettings;
     }
