@@ -67,6 +67,10 @@ public class Controller implements Serializable {
      * UUID of an instance of the controller.
      */
     private final String uuid;
+    /**
+     * The maximum number of turns until we need to loop back to 1.
+     */
+    private static int maxTurnCount;
 
     /**
      * Controller deals with game logic, loading and saving.
@@ -130,6 +134,7 @@ public class Controller implements Serializable {
      */
     public void setPlayers(Player[] players) {
         this.players = players;
+        maxTurnCount = players.length;
     }
 
     /**
@@ -234,6 +239,10 @@ public class Controller implements Serializable {
      * Updates the playerTurn counter to the next term.
      */
     public void nextPlayerTurn() {
+        nextGlobalTurn();
+        if (getPlayerTurn() == maxTurnCount) {
+            setPlayerTurn(0);
+        }
         this.playerTurn++;
     }
     /**
