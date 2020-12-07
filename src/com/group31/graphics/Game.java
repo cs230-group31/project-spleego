@@ -299,6 +299,7 @@ public class Game extends Application {
             });
             stackNodeAt(board, moveArrow, playerX + 1, playerY);
         }
+        controller.nextPlayerTurn();
     }
 
     private void saveAndExit(Stage stage) {
@@ -367,7 +368,6 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
                     }
                 });
@@ -378,7 +378,6 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
                     }
                 });
@@ -401,7 +400,6 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
                     }
                 });
@@ -412,7 +410,6 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
                     }
                 });
