@@ -85,18 +85,11 @@ public class Controller implements Serializable {
     }
 
     /**
-     * Plays the game by looping until a player has won.
-     */
-    public void playGame() {
-    }
-
-    /**
      * Starts a new game by making the playerTurn 0.
      */
     public void startGame() {
-        playerTurn = 0;
+        playerTurn = 1;
         floorTilePlaced = TilePlaced.NOT_REQUIRED;
-        playGame();
     }
 
     /**
