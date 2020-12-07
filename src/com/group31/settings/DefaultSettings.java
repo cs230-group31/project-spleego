@@ -78,6 +78,8 @@ public class DefaultSettings {
         defaultSettings.put("tiles_fed_left", "0,1,5,6,8,9,10");
         defaultSettings.put("tiles_fed_right", "0,1,3,4,7,8,10");
 
+        defaultSettings.put("level_files", "data/level_files/");
+
 
         return defaultSettings;
     }

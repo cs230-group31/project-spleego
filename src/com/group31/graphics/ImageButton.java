@@ -68,4 +68,14 @@ public class ImageButton extends Parent {
         ImageView imageView = new ImageView(buttonImage);
         this.getChildren().add(imageView);
     }
+
+    /**
+     * Represents a JavaFX button that presents as an image.
+     * Has only one image.
+     * @param buttonImage the image for the button
+     */
+    public ImageButton(final Image buttonImage) {
+        ImageView imageView = new ImageView(buttonImage);
+        this.getChildren().add(imageView);
+    }
 }

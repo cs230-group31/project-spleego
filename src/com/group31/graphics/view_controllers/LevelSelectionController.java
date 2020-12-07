@@ -64,11 +64,11 @@ public class LevelSelectionController {
     /**
      * Returns initialised players.
      * @param profiles list of profiles to get player information from
+     * @param fileName filename of the game save to load players from
      * @return initialised players
      */
-    public static Player[] initPlayers(ArrayList<PlayerProfile> profiles) {
+    public static Player[] initPlayers(ArrayList<PlayerProfile> profiles, String fileName) {
         ArrayList<Player> players = new ArrayList<>();
-        String fileName = "default level.txt";
         String delimiter = ",";
         ArrayList<String> playerLocations = new ArrayList<>();
         try {
@@ -120,5 +120,24 @@ public class LevelSelectionController {
             }
         }
         return gameSaveNames;
+    }
+
+    /**
+     * Returns a list of the pre-defined level file names.
+     * @return a list of the pre-defined level file names
+     */
+    public static ArrayList<String> getPredefinedLevelNames() {
+        ArrayList<String> fileNames = new ArrayList<>();
+        try {
+            FileManager.setDirectory(Settings.get("level_files"), false);
+            File[] files = FileManager.getAllFilesInDir();
+            for (File file : files) {
+                String rawFileName = file.getName().replaceFirst("[.][^.]+$", "");
+                fileNames.add(rawFileName);
+            }
+        } catch (NoSuchDirectory e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        return fileNames;
     }
 }
