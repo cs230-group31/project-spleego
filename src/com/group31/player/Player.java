@@ -2,7 +2,6 @@ package com.group31.player;
 
 import com.group31.tile_manager.Tile;
 import javafx.scene.image.Image;
-import javafx.scene.paint.Color;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -18,11 +17,6 @@ public class Player implements Serializable {
      * Player's sprite.
      */
     private final Image sprite;
-
-    /**
-     * Player's colour.
-     */
-    private final Color colour;
 
     /**
      * Player's current location on the board.
@@ -67,13 +61,11 @@ public class Player implements Serializable {
      * Class for a player who has or is playing the game.
      * @param name human name of the player
      * @param sprite player's picture
-     * @param colour player's colour
-     * @param location player's starting location on the gameboard
+     * @param location player's current location on the board
      */
-    public Player(String name, Image sprite, Color colour, int[] location) {
+    public Player(String name, Image sprite, int[] location) {
         this.name = name;
         this.sprite = sprite;
-        this.colour = colour;
         this.location = location;
 
         this.instanceUuid = UUID.randomUUID().toString();
@@ -86,6 +78,7 @@ public class Player implements Serializable {
     /**
      * Class for a player who has or is playing the game.
      * @param name human name of the player
+     * @param location player's current location on the board
      */
     public Player(String name, int[] location) {
         this.name = name;
@@ -97,7 +90,6 @@ public class Player implements Serializable {
         this.location = location;
 
         this.sprite = null;
-        this.colour = null;
     }
 
     /**
@@ -161,15 +153,6 @@ public class Player implements Serializable {
      */
     public Image getSprite() {
         return this.sprite;
-    }
-
-    /**
-     * Returns the player colour.
-     * @return the player's colour
-     */
-    public Color getColour() {
-
-        return this.colour;
     }
 
     /**
