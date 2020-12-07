@@ -1,6 +1,8 @@
 package com.group31.graphics;
 
 import java.util.ArrayList;
+
+import com.group31.controller.Validation;
 import com.group31.tile_manager.Tile;
 import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
@@ -15,6 +17,7 @@ import com.group31.tile_manager.FloorTile;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -56,6 +59,10 @@ public class Game extends Application {
      * File Path for the pressed `EXIT` button.
      */
     private static final String CLOSE_PRESSED_URL = "resources/images/close pressed.png";
+    /**
+     * File Path for the return button image.
+     */
+    private static final String RETURN_BUTTON_URL = "resources/images/return button.png";
     /**
      * File Path for the draw tile button.
      */
@@ -154,17 +161,30 @@ public class Game extends Application {
         StackPane.setAlignment(close, Pos.TOP_RIGHT);
         topThing.setPickOnBounds(false);
         root.setTop(topThing);
+
         root.setRight(playerTwoHand);
+
         StackPane bottomPane = new StackPane();
         bottomPane.getChildren().add(playerThreeHand);
         ImageButton drawTile = new ImageButton(DRAW_TILE_URL);
-        drawTile.setOnMouseClicked(e -> drawTile());
+        drawTile.setOnMouseClicked(e -> drawTile(board));
         drawShowTile.getChildren().add(drawTile);
         bottomPane.getChildren().add(drawShowTile);
+        ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
+        returnSign.setOnMouseClicked(e -> stage.setScene(mainScene));
+        HBox bottomBox = new HBox();
+        bottomBox.getChildren().add(returnSign);
+        bottomBox.setPickOnBounds(false);
+        bottomPane.getChildren().add(bottomBox);
+        playerThreeHand.setPickOnBounds(false);
+        drawShowTile.setPickOnBounds(false);
         bottomPane.setPickOnBounds(false);
-        StackPane.setAlignment(drawShowTile, Pos.BOTTOM_LEFT);
+        drawShowTile.setAlignment(Pos.BOTTOM_LEFT);
+        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
         root.setBottom(bottomPane);
+
         root.setLeft(playerFourHand);
+
         root.setCenter(board);
         drawTileArrows(board);
         drawGameBoard(board);
@@ -185,16 +205,15 @@ public class Game extends Application {
         for (Player player : players) {
             int[] location = player.getCurrentLocation();
             ImageView playerSprite = new ImageView(player.getSprite());
-            stackImageAt(board, playerSprite, location[0], location[1]);
+            stackNodeAt(board, playerSprite, location[0], location[1]);
         }
     }
 
-    private static void stackImageAt(GridPane board, ImageView imageView, int atRow, int atCol) {
-        board.add(imageView, atCol, atRow);
-//        }
+    private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
+        board.add(node, atCol, atRow);
     }
 
-    private void drawTile() {
+    private void drawTile(GridPane board) {
         Controller controller = Controller.getInstance();
         int playerTurn = controller.getPlayerTurn();
         Player currentPlayer = controller.getPlayers()[playerTurn];
@@ -209,12 +228,13 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
+        startPlayerMove(board);
         if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
             controller.setPlayerTurn(0);
         }
     }
 
-    private void startPlayerMove() {
+    private void startPlayerMove(GridPane board) {
         Controller controller = Controller.getInstance();
         Gameboard gameboard = controller.getGameboard();
         Player[] players = controller.getPlayers();
@@ -222,6 +242,67 @@ public class Game extends Application {
         int playerX = currentPlayer.getCurrentLocation()[0];
         int playerY = currentPlayer.getCurrentLocation()[1];
         FloorTile playerTile = gameboard.getBoardState()[playerX][playerY];
+        boolean upIsValid;
+        try {
+            upIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX][playerY - 1].getId(), "up");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            upIsValid = false;
+        }
+        boolean downIsValid;
+        try {
+            downIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX][playerY + 1].getId(), "down");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            downIsValid = false;
+        }
+        boolean leftIsValid;
+        try {
+            leftIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX - 1][playerY].getId(), "left");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            leftIsValid = false;
+        }
+        boolean rightIsValid;
+        try {
+            rightIsValid = Validation.validRouting(playerTile.getId(),
+                    gameboard.getBoardState()[playerX - 1][playerY].getId(), "right");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            rightIsValid = false;
+        }
+        if (upIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move up.png");
+            moveArrow.setOnMouseClicked(e -> {
+                currentPlayer.setLocation(playerX, playerY - 1);
+                drawGameBoard(board);
+            });
+            stackNodeAt(board, moveArrow, playerX, playerY - 1);
+        }
+        if (downIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move down.png");
+            moveArrow.setOnMouseClicked(e -> {
+                currentPlayer.setLocation(playerX, playerY + 1);
+                drawGameBoard(board);
+            });
+            stackNodeAt(board, moveArrow, playerX, playerY + 1);
+        }
+        if (leftIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move left.png");
+            moveArrow.setOnMouseClicked(e -> {
+                currentPlayer.setLocation(playerX - 1, playerY);
+                drawGameBoard(board);
+            });
+            stackNodeAt(board, moveArrow, playerX - 1, playerY);
+        }
+        if (rightIsValid) {
+            ImageButton moveArrow = new ImageButton("resources/images/tiles/move right.png");
+            moveArrow.setOnMouseClicked(e -> {
+                currentPlayer.setLocation(playerX + 1, playerY);
+                drawGameBoard(board);
+            });
+            stackNodeAt(board, moveArrow, playerX + 1, playerY);
+        }
+        controller.nextPlayerTurn();
     }
 
     private void saveAndExit(Stage stage) {
@@ -360,12 +441,12 @@ public class Game extends Application {
         Gameboard gameboard = controller.getGameboard();
         for (int row = 1; row <=  boardRows; row++) {
             for (int col = 1; col <= boardCols; col++) {
-                FloorTile boardStateAtCoords = gameboard.getBoardState()[row - 1][col - 1];
-                board.getChildren().remove(boardStateAtCoords);
+                FloorTile tileAtCoords = gameboard.getBoardState()[row - 1][col - 1];
+                board.getChildren().remove(tileAtCoords);
                 Image tileImg = null;
                 try {
                     FileManager.setDirectory(Settings.get("tile_images_url"), false);
-                    tileImg = FileManager.readImage(boardStateAtCoords.getId() + "", "png");
+                    tileImg = FileManager.readImage(tileAtCoords.getId() + "", "png");
                 } catch (NoSuchDirectory noSuchDirectory) {
                     noSuchDirectory.printStackTrace();
                 } catch (IOException e) {

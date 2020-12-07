@@ -46,11 +46,13 @@ public class Validation {
     }
 
     /**
-     *
-     * @param currentTileId
-     * @param neighbourTileId
-     * @param neighbourDirection
-     * @return
+     * Takes the current tile and a neighbouring tile, plus the direction to that tile.
+     * Checks to see if the neighbouring tile is in the set of tiles that the current
+     * tile connects to.
+     * @param currentTileId the current tile
+     * @param neighbourTileId a tile next to the current tile
+     * @param neighbourDirection the direction the neighbouring tile is from the current one
+     * @return true if the two tiles connect
      */
     public static boolean validRouting(int currentTileId, int neighbourTileId, String neighbourDirection) {
         String delimiter = ",";
