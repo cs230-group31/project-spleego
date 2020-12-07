@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.Collections;
 
 /**
- * @author liamdp
+ * @author liam
  */
 public class LevelSelectionController {
 

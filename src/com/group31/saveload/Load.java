@@ -18,7 +18,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 /**
- * @author Aaron, liamdp
+ * @author Aaron, liam
  */
 public class Load {
     /**

@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
- * @author liamdp
+ * @author liam
  */
 public class DefaultSettings {
 

@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
- * @author Moe, Liam, Aaron
+ * @author Abdullah(Moe), Liam, Aaron
  */
 public class Main {
 
@@ -117,24 +117,6 @@ public class Main {
         return new Gameboard(BOARD_ROWS, BOARD_COLS);
     }
 
-//    /**
-//     * Initialises players.
-//     * @param numPlayers the number of players in the game.
-//     * @param playerLocation arraylist containing all player locations.
-//     * @return New instance of player depending on how many players are in the game.
-//     */
-//    private static Player[] initPlayers(int numPlayers, ArrayList<String> playerLocation) {
-//        Player[] players = new Player[numPlayers];
-//        for (int i = 0; i <= numPlayers - 1; i++) {
-//            String currentPlayerLocation = playerLocation.get(i);
-//            String[] splitLocations = currentPlayerLocation.split(",");
-//            int[] location = {Integer.parseInt(splitLocations[0]), Integer.parseInt(splitLocations[1])};
-//            players[i] = new Player(null, null, null, location);
-//        }
-//
-//        return players;
-//    }
-
     /**
      * Initialises controller.
      */
@@ -142,17 +124,8 @@ public class Main {
 
         try {
             HashMap<String, Object> components = Load.loadNewGameFromFile("default level.txt");
-            //Player[] players = initPlayers(2, (ArrayList<String>) components.get("playerLocations"));
             Gameboard gameboard = (Gameboard) components.get("Gameboard");
             SilkBag silkbag = (SilkBag) components.get("SilkBag");
-//            ArrayList<String> playerLocations = (ArrayList<String>) components.get("playerLocations");
-//            for (int i = 0; i < players.length; i++) {
-//                String startingLocations = playerLocations.get(i);
-//                String[] coordinates = startingLocations.split(",");
-//                int playerX = Integer.parseInt(coordinates[0]);
-//                int playerY = Integer.parseInt(coordinates[1]);
-//                players[i].setLocation(playerX, playerY);
-//            }
             // Get instance of controller as Controller is a singleton.
             Controller controller = Controller.getInstance();
             // Initialise controller.

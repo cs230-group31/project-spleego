@@ -9,7 +9,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * @author aaron
+ * @author Aaron
  */
 public class ImageButton extends Parent {
     /**

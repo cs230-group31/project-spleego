@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.UUID;
 
 /**
- * @author liamdp, Moe, Aaron
+ * @author liam, Abdullah(Moe), Aaron
  */
 public class Controller implements Serializable {
     /**

@@ -85,7 +85,6 @@ public class FireTile extends ActionTile {
                 valid = true;
             }
         }
-
         return valid;
     }
 }

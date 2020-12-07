@@ -108,6 +108,10 @@ public class PlayerSelection {
 
     }
 
+    /**
+     * Returns a list of players in the game
+     * @return a list of players in the game
+     */
     private static ArrayList<PlayerProfile> getPlayerProfiles() {
         ArrayList<PlayerProfile> playersInGame = new ArrayList<>();
         String object = "player";

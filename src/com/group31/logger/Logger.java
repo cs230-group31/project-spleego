@@ -3,7 +3,7 @@ package com.group31.logger;
 import java.sql.Timestamp;
 
 /**
- * @author liamdp
+ * @author liam
  */
 public class Logger {
 

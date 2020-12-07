@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  * This class is subclass of Tile (no action tile).
- * @author aaron
+ * @author Aaron
  */
 public class FloorTile extends Tile implements Serializable {
     /**
@@ -111,70 +111,4 @@ public class FloorTile extends Tile implements Serializable {
     public void setOnIce(boolean onIce) {
         this.onIce = onIce;
     }
-
-
-//    /**
-//     * change the current tile position on the gameboard.
-//     * @param incAmount amount of movement
-//     */
-//    public void incCoords(int[] incAmount){
-//        coord[X] += incAmount[X];
-//        coord[Y] += incAmount[Y];
-//    }
-
-
-//    private void movementEffect(int id){
-//
-//        switch (this.id) {
-//            case 1:
-//                //movement effect code
-//                break;
-//            case 2:
-//                //movement effect code
-//                break;
-//            case 3:
-//                //movement effect code
-//                break;
-//            case 4:
-//                //movement effect code
-//                break;
-//            case 5:
-//                //movement effect code
-//                break;
-//            case 6:
-//                //movement effect code
-//                break;
-//            case 7:
-//                //movement effect code
-//                break;
-//            case 8:
-//                //movement effect code
-//                break;
-//            case 9:
-//                //movement effect code
-//                break;
-//
-//        }
-//    }
-
-//    /**
-// * This class is subclass of Tile (no action tile)
-//     **/
-//public class FloorTile extends Tile {
-//    /**
-//     *  Uses superclass Constructor
-//     * @param routing
-//     * @param id
-//     * @param coord
-//     */
-//    public FloorTile(String routing, int id, int[] coord){
-//        super(routing, id, coord, false);
-//        Logger.log("Floor tile created", Logger.Level.INFO);
-//    }
-//    public FloorTile(String routing, int id) {
-//        super(routing, id, false);
-//        Logger.log("Floor tile created", Logger.Level.INFO);
-//    }
-//}
-
 }

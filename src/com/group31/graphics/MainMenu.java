@@ -29,7 +29,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 /**
- * @author aaron
+ * @author Aaron
  */
 public class MainMenu extends Application {
     /**

@@ -11,7 +11,7 @@ import java.io.FileNotFoundException;
 import java.io.Serializable;
 
 /**
- * @author aaron
+ * @author Aaron
  */
 public class Gameboard implements Serializable {
     /**

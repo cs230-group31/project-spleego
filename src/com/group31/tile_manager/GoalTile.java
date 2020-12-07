@@ -4,7 +4,7 @@ import javafx.scene.image.Image;
 
 /**
  * This represents the Goal Tile.
- * @author aaron
+ * @author Aaron
  */
 public class GoalTile extends FloorTile {
 
