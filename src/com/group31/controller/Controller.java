@@ -142,7 +142,7 @@ public class Controller implements Serializable {
         for (Player player : players) {
             int playerX = player.getCurrentLocation()[0];
             int playerY = player.getCurrentLocation()[1];
-            if (gameboard.getTile(playerX - 1, playerY - 1).getId() == 0) {
+            if (gameboard.getTile(playerX, playerY).getId() == 0) {
                 gameWon = true;
                 return player;
             }

@@ -32,7 +32,7 @@ public class Player implements Serializable {
     /**
      * Stores the player's hand.
      */
-    private final ArrayList<Tile> hand = new ArrayList<>();
+    private final ArrayList<Tile> hand;
 
     /**
      * UUID of an instance of the Player class.
@@ -80,6 +80,24 @@ public class Player implements Serializable {
         this.wins = 0;
         this.losses = 0;
         this.gamesPlayed = 0;
+        this.hand = new ArrayList<>();
+    }
+
+    /**
+     * Class for a player who has or is playing the game.
+     * @param name human name of the player
+     */
+    public Player(String name, int[] location) {
+        this.name = name;
+        this.instanceUuid = UUID.randomUUID().toString();
+        this.wins = 0;
+        this.losses = 0;
+        this.gamesPlayed = 0;
+        this.hand = new ArrayList<>();
+        this.location = location;
+
+        this.sprite = null;
+        this.colour = null;
     }
 
     /**

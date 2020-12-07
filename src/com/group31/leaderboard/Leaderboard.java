@@ -34,6 +34,7 @@ public class Leaderboard {
                 String rawFileName = controller.getName().replaceFirst("[.][^.]+$", "");
                 PlayerProfile playerProfile = (PlayerProfile) Serializer.deserialize(rawFileName, object);
                 players.add(playerProfile);
+                playerProfile.save();
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);

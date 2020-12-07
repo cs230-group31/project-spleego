@@ -122,7 +122,7 @@ public class Load {
                 String rawFileName = file.getName().replaceFirst("[.][^.]+$", "");
                 PlayerProfile player = (PlayerProfile) Serializer.deserialize(rawFileName, object);
                 players.add(player);
-                Serializer.serialize(player, player.getName(), object);
+                player.save();
             }
         } catch (NoSuchDirectory | ObjectNeverSerialized e) {
             Logger.log(e.getMessage(), Logger.Level.ERROR);

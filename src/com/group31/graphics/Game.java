@@ -92,7 +92,7 @@ public class Game extends Application {
     /**
      * The maximum number of turns until we need to loop back to 1.
      */
-    private static final int MAX_TURN_COUNT = 4;
+    private static final int MAX_TURN_COUNT = Controller.getInstance().getPlayers().length - 1;
     /*
      * Player numbers enum.
      */
@@ -209,8 +209,8 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
-        if (controller.getPlayerTurn() == MAX_TURN_COUNT - 1) {
-            controller.setPlayerTurn(1);
+        if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
+            controller.setPlayerTurn(0);
         }
     }
 
