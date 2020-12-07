@@ -64,6 +64,7 @@ public class LevelSelectionController {
     /**
      * Returns initialised players.
      * @param profiles list of profiles to get player information from
+     * @param fileName filename of the game save to load players from
      * @return initialised players
      */
     public static Player[] initPlayers(ArrayList<PlayerProfile> profiles, String fileName) {
