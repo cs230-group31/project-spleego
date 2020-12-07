@@ -97,10 +97,6 @@ public class Game extends Application {
      */
     private static final Tile FACE_DOWN_TILE = new Tile(-1);
     /**
-     * The maximum number of turns until we need to loop back to 1.
-     */
-    private static final int MAX_TURN_COUNT = Controller.getInstance().getPlayers().length;
-    /*
      * Player numbers enum.
      */
     public enum PlayerNumber {
@@ -210,13 +206,13 @@ public class Game extends Application {
     }
 
     private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
-        board.add(node, atCol, atRow);
+        board.add(node, atRow, atCol);
     }
 
     private void drawTile() {
         Controller controller = Controller.getInstance();
         int playerTurn = controller.getPlayerTurn();
-        Player currentPlayer = controller.getPlayers()[playerTurn];
+        Player currentPlayer = controller.getPlayers()[playerTurn - 1];
         Tile drawnTile = controller.getSilkbag().drawTile();
         drawnTile.updateDrawnThisTurn(true);
         setCurrentDrawnTile(drawnTile);
@@ -228,9 +224,6 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
-        if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
-            controller.setPlayerTurn(1);
-        }
     }
 
     private static void startPlayerMove(GridPane board) {
@@ -265,7 +258,7 @@ public class Game extends Application {
         boolean rightIsValid;
         try {
             rightIsValid = Validation.validRouting(playerTile.getId(),
-                    gameboard.getBoardState()[playerX - 1][playerY].getId(), "right");
+                    gameboard.getBoardState()[playerX + 1][playerY].getId(), "right");
         } catch (ArrayIndexOutOfBoundsException e) {
             rightIsValid = false;
         }
@@ -274,32 +267,40 @@ public class Game extends Application {
             moveArrow.setOnMouseClicked(e -> {
                 currentPlayer.setLocation(playerX, playerY - 1);
                 drawGameBoard(board);
+
+                drawPlayers(board);
             });
-            stackNodeAt(board, moveArrow, playerX, playerY - 1);
+            stackNodeAt(board, moveArrow, playerX + 1, playerY);
         }
         if (downIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move down.png");
             moveArrow.setOnMouseClicked(e -> {
                 currentPlayer.setLocation(playerX, playerY + 1);
                 drawGameBoard(board);
+
+                drawPlayers(board);
             });
-            stackNodeAt(board, moveArrow, playerX, playerY + 1);
+            stackNodeAt(board, moveArrow, playerX + 1, playerY + 2);
         }
         if (leftIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move left.png");
             moveArrow.setOnMouseClicked(e -> {
                 currentPlayer.setLocation(playerX - 1, playerY);
                 drawGameBoard(board);
+
+                drawPlayers(board);
             });
-            stackNodeAt(board, moveArrow, playerX - 1, playerY);
+            stackNodeAt(board, moveArrow, playerX, playerY + 1);
         }
         if (rightIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move right.png");
             moveArrow.setOnMouseClicked(e -> {
                 currentPlayer.setLocation(playerX + 1, playerY);
                 drawGameBoard(board);
+
+                drawPlayers(board);
             });
-            stackNodeAt(board, moveArrow, playerX + 1, playerY);
+            stackNodeAt(board, moveArrow, playerX + 2, playerY + 1);
         }
         controller.nextPlayerTurn();
     }
