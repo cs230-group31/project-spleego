@@ -109,7 +109,7 @@ public class PlayerSelection {
     }
 
     /**
-     * Returns a list of players in the game
+     * Returns a list of players in the game.
      * @return a list of players in the game
      */
     private static ArrayList<PlayerProfile> getPlayerProfiles() {
