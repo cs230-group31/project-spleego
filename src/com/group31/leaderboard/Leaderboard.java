@@ -1,10 +1,8 @@
 package com.group31.leaderboard;
 
-import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
 import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.logger.Logger;
-import com.group31.player.Player;
 import com.group31.player.PlayerProfile;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
@@ -13,7 +11,6 @@ import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Leaderboard {
 

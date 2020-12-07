@@ -1,7 +1,6 @@
 package com.group31.graphics;
 
 import com.group31.leaderboard.Leaderboard;
-import com.group31.player.Player;
 import com.group31.player.PlayerProfile;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

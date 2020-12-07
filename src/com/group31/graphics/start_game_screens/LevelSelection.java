@@ -74,7 +74,8 @@ public class LevelSelection {
      * @param playerSelection instance of the Player Selection scene
      * @param playerProfiles
      */
-    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection, ArrayList<PlayerProfile> playerProfiles) {
+    public static void launch(Stage stage, Scene mainMenu, Scene playerSelection,
+                              ArrayList<PlayerProfile> playerProfiles) {
         LevelSelection levelSelection = new LevelSelection();
         levelSelection.start(stage, mainMenu, playerSelection);
     }

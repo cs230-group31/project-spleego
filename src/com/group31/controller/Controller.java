@@ -43,43 +43,6 @@ public class Controller implements Serializable {
      */
     private SilkBag silkBag;
     /**
-     * Returns the current player turn.
-     * @return the player turn
-     */
-    public int getPlayerTurn() {
-        return playerTurn;
-    }
-
-    /**
-     * return the current player turn.
-     * @return the current player turn.
-     */
-    public Game.PlayerNumber getPlayerTurnEnum() {
-        return Game.PlayerNumber.values()[playerTurn];
-    }
-    /**
-     * Sets the current turn.
-     * @param playerTurn the turn count
-     */
-    public void setPlayerTurn(int playerTurn) {
-        this.playerTurn = playerTurn;
-    }
-    /**
-     * Updates the playerTurn counter to the next term.
-     */
-    public void nextPlayerTurn() {
-        this.playerTurn++;
-    }
-
-    /**
-     * Returns the current state of FloorTilePlaced.
-     * @return the current state of FloorTilePlaced
-     */
-    public TilePlaced getFloorTilePlaced() {
-        return floorTilePlaced;
-    }
-
-    /**
      * The FloorTile waiting to be placed by the player.
      */
     private FloorTile currentFloorTile;
@@ -96,7 +59,10 @@ public class Controller implements Serializable {
      * Which player's turn it is.
      */
     private int playerTurn;
-
+    /**
+     * Keeps track of how many turns have passed.
+     */
+    private int globalTurnCount;
     /**
      * UUID of an instance of the controller.
      */
@@ -250,6 +216,54 @@ public class Controller implements Serializable {
         }
     }
     /**
+     * Returns the current player turn.
+     * @return the player turn
+     */
+    public int getPlayerTurn() {
+        return playerTurn;
+    }
+
+    /**
+     * return the current player turn.
+     * @return the current player turn.
+     */
+    public Game.PlayerNumber getPlayerTurnEnum() {
+        return Game.PlayerNumber.values()[playerTurn];
+    }
+    /**
+     * Sets the current turn.
+     * @param playerTurn the turn count
+     */
+    public void setPlayerTurn(int playerTurn) {
+        this.playerTurn = playerTurn;
+    }
+    /**
+     * Updates the playerTurn counter to the next term.
+     */
+    public void nextPlayerTurn() {
+        this.playerTurn++;
+    }
+    /**
+     * Updates the global turn counter to the next term.
+     */
+    public void nextGlobalTurn() {
+        this.globalTurnCount++;
+    }
+    /**
+     * Returns the current state of FloorTilePlaced.
+     * @return the current state of FloorTilePlaced
+     */
+    public TilePlaced getFloorTilePlaced() {
+        return floorTilePlaced;
+    }
+    /**
+     * Sets the floorTilePlaced to PLACED.
+     * @param tilePlaced ENUM of the state of the floorTile.
+     */
+    public void setFloorTilePlaced(TilePlaced tilePlaced) {
+        this.floorTilePlaced = tilePlaced;
+    }
+    /**
      * Saves the game.
      */
     public void saveGame() {
@@ -278,7 +292,6 @@ public class Controller implements Serializable {
     public FloorTile getCurrentFloorTile() {
         return currentFloorTile;
     }
-
     /**
      * Creates a new instance of Controller if one does not exist,
      * then returns the current instance of Controller.
@@ -313,14 +326,6 @@ public class Controller implements Serializable {
     public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
-    }
-
-    /**
-     * Sets the floorTilePlaced to PLACED.
-     * @param tilePlaced ENUM of the state of the floorTile.
-     */
-    public void setFloorTilePlaced(TilePlaced tilePlaced) {
-        this.floorTilePlaced = tilePlaced;
     }
 
     /**

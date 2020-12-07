@@ -2,7 +2,6 @@ package com.group31.graphics;
 
 import com.group31.logger.Logger;
 import com.group31.settings.Settings;
-import com.sun.org.apache.bcel.internal.generic.RET;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
