@@ -38,6 +38,11 @@ public class Tile implements Serializable {
     private boolean drawnThisTurn;
 
     /**
+     * IDs above this are action tiles.
+     */
+    private final int actionTileIdStart = 11;
+
+    /**
      * Tile is a piece that can be played on the gameboard. There are special tiles (action tiles) and regular tiles
      * (floor tiles) as well as a goal tile.
      * @param id the Tile's ID
@@ -57,6 +62,7 @@ public class Tile implements Serializable {
      */
     public Tile(int id) {
         this.id = id;
+        this.actionTile = id >= actionTileIdStart;
     }
 
     /**
