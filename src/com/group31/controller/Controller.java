@@ -26,6 +26,20 @@ public class Controller implements Serializable {
          */
         NOT_REQUIRED
     }
+    public enum MoveMade {
+        /**
+         * Player has been moved.
+         */
+        MOVED,
+        /**
+         * Player needs to be moved.
+         */
+        REQUIRED,
+        /**
+         * Player does not need to be moved.
+         */
+        NOT_REQUIRED
+    }
     /**
      * Instance of the controller.
      */
@@ -51,6 +65,11 @@ public class Controller implements Serializable {
      * Use The Enum.
      */
     private TilePlaced floorTilePlaced;
+    /**
+     * Keeps track of if a player has moved yet.
+     * Use The Enum.
+     */
+    private MoveMade playerMoved;
     /**
      *  Tracks if the game has been won.
      */
@@ -252,18 +271,32 @@ public class Controller implements Serializable {
         this.globalTurnCount++;
     }
     /**
-     * Returns the current state of FloorTilePlaced.
-     * @return the current state of FloorTilePlaced
+     * Returns the current state of floorTilePlaced.
+     * @return the current state of floorTilePlaced
      */
     public TilePlaced getFloorTilePlaced() {
         return floorTilePlaced;
     }
     /**
-     * Sets the floorTilePlaced to PLACED.
+     * Sets the floorTilePlaced to Enum provided.
      * @param tilePlaced ENUM of the state of the floorTile.
      */
     public void setFloorTilePlaced(TilePlaced tilePlaced) {
         this.floorTilePlaced = tilePlaced;
+    }
+    /**
+     * Returns the current state of playerMoved.
+     * @return the current state of playerMoved
+     */
+    public MoveMade getPlayerMoved() {
+        return playerMoved;
+    }
+    /**
+     * Sets playerMoved to Enum provided.
+     * @param playerMoved ENUM of if the player has moved.
+     */
+    public void setPlayerMoved(MoveMade playerMoved) {
+        this.playerMoved = playerMoved;
     }
     /**
      * Saves the game.
@@ -328,6 +361,8 @@ public class Controller implements Serializable {
     public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
+        setPlayerMoved(MoveMade.NOT_REQUIRED);
+        setFloorTilePlaced(Controller.TilePlaced.NOT_REQUIRED);
     }
 
     /**
