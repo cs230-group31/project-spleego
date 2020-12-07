@@ -99,7 +99,7 @@ public class Game extends Application {
     /**
      * The maximum number of turns until we need to loop back to 1.
      */
-    private static final int MAX_TURN_COUNT = Controller.getInstance().getPlayers().length - 1;
+    private static final int MAX_TURN_COUNT = Controller.getInstance().getPlayers().length;
     /*
      * Player numbers enum.
      */
@@ -167,11 +167,11 @@ public class Game extends Application {
         StackPane bottomPane = new StackPane();
         bottomPane.getChildren().add(playerThreeHand);
         ImageButton drawTile = new ImageButton(DRAW_TILE_URL);
-        drawTile.setOnMouseClicked(e -> drawTile(board));
+        drawTile.setOnMouseClicked(e -> drawTile());
         drawShowTile.getChildren().add(drawTile);
         bottomPane.getChildren().add(drawShowTile);
         ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
-        returnSign.setOnMouseClicked(e -> stage.setScene(mainScene));
+        returnSign.setOnMouseClicked(e -> saveAndExit(stage));
         HBox bottomBox = new HBox();
         bottomBox.getChildren().add(returnSign);
         bottomBox.setPickOnBounds(false);
@@ -205,7 +205,7 @@ public class Game extends Application {
         for (Player player : players) {
             int[] location = player.getCurrentLocation();
             ImageView playerSprite = new ImageView(player.getSprite());
-            stackNodeAt(board, playerSprite, location[0], location[1]);
+            stackNodeAt(board, playerSprite, location[0] + 1, location[1] + 1);
         }
     }
 
@@ -213,7 +213,7 @@ public class Game extends Application {
         board.add(node, atCol, atRow);
     }
 
-    private void drawTile(GridPane board) {
+    private void drawTile() {
         Controller controller = Controller.getInstance();
         int playerTurn = controller.getPlayerTurn();
         Player currentPlayer = controller.getPlayers()[playerTurn];
@@ -228,13 +228,12 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
-        startPlayerMove(board);
         if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
-            controller.setPlayerTurn(0);
+            controller.setPlayerTurn(1);
         }
     }
 
-    private void startPlayerMove(GridPane board) {
+    private static void startPlayerMove(GridPane board) {
         Controller controller = Controller.getInstance();
         Gameboard gameboard = controller.getGameboard();
         Player[] players = controller.getPlayers();
@@ -371,8 +370,8 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
+                        startPlayerMove(board);
                     }
                 });
 
@@ -382,8 +381,8 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
+                        startPlayerMove(board);
                     }
                 });
 
@@ -405,8 +404,8 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
+                        startPlayerMove(board);
                     }
                 });
 
@@ -416,8 +415,8 @@ public class Game extends Application {
                         drawGameBoard(board);
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
-                        controller.nextPlayerTurn();
                         drawPlayers(board);
+                        startPlayerMove(board);
                     }
                 });
 
