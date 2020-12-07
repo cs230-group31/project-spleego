@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
- * @author liamdp
+ * @author liam
  */
 public class FileManager {
     /**

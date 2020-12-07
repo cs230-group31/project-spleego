@@ -16,7 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 /**
- * @author Moe, Liam
+ * @author Abdullah(Moe), Liam
  */
 public class LeaderboardScreen {
 

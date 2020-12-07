@@ -1,7 +1,7 @@
 package com.group31.controller;
 
 /**
- * @author liamp, Moe
+ * @author liam, Abdullah(Moe)
  */
 public class Movement {
 

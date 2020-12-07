@@ -9,7 +9,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
- * @author Moe, liamdp
+ * @author Abdullah(Moe), liam
  */
 public class ApiRequest {
 

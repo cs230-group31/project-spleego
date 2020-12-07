@@ -20,7 +20,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 
 /**
- * @author liamdp, Aaron, Emily
+ * @author liam, Aaron, Emily
  */
 public class TutorialPage {
     /**

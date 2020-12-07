@@ -23,7 +23,7 @@ import java.util.HashMap;
 
 
 /**
- * @author liamdp, Aaron
+ * @author liam, Aaron
  */
 public class LevelSelection {
 
@@ -84,20 +84,6 @@ public class LevelSelection {
             });
             gameSaveButtons.getChildren().add(defaultLevelButton);
         }
-
-//        for (PlayerProfile profile : playerProfiles) {
-//            if (profile.getGamesParticipating() != null) {
-//                for (String controllerId : profile.getGamesParticipating()) {
-//                    Button gameSave = new Button("Game: " + controllerId);
-//                    gameSave.setOnMouseClicked(e -> {
-//                        LevelSelectionController.loadGame(controllerId);
-//                        Controller.getInstance().startGame();
-//                        Game.launch(stage, mainMenu, playerProfiles);
-//                    });
-//                }
-//            }
-//        }
-
         allButtons.getChildren().addAll(gameSaveButtons, buttonBox);
 
         root.setTop(title);

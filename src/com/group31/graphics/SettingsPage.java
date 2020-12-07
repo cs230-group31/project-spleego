@@ -8,7 +8,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
- * @author liamdp
+ * @author liam
  */
 public class SettingsPage {
 

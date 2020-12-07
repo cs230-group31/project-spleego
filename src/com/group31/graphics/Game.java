@@ -210,6 +210,10 @@ public class Game extends Application {
         drawPlayers(board);
     }
 
+    /**
+     * Puts the players onto the board.
+     * @param board game board the players are to be put on
+     */
     private static void drawPlayers(GridPane board) {
         Controller controller = Controller.getInstance();
         Player[] players = controller.getPlayers();
@@ -220,15 +224,28 @@ public class Game extends Application {
         }
     }
 
+    /**
+     * Skips a players turn if they are unable to move.
+     */
     private static void skipPlayerMovement() {
         Controller controller = Controller.getInstance();
         controller.setPlayerMoved(Controller.MoveMade.NOT_REQUIRED);
     }
 
+    /**
+     * Takes a JavaFX Node and places it on top fo the StackPane at given location.
+     * @param board
+     * @param node
+     * @param atRow
+     * @param atCol
+     */
     private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
         board.add(node, atRow, atCol);
     }
 
+    /**
+     * Draws the tile onto the game board.
+     */
     private void drawTile() {
 
         Controller controller = Controller.getInstance();
@@ -248,6 +265,10 @@ public class Game extends Application {
 
     }
 
+    /**
+     * Starts the player movement.
+     * @param board game board the players move on
+     */
     private static void startPlayerMove(GridPane board) {
         Controller controller = Controller.getInstance();
         Gameboard gameboard = controller.getGameboard();
@@ -358,6 +379,10 @@ public class Game extends Application {
         controller.nextPlayerTurn();
     }
 
+    /**
+     * Saves and exits the game.
+     * @param stage JavaFX Stage of the main window
+     */
     private void saveAndExit(Stage stage) {
         Save.saveAll(profiles);
         Controller.resetInstance();
@@ -365,6 +390,10 @@ public class Game extends Application {
         stage.setScene(mainScene);
     }
 
+    /**
+     * Sets the current draw tile on to the game board.
+     * @param tile tile to be drawn on to the board
+     */
     private static void setCurrentDrawnTile(Tile tile) {
         drawShowTile.getChildren().remove(currentDrawnTile);
         Image tileImg = null;
@@ -380,6 +409,12 @@ public class Game extends Application {
         drawShowTile.getChildren().add(currentDrawnTile);
     }
 
+    /**
+     * Declares the winner and updates the stats of everyone that played.
+     * @param winner winner of the game
+     * @param stage JavaFX Stage of the main window
+     * @param mainMenu user is returned to mainMenu when winning screen is over
+     */
     private static void declareWinner(String winner, Stage stage, Scene mainMenu) {
         String object = "player";
         String winnerFileName = String.format("PlayerProfile_%s", winner);
