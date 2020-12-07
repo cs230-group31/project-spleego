@@ -61,6 +61,7 @@ public class Serializer {
      * @param identifier File name (excluding extension).
      * @param object the object to deserialize
      * @return Instance of player.
+     * @throws ObjectNeverSerialized if the object is not serialized
      */
     public static Object deserialize(String identifier, String object) throws ObjectNeverSerialized {
             try {

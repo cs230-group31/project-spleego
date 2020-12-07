@@ -65,6 +65,7 @@ public class SilkBag implements Serializable {
     /**
      * SilkBag contains all the tiles that can be played on the board.
      * @param maxTiles Total amount of tiles.
+     * @throws FileNotFoundException if the file is not found
      */
     public SilkBag(int maxTiles) throws FileNotFoundException {
         this.maxTiles = maxTiles;
@@ -178,6 +179,7 @@ public class SilkBag implements Serializable {
     /**
      * Generates a random action tile.
      * @return the action tile
+     * @throws FileNotFoundException if the file is not found
      */
     public Tile genActionTile() throws FileNotFoundException {
         Random random = new Random();
@@ -199,6 +201,7 @@ public class SilkBag implements Serializable {
      * Takes in a FloorTile ID and returns the fully created FloorTile.
      * @param id the ID of the tile to be created
      * @return the generated FloorTile
+     * @throws FileNotFoundException if the file is not found
      */
     public FloorTile genFloorTile(int id) throws FileNotFoundException {
         return getFloorTile(id);

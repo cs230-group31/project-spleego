@@ -56,6 +56,8 @@ public class Load {
      * Accesses the file given in its parameter and returns it as a Gameboard.
      * @param filename name of the file to load
      * @return the generated gameboard
+     * @throws NoSuchDirectory if the directory doesn't exist
+     * @throws FileNotFoundException if the file isn't found
      */
     public static HashMap<String, Object> loadNewGameFromFile(String filename)
             throws NoSuchDirectory, FileNotFoundException {

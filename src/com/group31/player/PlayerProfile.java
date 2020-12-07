@@ -34,7 +34,7 @@ public class PlayerProfile implements Serializable {
 
     /**
      * Set their wins, losses, name and games played.
-     * @param name
+     * @param name players name used
      */
     public PlayerProfile(String name) {
         this.name = name;

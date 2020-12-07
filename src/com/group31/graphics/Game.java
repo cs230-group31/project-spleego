@@ -234,10 +234,10 @@ public class Game extends Application {
 
     /**
      * Takes a JavaFX Node and places it on top fo the StackPane at given location.
-     * @param board
-     * @param node
-     * @param atRow
-     * @param atCol
+     * @param board grid pane of tiles
+     * @param node JavaFX node to display
+     * @param atRow target row
+     * @param atCol target column
      */
     private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
         board.add(node, atRow, atCol);

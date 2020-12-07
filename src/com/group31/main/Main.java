@@ -104,6 +104,7 @@ public class Main {
     /**
      * Initialises SilkBag.
      * @return A new instance of SilkBag.
+     * @throws FileNotFoundException if the file is not found
      */
     private static SilkBag initSilkBag() throws FileNotFoundException {
         int maxTiles = Settings.getSettingAsInt("max_tiles");

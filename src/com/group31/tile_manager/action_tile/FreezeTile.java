@@ -26,7 +26,6 @@ public class FreezeTile extends ActionTile {
      * @param gameboard the board of tiles
      * @param coordX the x coordinate of target tile
      * @param coordY the y coordinate of target tile
-     * @return
      */
     public void freezeEffect(Player[] players, Gameboard gameboard, int coordX, int coordY) {
         FloorTile[][] floorTile = gameboard.getBoardState();

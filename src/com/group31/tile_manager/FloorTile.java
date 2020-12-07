@@ -57,7 +57,7 @@ public class FloorTile extends Tile implements Serializable {
 
     /**
      * FloorTile constructor using just an ID to grab all the needed information.
-     * @param id
+     * @param id id used to get needed information
      */
     public FloorTile(int id) {
         super(id);
