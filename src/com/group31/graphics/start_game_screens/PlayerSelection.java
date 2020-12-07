@@ -70,6 +70,7 @@ public class PlayerSelection {
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
         playerCountList.addAll(TWO, THREE, FOUR);
         Button setPlayerCount = new Button("Confirm count");
+        setPlayerCount.setDisable(true);
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
@@ -89,7 +90,6 @@ public class PlayerSelection {
             // Serialized
             new PlayerProfile(newPlayerName.getText()).save();
             newPlayerName.clear();
-            setPlayerCount.setDisable(false);
         });
 
         newPlayerName.setPromptText("Enter name:");
