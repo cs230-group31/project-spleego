@@ -1,7 +1,12 @@
 package com.group31.graphics.start_game_screens;
 
+import com.group31.exceptions.ObjectNeverSerialized;
+import com.group31.logger.Logger;
 import com.group31.player.PlayerProfile;
 import com.group31.saveload.Load;
+import com.group31.services.serializer.Serializer;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Orientation;
@@ -58,10 +63,6 @@ public class PlayerSelection {
         TextField newPlayerName = new TextField();
         newPlayerName.setPromptText("Enter the name of the new player: ");
         playerNameBox.getChildren().addAll(createPlayerLabel, newPlayerName, createPlayer);
-        createPlayer.setOnMouseClicked(e -> {
-            new PlayerProfile(newPlayerName.getText()).save();
-            newPlayerName.clear();
-        });
 
 
         ObservableList<Integer> playerCountList = FXCollections.observableArrayList();
@@ -70,8 +71,24 @@ public class PlayerSelection {
         ComboBox<Integer> numOfPlayers = new ComboBox<>(playerCountList);
         numOfPlayers.setItems(playerCountList);
         HBox playerBox = new HBox();
-        setPlayerCount.setOnMouseClicked(e -> updatePlayerSelection(numOfPlayers.getValue(),
-                mainPane, playerBox));
+        setPlayerCount.setOnMouseClicked(e -> {
+            updatePlayerSelection(numOfPlayers.getValue(), mainPane, playerBox);
+            setPlayerCount.setDisable(true);
+        });
+
+        numOfPlayers.valueProperty().addListener(new ChangeListener<Integer>() {
+            @Override
+            public void changed(ObservableValue<? extends Integer> observable, Integer oldValue, Integer newValue) {
+                setPlayerCount.setDisable(false);
+            }
+        });
+
+        createPlayer.setOnMouseClicked(e -> {
+            // Serialized
+            new PlayerProfile(newPlayerName.getText()).save();
+            newPlayerName.clear();
+            setPlayerCount.setDisable(false);
+        });
 
         newPlayerName.setPromptText("Enter name:");
 
@@ -91,11 +108,23 @@ public class PlayerSelection {
 
     private static ArrayList<PlayerProfile> getPlayerProfiles() {
         ArrayList<PlayerProfile> playersInGame = new ArrayList<>();
+        String object = "player";
+        PlayerProfile profile = null;
         for (ComboBox<String> comboBox : COMBO_BOXES) {
-            playersInGame.add(new PlayerProfile(comboBox.getValue()));
+            String name = String.format("PlayerProfile_%s", comboBox.getValue());
+            try {
+                profile = (PlayerProfile) Serializer.deserialize(name, object);
+            } catch (ObjectNeverSerialized e) {
+                Logger.log(e.getMessage(), Logger.Level.ERROR);
+            }
+            if (profile != null) {
+                playersInGame.add(profile);
+                Serializer.serialize(profile, name, object);
+            }
         }
         return playersInGame;
     }
+
     /**
      * Updates dropdown menus according to number of players.
      * @param numPlayers number of players
@@ -103,6 +132,7 @@ public class PlayerSelection {
      * @param playerBox the HBox for dropdown menus
      */
     public static void updatePlayerSelection(int numPlayers, FlowPane mainPane, HBox playerBox) {
+        COMBO_BOXES.clear();
         mainPane.getChildren().remove(playerBox);
         playerBox.getChildren().clear();
         ArrayList<PlayerProfile> players = Load.getPlayerProfiles();

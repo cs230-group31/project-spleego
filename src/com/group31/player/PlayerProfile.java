@@ -5,6 +5,7 @@ import com.group31.services.serializer.Serializer;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * @author Liam,Moe
@@ -29,7 +30,7 @@ public class PlayerProfile implements Serializable {
     /**
      * UUIDs of the games that the player has participated in.
      */
-    private ArrayList<String> gamesParticipating;
+    private String[] gamesParticipating;
 
     /**
      * Set their wins, losses, name and games played.
@@ -38,9 +39,23 @@ public class PlayerProfile implements Serializable {
     public PlayerProfile(String name) {
         this.name = name;
 
+        this.gamesParticipating = new String[0];
         this.wins = 0;
         this.losses = 0;
         this.gamesPlayed = 0;
+    }
+
+    /**
+     * Set their wins, losses, name and games played.
+     * @param name
+     */
+    public PlayerProfile(String name, String[] gamesParticipating, int wins, int losses, int gamesPlayed) {
+        this.name = name;
+
+        this.gamesParticipating = gamesParticipating;
+        this.wins = wins;
+        this.losses = losses;
+        this.gamesPlayed = gamesPlayed;
     }
 
     /**
@@ -102,7 +117,7 @@ public class PlayerProfile implements Serializable {
      * Returns the number of games the player is participating in.
      * @return the number of games the player is participating in
      */
-    public ArrayList<String> getGamesParticipating() {
+    public String[] getGamesParticipating() {
         return gamesParticipating;
     }
 
@@ -111,7 +126,9 @@ public class PlayerProfile implements Serializable {
      * @param controller controller used to add player to a game.
      */
     public void addPlayerToGame(Controller controller) {
-        this.gamesParticipating.add(controller.getUuid());
+        ArrayList<String> controllers = new ArrayList<>(Arrays.asList(this.gamesParticipating));
+        controllers.add(String.format("Game_%s", controller.getUuid()));
+        this.gamesParticipating = controllers.toArray(new String[0]);
     }
 
     /**

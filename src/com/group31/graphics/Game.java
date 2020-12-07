@@ -3,6 +3,7 @@ package com.group31.graphics;
 import java.util.ArrayList;
 
 import com.group31.controller.Validation;
+import com.group31.player.PlayerProfile;
 import com.group31.tile_manager.Tile;
 import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
@@ -127,6 +128,11 @@ public class Game extends Application {
     private static Scene mainScene;
 
     /**
+     * Player Profiles.
+     */
+    private static ArrayList<PlayerProfile> profiles;
+
+    /**
      * Creates the board.
      * @param stage JavaFX Stage of the main window
      */
@@ -216,7 +222,7 @@ public class Game extends Application {
     private void drawTile() {
         Controller controller = Controller.getInstance();
         int playerTurn = controller.getPlayerTurn();
-        Player currentPlayer = controller.getPlayers()[playerTurn];
+        Player currentPlayer = controller.getPlayers()[playerTurn - 1];
         Tile drawnTile = controller.getSilkbag().drawTile();
         drawnTile.updateDrawnThisTurn(true);
         setCurrentDrawnTile(drawnTile);
@@ -305,7 +311,7 @@ public class Game extends Application {
     }
 
     private void saveAndExit(Stage stage) {
-        Save.saveAll();
+        Save.saveAll(profiles);
         Controller.resetInstance();
         Main.initController();
         stage.setScene(mainScene);
@@ -330,20 +336,23 @@ public class Game extends Application {
      * Creates an instance of Game and starts it.
      * @param stage JavaFX Stage of the main window.
      * @param mainScene JavaFX Scene of the main menu.
+     * @param profiles player profiles
      */
-    public static void launch(Stage stage, Scene mainScene) {
+    public static void launch(Stage stage, Scene mainScene, ArrayList<PlayerProfile> profiles) {
         Game game = new Game();
-        init(mainScene);
+        init(mainScene, profiles);
         game.start(stage);
     }
 
     /**
      * Initialises the main menu scene into this Game instance so it can be referenced.
      * @param mainMenuScene JavaFX Scene of the main menu.
+     * @param playerProfiles Player profiles
      */
-    private static void init(Scene mainMenuScene) {
+    private static void init(Scene mainMenuScene, ArrayList<PlayerProfile> playerProfiles) {
         mainScene = mainMenuScene;
         drawShowTile = new FlowPane();
+        profiles = playerProfiles;
         setCurrentDrawnTile(FACE_DOWN_TILE);
     }
 

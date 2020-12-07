@@ -8,6 +8,7 @@ import com.group31.logger.Logger;
 import com.group31.controller.Controller;
 import com.group31.saveload.Load;
 import com.group31.services.FileManager;
+import com.group31.services.serializer.Serializer;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
@@ -48,6 +49,9 @@ public class Main {
 
         // Testing.
         Settings.dumpSettingsToConsole();
+
+        // Serializer
+        Serializer.init();
 
         // Initialise components.
         initLeaderBoard();

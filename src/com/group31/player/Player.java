@@ -16,7 +16,7 @@ public class Player implements Serializable {
     /**
      * Player's sprite.
      */
-    private final Image sprite;
+    private transient Image sprite;
 
     /**
      * Player's current location on the board.
@@ -130,6 +130,10 @@ public class Player implements Serializable {
     public void incrementWins() {
         this.wins++;
         setGamesPlayed();
+    }
+
+    public void setSprite(Image sprite) {
+        this.sprite = sprite;
     }
 
     /**

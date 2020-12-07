@@ -45,28 +45,37 @@ public class LevelSelection {
         VBox buttonBox = new VBox();
         VBox allButtons = new VBox();
         start.setOnMouseClicked(e -> {
-            Controller.getInstance().setPlayers(initPlayers(playerProfiles));
+            Controller.getInstance().setPlayers(LevelSelectionController.initPlayers(playerProfiles));
             Controller.getInstance().startGame();
-            Game.launch(stage, mainMenu);
+            Game.launch(stage, mainMenu, playerProfiles);
         });
         returnMainMenu.setOnMouseClicked(e -> stage.setScene(mainMenu));
         backToPlayerProfile.setOnMouseClicked(e -> stage.setScene(playerSelection));
 
         buttonBox.getChildren().addAll(start, backToPlayerProfile, returnMainMenu);
 
-        try {
-            for (String name : LevelSelectionController.getSavedGamesName()) {
-                Button gameSave = new Button(name);
-                gameSave.setOnMouseClicked(e -> {
-                    LevelSelectionController.loadGame(name);
-                    Game.launch(stage, mainMenu);
-                    Controller.getInstance().startGame();
-                });
-                gameSaveButtons.getChildren().add(gameSave);
-            }
-        } catch (NoSuchDirectory e) {
-            Logger.log("Getting game save names threw an error.", Logger.Level.ERROR);
+        for (String gameSaveName : LevelSelectionController.getGamesWithPlayerParticipation(playerProfiles)) {
+            Button gameSave = new Button(gameSaveName);
+            gameSave.setOnMouseClicked(e -> {
+                LevelSelectionController.loadGame(gameSaveName);
+                Controller.getInstance().startGame();
+                Game.launch(stage, mainMenu, playerProfiles);
+            });
+            gameSaveButtons.getChildren().add(gameSave);
         }
+
+//        for (PlayerProfile profile : playerProfiles) {
+//            if (profile.getGamesParticipating() != null) {
+//                for (String controllerId : profile.getGamesParticipating()) {
+//                    Button gameSave = new Button("Game: " + controllerId);
+//                    gameSave.setOnMouseClicked(e -> {
+//                        LevelSelectionController.loadGame(controllerId);
+//                        Controller.getInstance().startGame();
+//                        Game.launch(stage, mainMenu, playerProfiles);
+//                    });
+//                }
+//            }
+//        }
 
         allButtons.getChildren().addAll(gameSaveButtons, buttonBox);
 
@@ -75,33 +84,6 @@ public class LevelSelection {
         scene.setRoot(root);
         stage.setScene(scene);
 
-    }
-
-    private Player[] initPlayers(ArrayList<PlayerProfile> profiles) {
-        ArrayList<Player> players = new ArrayList<>();
-        String fileName = "default level.txt";
-        String delimiter = ",";
-        ArrayList<String> playerLocations = new ArrayList<>();
-        try {
-            playerLocations = (ArrayList<String>) Load.loadNewGameFromFile(fileName).get("playerLocations");
-        } catch (FileNotFoundException | NoSuchDirectory e) {
-           Logger.log(e.getMessage(), Logger.Level.ERROR);
-        }
-        for (int i = 0; i <= profiles.size() - 1; i++) {
-            String[] locationsAsString = playerLocations.get(i).split(delimiter);
-            int[] locations = new int[]
-                    {Integer.parseInt(locationsAsString[0]), Integer.parseInt(locationsAsString[1])};
-
-            Image playerSprite = null;
-            try {
-                FileManager.setDirectory("resources/images/sprites/", false);
-                playerSprite = FileManager.readImage(i + "", "png");
-            } catch (NoSuchDirectory | IOException e) {
-                Logger.log(e.toString(), Logger.Level.ERROR);
-            }
-            players.add(new Player(profiles.get(i).getName(), playerSprite, locations));
-        }
-        return players.toArray(new Player[0]);
     }
 
     /**
