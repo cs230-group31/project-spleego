@@ -140,8 +140,8 @@ public class MainMenu extends Application {
     public void start(final Stage stage) {
         stage.setHeight(WINDOW_HEIGHT);
         stage.setWidth(WINDOW_WIDTH);
-        stage.setMaxHeight(WINDOW_HEIGHT);
-        stage.setMaxWidth(WINDOW_WIDTH);
+//        stage.setMaxHeight(WINDOW_HEIGHT);
+//        stage.setMaxWidth(WINDOW_WIDTH);
         stage.setTitle("Spooky Spleego");
 
         Scene scene = new Scene(new Group());
