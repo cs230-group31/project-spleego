@@ -174,10 +174,13 @@ public class Game extends Application {
         returnSign.setOnMouseClicked(e -> stage.setScene(mainScene));
         HBox bottomBox = new HBox();
         bottomBox.getChildren().add(returnSign);
+        bottomBox.setPickOnBounds(false);
         bottomPane.getChildren().add(bottomBox);
+        playerThreeHand.setPickOnBounds(false);
+        drawShowTile.setPickOnBounds(false);
         bottomPane.setPickOnBounds(false);
-        StackPane.setAlignment(drawShowTile, Pos.BOTTOM_LEFT);
-        StackPane.setAlignment(bottomBox, Pos.BOTTOM_RIGHT);
+        drawShowTile.setAlignment(Pos.BOTTOM_LEFT);
+        bottomBox.setAlignment(Pos.BOTTOM_RIGHT);
         root.setBottom(bottomPane);
 
         root.setLeft(playerFourHand);
