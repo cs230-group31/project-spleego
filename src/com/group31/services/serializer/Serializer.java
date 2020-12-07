@@ -76,7 +76,7 @@ public class Serializer {
                     }
                 } else {
                     throw new ObjectNeverSerialized(
-                            "Object has not been serialized, "
+                            identifier + " has not been serialized, "
                                     + "or serialized file cannot be found. (Deserializer)");
                 }
             } catch (NoSuchDirectory | IOException | ClassNotFoundException e) {
@@ -120,8 +120,11 @@ public class Serializer {
     public static void init() {
         identifiers.clear();
         try {
-            FileManager.setDirectory(SERIALIZED_OBJECTS_FOLDER, true);
-            saveIdentifiers();
+            String fileName = "identifiers.txt";
+            FileManager.setDirectory(IDENTIFIERS_FILE_LOCATION, true);
+            if (!FileManager.fileExists(fileName)) {
+                saveIdentifiers();
+            }
         } catch (NoSuchDirectory noSuchDirectory) {
             Logger.log(noSuchDirectory.getMessage(), Logger.Level.ERROR);
         }

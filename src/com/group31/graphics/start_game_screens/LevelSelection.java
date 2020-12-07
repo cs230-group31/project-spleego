@@ -1,28 +1,17 @@
 package com.group31.graphics.start_game_screens;
 
 import com.group31.controller.Controller;
-import com.group31.exceptions.NoSuchDirectory;
 import com.group31.graphics.Game;
 import com.group31.graphics.view_controllers.LevelSelectionController;
-import com.group31.logger.Logger;
-import com.group31.player.Player;
 import com.group31.player.PlayerProfile;
-import com.group31.saveload.Load;
-import com.group31.services.FileManager;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import sun.rmi.runtime.Log;
-
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
 
 public class LevelSelection {

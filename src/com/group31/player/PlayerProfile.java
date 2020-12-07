@@ -46,8 +46,12 @@ public class PlayerProfile implements Serializable {
     }
 
     /**
-     * Set their wins, losses, name and games played.
-     * @param name
+     * Build a PLayer Profile.
+     * @param name name of the player
+     * @param gamesParticipating games the player is participating in
+     * @param wins number of wins a player has achieved.
+     * @param losses player's losses
+     * @param gamesPlayed the total amount of games played.
      */
     public PlayerProfile(String name, String[] gamesParticipating, int wins, int losses, int gamesPlayed) {
         this.name = name;

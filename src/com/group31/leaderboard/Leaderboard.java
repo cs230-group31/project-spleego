@@ -6,6 +6,7 @@ import com.group31.logger.Logger;
 import com.group31.player.PlayerProfile;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
+import com.group31.settings.Settings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -43,6 +44,20 @@ public class Leaderboard {
      * @return Leaderboard data.
      */
     public static ObservableList<PlayerProfile> getLeaderboardData() {
+        players.clear();
+        try {
+            String object = "player";
+            String directory = String.format("%splayer/", Settings.get("serialized_objects_folder"));
+            FileManager.setDirectory(directory, false);
+            for (File file : FileManager.getAllFilesInDir()) {
+                String identifier = file.getName().replaceFirst("[.][^.]+$", "");
+                PlayerProfile profile = (PlayerProfile) Serializer.deserialize(identifier, object);
+                players.add(profile);
+                profile.save();
+            }
+        } catch (NoSuchDirectory | ObjectNeverSerialized e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
         return FXCollections.observableArrayList(players);
     }
 }

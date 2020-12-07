@@ -3,7 +3,9 @@ package com.group31.graphics;
 import java.util.ArrayList;
 
 import com.group31.controller.Validation;
+import com.group31.exceptions.ObjectNeverSerialized;
 import com.group31.player.PlayerProfile;
+import com.group31.services.serializer.Serializer;
 import com.group31.tile_manager.Tile;
 import com.group31.controller.Controller;
 import com.group31.exceptions.NoSuchDirectory;
@@ -124,6 +126,11 @@ public class Game extends Application {
     private static Scene mainScene;
 
     /**
+     * Stage instance.
+     */
+    private static Stage stageWindow;
+
+    /**
      * Player Profiles.
      */
     private static ArrayList<PlayerProfile> profiles;
@@ -133,6 +140,7 @@ public class Game extends Application {
      * @param stage JavaFX Stage of the main window
      */
     public void start(Stage stage) {
+        stageWindow = stage;
         Scene scene = new Scene(new Group());
         BorderPane root = new BorderPane();
         GridPane board = new GridPane();
@@ -287,7 +295,7 @@ public class Game extends Application {
                     Player winner = controller.hasWon();
                     if (winner != null) {
                         Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
-                        System.exit(0);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
                     }
                 });
                 stackNodeAt(board, moveArrow, playerX + 1, playerY);
@@ -304,7 +312,7 @@ public class Game extends Application {
                     Player winner = controller.hasWon();
                     if (winner != null) {
                         Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
-                        System.exit(0);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
                     }
                 });
                 stackNodeAt(board, moveArrow, playerX + 1, playerY + 2);
@@ -321,7 +329,7 @@ public class Game extends Application {
                     Player winner = controller.hasWon();
                     if (winner != null) {
                         Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
-                        System.exit(0);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
                     }
                 });
                 stackNodeAt(board, moveArrow, playerX, playerY + 1);
@@ -338,7 +346,7 @@ public class Game extends Application {
                     Player winner = controller.hasWon();
                     if (winner != null) {
                         Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
-                        System.exit(0);
+                        declareWinner(winner.getName(), stageWindow, mainScene);
                     }
                 });
                 stackNodeAt(board, moveArrow, playerX + 2, playerY + 1);
@@ -370,6 +378,28 @@ public class Game extends Application {
         }
         currentDrawnTile = new ImageView(tileImg);
         drawShowTile.getChildren().add(currentDrawnTile);
+    }
+
+    private static void declareWinner(String winner, Stage stage, Scene mainMenu) {
+        String object = "player";
+        String winnerFileName = String.format("PlayerProfile_%s", winner);
+        try {
+            PlayerProfile winningProfile = (PlayerProfile) Serializer.deserialize(winnerFileName, object);
+            winningProfile.incrementGamesWon();
+            winningProfile.save();
+            for (Player player : Controller.getInstance().getPlayers()) {
+                if (!player.getName().equals(winner)) {
+                    String loserFileName = String.format("PlayerProfile_%s", player.getName());
+                    PlayerProfile profile = (PlayerProfile) Serializer.deserialize(loserFileName, object);
+                    profile.incrementGamesLost();
+                    profile.save();
+                }
+            }
+        } catch (ObjectNeverSerialized e) {
+            Logger.log(e.getMessage(), Logger.Level.ERROR);
+        }
+        Controller.resetInstance();
+        WinnerScreen.launch(stage, mainMenu, winner);
     }
 
     /**

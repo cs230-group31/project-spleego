@@ -132,6 +132,10 @@ public class Player implements Serializable {
         setGamesPlayed();
     }
 
+    /**
+     * Sets the Player's sprite.
+     * @param sprite image to set as the player's sprite
+     */
     public void setSprite(Image sprite) {
         this.sprite = sprite;
     }
