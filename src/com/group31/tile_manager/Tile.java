@@ -57,6 +57,7 @@ public class Tile implements Serializable {
      */
     public Tile(int id) {
         this.id = id;
+        this.actionTile = id >= 11;
     }
 
     /**
