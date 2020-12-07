@@ -8,15 +8,19 @@ import com.group31.logger.Logger;
 import com.group31.player.Player;
 import com.group31.player.PlayerProfile;
 import com.group31.saveload.Load;
+import com.group31.services.FileManager;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import sun.rmi.runtime.Log;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -87,7 +91,15 @@ public class LevelSelection {
             String[] locationsAsString = playerLocations.get(i).split(delimiter);
             int[] locations = new int[]
                     {Integer.parseInt(locationsAsString[0]), Integer.parseInt(locationsAsString[1])};
-            players.add(new Player(profiles.get(i).getName(), locations));
+
+            Image playerSprite = null;
+            try {
+                FileManager.setDirectory("resources/images/sprites/", false);
+                playerSprite = FileManager.readImage(i + "", "png");
+            } catch (NoSuchDirectory | IOException e) {
+                Logger.log(e.toString(), Logger.Level.ERROR);
+            }
+            players.add(new Player(profiles.get(i).getName(), playerSprite, locations));
         }
         return players.toArray(new Player[0]);
     }
