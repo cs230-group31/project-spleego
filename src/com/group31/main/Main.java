@@ -6,18 +6,15 @@ import com.group31.graphics.MainMenu;
 import com.group31.leaderboard.Leaderboard;
 import com.group31.logger.Logger;
 import com.group31.controller.Controller;
-import com.group31.player.Player;
 import com.group31.saveload.Load;
 import com.group31.services.FileManager;
 import com.group31.services.serializer.Serializer;
 import com.group31.settings.DefaultSettings;
 import com.group31.settings.Settings;
 import com.group31.tile_manager.silk_bag.SilkBag;
-import javafx.scene.image.Image;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
