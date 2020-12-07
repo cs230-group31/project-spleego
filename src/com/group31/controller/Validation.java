@@ -60,23 +60,25 @@ public class Validation {
         List<String> tileAcceptsRouteAboveList = Arrays.asList(Settings.get("tiles_fed_above").split(delimiter));
         List<String> tileAcceptsRouteLeftList = Arrays.asList(Settings.get("tiles_fed_left").split(delimiter));
         List<String> tileAcceptsRouteRightList = Arrays.asList(Settings.get("tiles_fed_right").split(delimiter));
-
-        if (neighbourDirection.equals("up") && tileAcceptsRouteAboveList.contains(currentTileId)
-                && tileAcceptsRouteBelowList.contains(neighbourTileId)) {
-            return true;
-        } else if (neighbourDirection.equals("down") && tileAcceptsRouteBelowList.contains(currentTileId)
-                && tileAcceptsRouteAboveList.contains(neighbourTileId)) {
-            return true;
-        } else if (neighbourDirection.equals("left") && tileAcceptsRouteLeftList.contains(currentTileId)
-                && tileAcceptsRouteRightList.contains(neighbourTileId)) {
-            return true;
-        } else if (neighbourDirection.equals("right") && tileAcceptsRouteRightList.contains(currentTileId)
-                && tileAcceptsRouteLeftList.contains(neighbourTileId)) {
+        String currentTileString = Integer.toString(currentTileId);
+        String neighbourTileString = Integer.toString(neighbourTileId);
+        if (neighbourDirection.equals("up") && tileAcceptsRouteAboveList.contains(currentTileString)
+                && tileAcceptsRouteBelowList.contains(neighbourTileString)) {
             return true;
         }
-
+        if (neighbourDirection.equals("down") && tileAcceptsRouteBelowList.contains(currentTileString)
+                && tileAcceptsRouteAboveList.contains(neighbourTileString)) {
+            return true;
+        }
+        if (neighbourDirection.equals("left") && tileAcceptsRouteLeftList.contains(currentTileString)
+                && tileAcceptsRouteRightList.contains(neighbourTileString)) {
+            return true;
+        }
+        if (neighbourDirection.equals("right") && tileAcceptsRouteRightList.contains(currentTileString)
+                && tileAcceptsRouteLeftList.contains(neighbourTileString)) {
+            return true;
+        }
         return false;
 
     }
-
 }

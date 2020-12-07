@@ -98,10 +98,6 @@ public class Game extends Application {
      */
     private static final Tile FACE_DOWN_TILE = new Tile(-1);
     /**
-     * The maximum number of turns until we need to loop back to 1.
-     */
-    private static final int MAX_TURN_COUNT = Controller.getInstance().getPlayers().length;
-    /*
      * Player numbers enum.
      */
     public enum PlayerNumber {
@@ -158,6 +154,7 @@ public class Game extends Application {
         playerTwoHand = new VBox();
         playerThreeHand = new HBox();
         playerFourHand = new VBox();
+        Controller controller = Controller.getInstance();
 
         StackPane topThing = new StackPane();
         topThing.getChildren().add(playerOneHand);
@@ -173,7 +170,12 @@ public class Game extends Application {
         StackPane bottomPane = new StackPane();
         bottomPane.getChildren().add(playerThreeHand);
         ImageButton drawTile = new ImageButton(DRAW_TILE_URL);
-        drawTile.setOnMouseClicked(e -> drawTile());
+        drawTile.setOnMouseClicked(e -> {
+            if ((controller.getPlayerMoved() != Controller.MoveMade.REQUIRED
+                    && controller.getFloorTilePlaced() != Controller.TilePlaced.REQUIRED)) {
+                drawTile();
+            }
+        });
         drawShowTile.getChildren().add(drawTile);
         bottomPane.getChildren().add(drawShowTile);
         ImageButton returnSign = new ImageButton(RETURN_BUTTON_URL);
@@ -198,11 +200,6 @@ public class Game extends Application {
         stage.setScene(scene);
 
         drawPlayers(board);
-        Controller controller = Controller.getInstance();
-        Player winner = controller.hasWon();
-        if (winner != null) {
-            Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
-        }
     }
 
     private static void drawPlayers(GridPane board) {
@@ -215,11 +212,17 @@ public class Game extends Application {
         }
     }
 
+    private static void skipPlayerMovement() {
+        Controller controller = Controller.getInstance();
+        controller.setPlayerMoved(Controller.MoveMade.NOT_REQUIRED);
+    }
+
     private static void stackNodeAt(GridPane board, Node node, int atRow, int atCol) {
-        board.add(node, atCol, atRow);
+        board.add(node, atRow, atCol);
     }
 
     private void drawTile() {
+
         Controller controller = Controller.getInstance();
         int playerTurn = controller.getPlayerTurn();
         Player currentPlayer = controller.getPlayers()[playerTurn - 1];
@@ -234,9 +237,7 @@ public class Game extends Application {
             controller.setFloorTilePlaced(Controller.TilePlaced.REQUIRED);
         }
         drawnTile.updateDrawnThisTurn(false);
-        if (controller.getPlayerTurn() == MAX_TURN_COUNT) {
-            controller.setPlayerTurn(1);
-        }
+
     }
 
     private static void startPlayerMove(GridPane board) {
@@ -271,41 +272,80 @@ public class Game extends Application {
         boolean rightIsValid;
         try {
             rightIsValid = Validation.validRouting(playerTile.getId(),
-                    gameboard.getBoardState()[playerX - 1][playerY].getId(), "right");
+                    gameboard.getBoardState()[playerX + 1][playerY].getId(), "right");
         } catch (ArrayIndexOutOfBoundsException e) {
             rightIsValid = false;
         }
         if (upIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move up.png");
-            moveArrow.setOnMouseClicked(e -> {
-                currentPlayer.setLocation(playerX, playerY - 1);
-                drawGameBoard(board);
-            });
-            stackNodeAt(board, moveArrow, playerX, playerY - 1);
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX, playerY - 1);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        System.exit(0);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 1, playerY);
+            }
         }
         if (downIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move down.png");
-            moveArrow.setOnMouseClicked(e -> {
-                currentPlayer.setLocation(playerX, playerY + 1);
-                drawGameBoard(board);
-            });
-            stackNodeAt(board, moveArrow, playerX, playerY + 1);
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX, playerY + 1);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        System.exit(0);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 1, playerY + 2);
+            }
         }
         if (leftIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move left.png");
-            moveArrow.setOnMouseClicked(e -> {
-                currentPlayer.setLocation(playerX - 1, playerY);
-                drawGameBoard(board);
-            });
-            stackNodeAt(board, moveArrow, playerX - 1, playerY);
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX - 1, playerY);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        System.exit(0);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX, playerY + 1);
+            }
         }
         if (rightIsValid) {
             ImageButton moveArrow = new ImageButton("resources/images/tiles/move right.png");
-            moveArrow.setOnMouseClicked(e -> {
-                currentPlayer.setLocation(playerX + 1, playerY);
-                drawGameBoard(board);
-            });
-            stackNodeAt(board, moveArrow, playerX + 1, playerY);
+            if (controller.getPlayerMoved() == Controller.MoveMade.REQUIRED) {
+                moveArrow.setOnMouseClicked(e -> {
+                    currentPlayer.setLocation(playerX + 1, playerY);
+                    drawGameBoard(board);
+                    drawPlayers(board);
+                    controller.setPlayerMoved(Controller.MoveMade.MOVED);
+                    Player winner = controller.hasWon();
+                    if (winner != null) {
+                        Logger.log(winner.getName() + " has won!", Logger.Level.INFO);
+                        System.exit(0);
+                    }
+                });
+                stackNodeAt(board, moveArrow, playerX + 2, playerY + 1);
+            }
+        }
+        if ((!upIsValid && !downIsValid && !leftIsValid && !rightIsValid)) {
+            skipPlayerMovement();
         }
         controller.nextPlayerTurn();
     }
@@ -380,6 +420,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
                         startPlayerMove(board);
                     }
                 });
@@ -391,6 +432,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
                         startPlayerMove(board);
                     }
                 });
@@ -414,6 +456,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
                         startPlayerMove(board);
                     }
                 });
@@ -425,6 +468,7 @@ public class Game extends Application {
                         controller.setFloorTilePlaced(Controller.TilePlaced.PLACED);
                         setCurrentDrawnTile(FACE_DOWN_TILE);
                         drawPlayers(board);
+                        controller.setPlayerMoved(Controller.MoveMade.REQUIRED);
                         startPlayerMove(board);
                     }
                 });

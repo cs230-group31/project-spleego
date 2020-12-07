@@ -26,6 +26,20 @@ public class Controller implements Serializable {
          */
         NOT_REQUIRED
     }
+    public enum MoveMade {
+        /**
+         * Player has been moved.
+         */
+        MOVED,
+        /**
+         * Player needs to be moved.
+         */
+        REQUIRED,
+        /**
+         * Player does not need to be moved.
+         */
+        NOT_REQUIRED
+    }
     /**
      * Instance of the controller.
      */
@@ -52,6 +66,11 @@ public class Controller implements Serializable {
      */
     private TilePlaced floorTilePlaced;
     /**
+     * Keeps track of if a player has moved yet.
+     * Use The Enum.
+     */
+    private MoveMade playerMoved;
+    /**
      *  Tracks if the game has been won.
      */
     private boolean gameWon;
@@ -67,6 +86,10 @@ public class Controller implements Serializable {
      * UUID of an instance of the controller.
      */
     private final String uuid;
+    /**
+     * The maximum number of turns until we need to loop back to 1.
+     */
+    private static int maxTurnCount;
 
     /**
      * Controller deals with game logic, loading and saving.
@@ -130,6 +153,7 @@ public class Controller implements Serializable {
      */
     public void setPlayers(Player[] players) {
         this.players = players;
+        maxTurnCount = players.length;
     }
 
     /**
@@ -234,6 +258,10 @@ public class Controller implements Serializable {
      * Updates the playerTurn counter to the next term.
      */
     public void nextPlayerTurn() {
+        nextGlobalTurn();
+        if (getPlayerTurn() == maxTurnCount) {
+            setPlayerTurn(0);
+        }
         this.playerTurn++;
     }
     /**
@@ -243,18 +271,32 @@ public class Controller implements Serializable {
         this.globalTurnCount++;
     }
     /**
-     * Returns the current state of FloorTilePlaced.
-     * @return the current state of FloorTilePlaced
+     * Returns the current state of floorTilePlaced.
+     * @return the current state of floorTilePlaced
      */
     public TilePlaced getFloorTilePlaced() {
         return floorTilePlaced;
     }
     /**
-     * Sets the floorTilePlaced to PLACED.
+     * Sets the floorTilePlaced to Enum provided.
      * @param tilePlaced ENUM of the state of the floorTile.
      */
     public void setFloorTilePlaced(TilePlaced tilePlaced) {
         this.floorTilePlaced = tilePlaced;
+    }
+    /**
+     * Returns the current state of playerMoved.
+     * @return the current state of playerMoved
+     */
+    public MoveMade getPlayerMoved() {
+        return playerMoved;
+    }
+    /**
+     * Sets playerMoved to Enum provided.
+     * @param playerMoved ENUM of if the player has moved.
+     */
+    public void setPlayerMoved(MoveMade playerMoved) {
+        this.playerMoved = playerMoved;
     }
     /**
      * Saves the game.
@@ -319,6 +361,8 @@ public class Controller implements Serializable {
     public void init(Gameboard gameboard, SilkBag silkBag) {
         this.gameboard = gameboard;
         this.silkBag = silkBag;
+        setPlayerMoved(MoveMade.NOT_REQUIRED);
+        setFloorTilePlaced(Controller.TilePlaced.NOT_REQUIRED);
     }
 
     /**
